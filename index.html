@@ -52,8 +52,11 @@
     padding: var(--s16) 0; margin-bottom: var(--s48);
     border-bottom: 1px solid var(--hairline);
   }
-  .nav-brand { font-size: 18px; font-weight: 700; color: var(--text); text-decoration: none; }
-  .nav-brand:hover { color: var(--accent-hover); }
+  .nav-wordmark {
+    font-size: 10px; line-height: 1.1; color: var(--accent);
+    white-space: pre; text-decoration: none; display: block;
+  }
+  .nav-wordmark:hover { color: var(--accent-hover); }
   .nav-tabs { display: flex; gap: var(--s8); }
   .nav-tab {
     font-size: 14px; font-weight: 500; color: var(--muted); text-decoration: none;
@@ -68,7 +71,6 @@
     text-align: center; padding: var(--s48) 0 var(--s32);
     border-bottom: 1px solid var(--hairline); margin-bottom: var(--s48);
   }
-  .hero .wordmark { font-size: 12px; line-height: 1.2; color: var(--accent); margin-bottom: var(--s16); white-space: pre; }
   .hero h1 { font-size: 38px; font-weight: 700; line-height: 1.5; color: var(--text); margin-bottom: var(--s8); letter-spacing: -0.02em; }
   .hero .tagline { font-size: 16px; color: var(--muted); }
 
@@ -142,6 +144,9 @@
 
   @media (max-width: 600px) {
     body { padding: var(--s24) var(--s16); }
+    .nav { flex-direction: column; align-items: flex-start; gap: var(--s8); }
+    .nav-wordmark { font-size: 7px; }
+    .nav-tabs { flex-wrap: wrap; }
     .hero h1 { font-size: 28px; }
     .hero { padding: var(--s32) 0 var(--s24); }
     table { font-size: 13px; }
@@ -154,7 +159,14 @@
 
 <!-- ============ Top Nav ============ -->
 <nav class="nav">
-  <a href="#" class="nav-brand">Rocky</a>
+  <a href="#" class="nav-wordmark">
+  ██████╗   ██████╗   ██████╗ ██╗  ██╗██╗   ██╗
+  ██╔══██╗ ██╔═══██╗ ██╔════╝██║ ██╔╝╚██╗ ██╔╝
+  ██████╔╝ ██║   ██║ ██║     █████╔╝  ╚████╔╝
+  ██╔══██╗ ██║   ██║ ██║     ██╔═██╗   ╚██╔╝
+  ██║  ██║ ╚██████╔╝ ╚██████╗██║  ██╗   ██║
+  ╚═╝  ╚═╝  ╚═════╝   ╚═════╝╚═╝  ╚═╝   ╚═╝
+  </a>
   <div class="nav-tabs">
     <a href="#" class="nav-tab">Git</a>
     <a href="#" class="nav-tab active">文档</a>
@@ -164,14 +176,6 @@
 
 <!-- ============ Hero ============ -->
 <div class="hero">
-  <div class="wordmark">
-  ██████╗   ██████╗   ██████╗ ██╗  ██╗██╗   ██╗
-  ██╔══██╗ ██╔═══██╗ ██╔════╝██║ ██╔╝╚██╗ ██╔╝
-  ██████╔╝ ██║   ██║ ██║     █████╔╝  ╚████╔╝
-  ██╔══██╗ ██║   ██║ ██║     ██╔═██╗   ╚██╔╝
-  ██║  ██║ ╚██████╔╝ ╚██████╗██║  ██╗   ██║
-  ╚═╝  ╚═╝  ╚═════╝   ╚═════╝╚═╝  ╚═╝   ╚═╝
-  </div>
   <h1>Rocky 使用说明文档</h1>
   <p class="tagline">AI 编程助手 Rocky — 修 bug &middot; 写代码 &middot; 跑测试 &middot; amaze!</p>
 </div>
