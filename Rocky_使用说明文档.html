@@ -6,52 +6,32 @@
 <title>Rocky 使用说明文档</title>
 <style>
   /* ============================================
-     Rocky Doc — OpenCode Design System
-     Terminal-native · Monospace-first · Flat.
+     Rocky Doc
+     Purple primary · Flat · Terminal-native.
      ============================================ */
 
-  /* --- Design Tokens --- */
   :root {
-    /* Surfaces */
-    --ink:        #201d1d;
-    --canvas:     #302c2c;
-    --elevated:   #3a3535;
-
-    /* Text */
-    --text:       #fdfcfc;
-    --body:       #d6d3d3;
-    --muted:      #9a9898;
-    --stone:      #6e6e73;
-
-    /* Semantic (Apple HIG) */
-    --accent:     #007aff;
-    --accent-hover: #3395ff;
-    --success:    #30d158;
-    --warning:    #ff9f0a;
-    --danger:     #ff3b30;
-
-    /* Borders */
-    --hairline:        rgba(253,252,252,0.10);
+    --ink:           #201d1d;
+    --canvas:        #302c2c;
+    --elevated:      #3a3535;
+    --text:          #fdfcfc;
+    --body:          #d6d3d3;
+    --muted:         #9a9898;
+    --stone:         #6e6e73;
+    --accent:        #7c3aed;
+    --accent-hover:  #a78bfa;
+    --accent-soft:   rgba(124,58,237,0.15);
+    --success:       #30d158;
+    --warning:       #ff9f0a;
+    --danger:        #ff3b30;
+    --hairline:      rgba(253,252,252,0.10);
     --hairline-strong: rgba(253,252,252,0.16);
-
-    /* Spacing (8px grid) */
-    --s8:   8px;
-    --s16:  16px;
-    --s24:  24px;
-    --s32:  32px;
-    --s48:  48px;
-    --s64:  64px;
-
-    /* Radius */
-    --r-none: 0px;
-    --r-sm:   4px;
-    --r-pill: 9999px;
-
-    /* Typography */
+    --s8:  8px;  --s16: 16px; --s24: 24px;
+    --s32: 32px; --s48: 48px; --s64: 64px;
+    --r-none: 0px; --r-sm: 4px; --r-pill: 9999px;
     --font: "Berkeley Mono", "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   }
 
-  /* --- Reset --- */
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
@@ -66,275 +46,100 @@
     padding: var(--s48) var(--s24) var(--s64);
   }
 
+  /* --- Top Nav --- */
+  .nav {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: var(--s16) 0; margin-bottom: var(--s48);
+    border-bottom: 1px solid var(--hairline);
+  }
+  .nav-brand { font-size: 18px; font-weight: 700; color: var(--text); text-decoration: none; }
+  .nav-brand:hover { color: var(--accent-hover); }
+  .nav-tabs { display: flex; gap: var(--s8); }
+  .nav-tab {
+    font-size: 14px; font-weight: 500; color: var(--muted); text-decoration: none;
+    padding: var(--s8) var(--s16); border: 1px solid var(--hairline); border-radius: var(--r-sm);
+    transition: color 0.15s, border-color 0.15s, background 0.15s;
+  }
+  .nav-tab:hover { color: var(--accent-hover); border-color: var(--accent); }
+  .nav-tab.active { color: var(--accent); border-color: var(--accent); background: var(--accent-soft); }
+
   /* --- Hero --- */
   .hero {
-    text-align: center;
-    padding: var(--s48) 0 var(--s32);
-    border-bottom: 1px solid var(--hairline);
+    text-align: center; padding: var(--s48) 0 var(--s32);
+    border-bottom: 1px solid var(--hairline); margin-bottom: var(--s48);
+  }
+  .hero .wordmark { font-size: 12px; line-height: 1.2; color: var(--accent); margin-bottom: var(--s16); white-space: pre; }
+  .hero h1 { font-size: 38px; font-weight: 700; line-height: 1.5; color: var(--text); margin-bottom: var(--s8); letter-spacing: -0.02em; }
+  .hero .tagline { font-size: 16px; color: var(--muted); }
+
+  /* --- Section --- */
+  .section {
     margin-bottom: var(--s48);
+    padding-bottom: var(--s32);
+    border-bottom: 1px solid var(--hairline);
   }
-  .hero .wordmark {
-    font-size: 12px;
-    line-height: 1.2;
-    color: var(--accent);
-    margin-bottom: var(--s16);
-    white-space: pre;
-  }
-  .hero h1 {
-    font-family: var(--font);
-    font-size: 38px;
-    font-weight: 700;
-    line-height: 1.5;
-    color: var(--text);
-    margin-bottom: var(--s8);
-    letter-spacing: -0.02em;
-  }
-  .hero .tagline {
-    font-size: 16px;
-    color: var(--muted);
-  }
-
-  /* --- Global Controls --- */
-  .global-controls {
-    text-align: center;
-    margin-bottom: var(--s32);
-  }
-  .global-controls button {
-    font-family: var(--font);
-    font-size: 14px;
-    font-weight: 500;
-    background: transparent;
-    color: var(--accent);
-    border: 1px solid var(--accent);
-    padding: var(--s8) var(--s16);
-    border-radius: var(--r-sm);
-    cursor: pointer;
-    margin: 0 var(--s8);
-    transition: background 0.15s, color 0.15s;
-  }
-  .global-controls button:hover {
-    background: var(--accent);
-    color: var(--text);
-  }
-
-  /* --- Accordion --- */
-  .accordion {
-    margin-bottom: var(--s8);
-    border: 1px solid var(--hairline);
-    border-radius: var(--r-sm);
-    background: var(--canvas);
-  }
-  .accordion-header {
-    font-family: var(--font);
-    background: transparent;
-    color: var(--text);
-    cursor: pointer;
-    padding: var(--s16);
-    width: 100%;
-    text-align: left;
-    border: none;
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 1.5;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: background 0.15s;
-    border-radius: var(--r-sm);
-  }
-  .accordion-header:hover { background: var(--elevated); }
-  .accordion-header .marker {
-    font-size: 16px;
-    font-weight: 400;
-    color: var(--accent);
-    flex-shrink: 0;
-    margin-left: var(--s16);
-  }
-  .accordion-body {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.35s ease;
-  }
-  .accordion.open .accordion-body { max-height: 20000px; }
-  .accordion-body-inner {
-    padding: 0 var(--s16) var(--s24) var(--s16);
-    border-top: 1px solid var(--hairline);
-  }
+  .section:last-of-type { border-bottom: none; margin-bottom: 0; }
 
   /* --- Typography --- */
-  h2 {
-    font-family: var(--font);
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 1.5;
-    color: var(--text);
-    margin: var(--s24) 0 var(--s8);
-  }
-  h3 {
-    font-family: var(--font);
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 1.5;
-    color: var(--text);
-    margin: var(--s16) 0 var(--s8);
-  }
+  h2 { font-size: 18px; font-weight: 700; line-height: 1.5; color: var(--accent); margin: 0 0 var(--s16); }
+  h3 { font-size: 16px; font-weight: 500; line-height: 1.5; color: var(--text); margin: var(--s24) 0 var(--s8); }
   p { margin: var(--s8) 0; }
   strong { color: var(--text); font-weight: 500; }
   em { font-style: normal; color: var(--text); }
   a { color: var(--accent); text-decoration: none; }
   a:hover { text-decoration: underline; }
 
-  /* --- Lists --- */
   ul, ol { padding-left: var(--s24); margin: var(--s8) 0; }
   li { margin: var(--s8) 0; }
 
-  /* ASCII bullet lists */
   .ascii-bullets { list-style: none; padding-left: 0; }
-  .ascii-bullets li::before {
-    content: "[+]";
-    color: var(--accent);
-    margin-right: var(--s8);
-    font-size: 14px;
-  }
-  .ascii-bullets li.done::before {
-    content: "[x]";
-    color: var(--success);
-    margin-right: var(--s8);
-  }
+  .ascii-bullets li::before { content: "[+]"; color: var(--accent); margin-right: var(--s8); font-size: 14px; }
+  .ascii-bullets li.done::before { content: "[x]"; color: var(--success); }
 
   /* --- Tables --- */
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: var(--s16) 0;
-    font-size: 14px;
-  }
-  th {
-    text-align: left;
-    padding: var(--s8) var(--s16);
-    border-bottom: 1px solid var(--hairline-strong);
-    font-weight: 500;
-    color: var(--text);
-    white-space: nowrap;
-    font-family: var(--font);
-  }
-  td {
-    text-align: left;
-    padding: var(--s8) var(--s16);
-    border-bottom: 1px solid var(--hairline);
-    vertical-align: top;
-    font-family: var(--font);
-  }
+  table { width: 100%; border-collapse: collapse; margin: var(--s16) 0; font-size: 14px; }
+  th { text-align: left; padding: var(--s8) var(--s16); border-bottom: 1px solid var(--hairline-strong); font-weight: 500; color: var(--text); white-space: nowrap; }
+  td { text-align: left; padding: var(--s8) var(--s16); border-bottom: 1px solid var(--hairline); vertical-align: top; }
   tr:last-child td { border-bottom: none; }
 
   /* --- Tags --- */
-  .tag {
-    display: inline-block;
-    padding: 2px var(--s8);
-    border-radius: var(--r-pill);
-    font-size: 12px;
-    font-weight: 500;
-    font-family: var(--font);
-    line-height: 1.6;
-    border: 1px solid;
-  }
+  .tag { display: inline-block; padding: 2px var(--s8); border-radius: var(--r-pill); font-size: 12px; font-weight: 500; line-height: 1.6; border: 1px solid; }
   .tag-purple { color: #a78bfa; border-color: rgba(167,139,250,0.35); }
   .tag-amber  { color: var(--warning); border-color: rgba(255,159,10,0.35); }
   .tag-red    { color: var(--danger);  border-color: rgba(255,59,48,0.35); }
   .tag-green  { color: var(--success); border-color: rgba(48,209,88,0.35); }
 
   /* --- Code --- */
-  code {
-    font-family: var(--font);
-    font-size: 14px;
-    color: var(--text);
-    background: var(--ink);
-    padding: 1px var(--s8);
-    border-radius: var(--r-sm);
-    border: 1px solid var(--hairline);
-  }
+  code { font-size: 14px; color: var(--text); background: var(--ink); padding: 1px var(--s8); border-radius: var(--r-sm); border: 1px solid var(--hairline); }
   pre {
-    background: var(--ink);
-    border: 1px solid var(--hairline);
-    border-radius: var(--r-sm);
-    padding: var(--s16);
-    overflow-x: auto;
-    font-size: 14px;
-    line-height: 1.6;
-    margin: var(--s8) 0;
-    font-family: var(--font);
-    color: var(--body);
+    background: var(--ink); border: 1px solid var(--hairline); border-radius: var(--r-sm);
+    padding: var(--s16); overflow-x: auto; font-size: 14px; line-height: 1.6;
+    margin: var(--s8) 0; color: var(--body);
   }
-  pre code {
-    background: none;
-    border: none;
-    padding: 0;
-    font-size: inherit;
-    color: inherit;
-  }
+  pre code { background: none; border: none; padding: 0; font-size: inherit; color: inherit; }
 
   /* --- Step --- */
-  .step {
-    border-left: 3px solid var(--accent);
-    padding: var(--s8) var(--s16);
-    margin: var(--s8) 0;
-    font-weight: 500;
-    color: var(--text);
-  }
+  .step { border-left: 3px solid var(--accent); padding: var(--s8) var(--s16); margin: var(--s8) 0; font-weight: 500; color: var(--text); }
   .step strong { color: var(--accent); }
 
   /* --- Callouts --- */
-  .note {
-    border-left: 3px solid var(--warning);
-    padding: var(--s8) var(--s16);
-    margin: var(--s16) 0;
-    border-radius: 0 var(--r-sm) var(--r-sm) 0;
-    font-size: 14px;
-  }
+  .note { border-left: 3px solid var(--warning); padding: var(--s8) var(--s16); margin: var(--s16) 0; border-radius: 0 var(--r-sm) var(--r-sm) 0; font-size: 14px; }
   .note strong { color: var(--warning); }
-  .tip {
-    border-left: 3px solid var(--success);
-    padding: var(--s8) var(--s16);
-    margin: var(--s16) 0;
-    border-radius: 0 var(--r-sm) var(--r-sm) 0;
-    font-size: 14px;
-  }
+  .tip { border-left: 3px solid var(--success); padding: var(--s8) var(--s16); margin: var(--s16) 0; border-radius: 0 var(--r-sm) var(--r-sm) 0; font-size: 14px; }
   .tip strong { color: var(--success); }
 
-  /* --- Workflow diagram --- */
+  /* --- Workflow --- */
   .workflow {
-    background: var(--ink);
-    border: 1px solid var(--hairline);
-    border-radius: var(--r-sm);
-    padding: var(--s16);
-    margin: var(--s8) 0;
-    font-size: 14px;
-    line-height: 1.8;
-    white-space: pre;
-    font-family: var(--font);
-    color: var(--body);
+    background: var(--ink); border: 1px solid var(--hairline); border-radius: var(--r-sm);
+    padding: var(--s16); margin: var(--s8) 0; font-size: 14px; line-height: 1.8;
+    white-space: pre; color: var(--body);
   }
 
   /* --- Footer --- */
-  .footer {
-    text-align: center;
-    margin-top: var(--s64);
-    padding-top: var(--s32);
-    border-top: 1px solid var(--hairline);
-  }
-  .footer .big {
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--text);
-  }
-  .footer .sub {
-    font-size: 14px;
-    font-weight: 400;
-    color: var(--accent);
-    margin-top: var(--s8);
-  }
+  .footer { text-align: center; margin-top: var(--s64); padding-top: var(--s32); border-top: 1px solid var(--hairline); }
+  .footer .big { font-size: 20px; font-weight: 700; color: var(--text); }
+  .footer .sub { font-size: 14px; font-weight: 400; color: var(--accent); margin-top: var(--s8); }
 
-  /* --- Responsive --- */
   @media (max-width: 600px) {
     body { padding: var(--s24) var(--s16); }
     .hero h1 { font-size: 28px; }
@@ -346,6 +151,16 @@
 </style>
 </head>
 <body>
+
+<!-- ============ Top Nav ============ -->
+<nav class="nav">
+  <a href="#" class="nav-brand">Rocky</a>
+  <div class="nav-tabs">
+    <a href="#" class="nav-tab">Git</a>
+    <a href="#" class="nav-tab active">文档</a>
+    <a href="#" class="nav-tab">下载</a>
+  </div>
+</nav>
 
 <!-- ============ Hero ============ -->
 <div class="hero">
@@ -361,23 +176,10 @@
   <p class="tagline">AI 编程助手 Rocky — 修 bug &middot; 写代码 &middot; 跑测试 &middot; amaze!</p>
 </div>
 
-<!-- ============ Global Controls ============ -->
-<div class="global-controls">
-  <button onclick="toggleAll(true)">[+] expand all</button>
-  <button onclick="toggleAll(false)">[-] collapse all</button>
-</div>
-
 <!-- ==========================================
      1. Rocky 是谁？
      ========================================== -->
-<div class="accordion">
-  <button class="accordion-header" onclick="toggleAccordion(this)">
-    <span>1. Rocky 是谁？</span>
-    <span class="marker">[+]</span>
-  </button>
-  <div class="accordion-body">
-    <div class="accordion-body-inner">
-
+<div class="section">
 <h2>1. Rocky 是谁？</h2>
 <p>Rocky 是一个<strong>交互式 AI 编程智能体 (Agent)</strong>，名字来自《挽救计划》里的外星工程师 Rocky — 热情、好奇、偶尔出错、但总能搞定。</p>
 <p>Rocky 能在你的项目里<strong>读代码、改代码、跑命令</strong>，并实时流式展示推理过程。</p>
@@ -386,22 +188,12 @@
   <li><strong>聊天伙伴</strong> — <code>rockycode chat</code>：在终端里用原生工具调用读写代码</li>
   <li><strong>基准测试工具</strong> — <code>rockycode bench</code>：在 SWE-bench Verified 上打分</li>
 </ul>
-
-    </div>
-  </div>
 </div>
 
 <!-- ==========================================
      2. 环境要求
      ========================================== -->
-<div class="accordion">
-  <button class="accordion-header" onclick="toggleAccordion(this)">
-    <span>2. 环境要求</span>
-    <span class="marker">[+]</span>
-  </button>
-  <div class="accordion-body">
-    <div class="accordion-body-inner">
-
+<div class="section">
 <h2>2. 环境要求</h2>
 <table>
   <tr><th>依赖</th><th>用途</th></tr>
@@ -413,22 +205,12 @@
   <tr><td><strong>Ollama</strong> <span class="tag tag-amber">可选</span></td><td>本地方案：语义记忆搜索 + 梦境</td></tr>
 </table>
 <div class="tip"><strong>提示：</strong>如果不跑 benchmark，只需 Python + uv + API Key，无需 Docker。</div>
-
-    </div>
-  </div>
 </div>
 
 <!-- ==========================================
      3. 安装步骤
      ========================================== -->
-<div class="accordion">
-  <button class="accordion-header" onclick="toggleAccordion(this)">
-    <span>3. 安装步骤</span>
-    <span class="marker">[+]</span>
-  </button>
-  <div class="accordion-body">
-    <div class="accordion-body-inner">
-
+<div class="section">
 <h2>3. 安装步骤</h2>
 
 <div class="step"><strong>步骤 1：</strong>安装 <code>uv</code>（如果还没有）</div>
@@ -451,22 +233,12 @@ uv sync</code></pre>
 <pre><code>uv run rockycode --help</code></pre>
 <p>看到帮助信息即安装成功。</p>
 <div class="note"><strong>注意：</strong>所有命令都通过 <code>uv run</code> 运行，它自动使用项目的虚拟环境。</div>
-
-    </div>
-  </div>
 </div>
 
 <!-- ==========================================
      4. 配置说明
      ========================================== -->
-<div class="accordion">
-  <button class="accordion-header" onclick="toggleAccordion(this)">
-    <span>4. 配置说明</span>
-    <span class="marker">[+]</span>
-  </button>
-  <div class="accordion-body">
-    <div class="accordion-body-inner">
-
+<div class="section">
 <h2>4. 配置说明</h2>
 <p>所有配置通过 <code>.env</code> 文件管理（位于项目根目录）。复制示例文件并编辑：</p>
 <pre><code>cp .env.example .env</code></pre>
@@ -504,22 +276,12 @@ uv run rockycode chat --max-steps 20
 
 # 关闭记忆 / MCP / 技能
 uv run rockycode chat --no-memory --no-mcp --no-skills</code></pre>
-
-    </div>
-  </div>
 </div>
 
 <!-- ==========================================
      5. 开始对话
      ========================================== -->
-<div class="accordion">
-  <button class="accordion-header" onclick="toggleAccordion(this)">
-    <span>5. 开始对话</span>
-    <span class="marker">[+]</span>
-  </button>
-  <div class="accordion-body">
-    <div class="accordion-body-inner">
-
+<div class="section">
 <h2>5. 开始对话</h2>
 <pre><code># 在当前目录下启动 Rocky
 uv run rockycode chat
@@ -532,22 +294,12 @@ uv run rockycode chat --no-memory
 uv run rockycode chat --no-mcp
 uv run rockycode chat --no-skills</code></pre>
 <p>启动后你会看到一个<strong>终端界面 (TUI)</strong>，底部有输入框，上面是对话历史。Rocky 会实时流式展示他的思考和工具调用过程。</p>
-
-    </div>
-  </div>
 </div>
 
 <!-- ==========================================
      6. 对话命令
      ========================================== -->
-<div class="accordion">
-  <button class="accordion-header" onclick="toggleAccordion(this)">
-    <span>6. 对话命令</span>
-    <span class="marker">[+]</span>
-  </button>
-  <div class="accordion-body">
-    <div class="accordion-body-inner">
-
+<div class="section">
 <h2>6. 对话命令 (Slash Commands)</h2>
 <table>
   <tr><th>命令</th><th>功能</th></tr>
@@ -566,22 +318,12 @@ uv run rockycode chat --no-skills</code></pre>
 <pre><code>!ls -la
 !python --version
 !git status</code></pre>
-
-    </div>
-  </div>
 </div>
 
 <!-- ==========================================
      7. 运行基准测试
      ========================================== -->
-<div class="accordion">
-  <button class="accordion-header" onclick="toggleAccordion(this)">
-    <span>7. 运行基准测试 (Bench)</span>
-    <span class="marker">[+]</span>
-  </button>
-  <div class="accordion-body">
-    <div class="accordion-body-inner">
-
+<div class="section">
 <h2>7. 运行基准测试 (Bench)</h2>
 <p>Rocky 内置了对 <strong>SWE-bench Verified</strong> 的评测流程。每次改动提示词或循环逻辑，得到一个<strong>数字</strong>而非感觉。</p>
 
@@ -619,22 +361,12 @@ uv run rockycode bench --runner rockycode --tasks dev10 --limit 1</code></pre>
 </table>
 
 <div class="note"><strong>首次运行较慢：</strong>需要下载 HF 数据集（数百 MB）和 Docker 镜像（每个约 1GB，之后永久缓存）。Apple Silicon 用户需在 Docker Desktop 中开启 "Use Rosetta for x86_64/amd64 emulation"。</div>
-
-    </div>
-  </div>
 </div>
 
 <!-- ==========================================
      8. 记忆系统
      ========================================== -->
-<div class="accordion">
-  <button class="accordion-header" onclick="toggleAccordion(this)">
-    <span>8. 记忆系统 (Memory)</span>
-    <span class="marker">[+]</span>
-  </button>
-  <div class="accordion-body">
-    <div class="accordion-body-inner">
-
+<div class="section">
 <h2>8. 记忆系统 (Memory)</h2>
 <p>Rocky 可以跨会话记忆。记忆以<strong>纯 Markdown 文件</strong>存储在 <code>.rockycode/memory/</code>，文件即真理，可随时编辑。</p>
 
@@ -667,22 +399,12 @@ rockycode memory search &lt;词&gt;   # 搜索
 rockycode memory reindex       # 重建索引
 rockycode memory edit &lt;name&gt;   # 编辑
 rockycode memory rm &lt;name&gt;     # 删除（归档，不真删）</code></pre>
-
-    </div>
-  </div>
 </div>
 
 <!-- ==========================================
      9. 梦境系统
      ========================================== -->
-<div class="accordion">
-  <button class="accordion-header" onclick="toggleAccordion(this)">
-    <span>9. 梦境系统 (Dream)</span>
-    <span class="marker">[+]</span>
-  </button>
-  <div class="accordion-body">
-    <div class="accordion-body-inner">
-
+<div class="section">
 <h2>9. 梦境系统 (Dream)</h2>
 <p><code>rockycode dream</code> 在你休息时整理近期对话：一个本地 Ollama 模型（默认 <code>qwen3.5:4b</code>，零 API 费用）把每条轨迹消化成经历笔记，将新事实和旧记忆对账（矛盾的记忆归档不删除），重写 <code>MEMORY.md</code> 中的 dream 状态摘要，并重建嵌入索引。</p>
 
@@ -691,22 +413,12 @@ uv run rockycode dream --dry-run
 
 # 正式执行
 uv run rockycode dream</code></pre>
-
-    </div>
-  </div>
 </div>
 
 <!-- ==========================================
      10. 提示词实验室
      ========================================== -->
-<div class="accordion">
-  <button class="accordion-header" onclick="toggleAccordion(this)">
-    <span>10. 提示词实验室 (Prompt Lab)</span>
-    <span class="marker">[+]</span>
-  </button>
-  <div class="accordion-body">
-    <div class="accordion-body-inner">
-
+<div class="section">
 <h2>10. 提示词实验室 (Prompt Lab)</h2>
 <p>系统提示词是可替换的文件。复制 <code>prompts/rocky-v1.txt</code>，改一处，跑 dev10 对比分数 / 步数 / token。</p>
 
@@ -716,22 +428,12 @@ uv run rockycode bench --runner rockycode --tasks dev10 --prompt prompts/rocky-v
 
 <p>每次运行都会在轨迹元数据中记录提示词名称 + sha256，预测文件按变体分别存储，互不覆盖。</p>
 <p>值得测试的方向：read-before-write 规则、强制探索 vs 自由决策、简洁 vs 详细工具指导、Rocky 个性 vs 中性风格。</p>
-
-    </div>
-  </div>
 </div>
 
 <!-- ==========================================
      11. 技巧 & MCP
      ========================================== -->
-<div class="accordion">
-  <button class="accordion-header" onclick="toggleAccordion(this)">
-    <span>11. 技巧 (Skills) &amp; MCP</span>
-    <span class="marker">[+]</span>
-  </button>
-  <div class="accordion-body">
-    <div class="accordion-body-inner">
-
+<div class="section">
 <h2>11. 技巧 (Skills) &amp; MCP</h2>
 <p>Rocky 可以直接读取你已有工具的配置，<strong>零迁移成本</strong>：</p>
 
@@ -756,22 +458,12 @@ uv run rockycode bench --runner rockycode --tasks dev10 --prompt prompts/rocky-v
 <p>仅名称 + 描述进入上下文；Rocky 通过 <code>skill</code> 工具按需加载完整说明。</p>
 
 <div class="note"><strong>注意：</strong>基准测试 (bench) 中记忆、MCP、Skills <strong>均不加载</strong> — 公开分数衡量的是 harness 本身，而非你的插件。</div>
-
-    </div>
-  </div>
 </div>
 
 <!-- ==========================================
      12. 工具清单
      ========================================== -->
-<div class="accordion">
-  <button class="accordion-header" onclick="toggleAccordion(this)">
-    <span>12. 工具清单</span>
-    <span class="marker">[+]</span>
-  </button>
-  <div class="accordion-body">
-    <div class="accordion-body-inner">
-
+<div class="section">
 <h2>12. 工具清单</h2>
 
 <h3>搜索工具</h3>
@@ -810,22 +502,12 @@ uv run rockycode bench --runner rockycode --tasks dev10 --prompt prompts/rocky-v
   <tr><th>工具</th><th>说明</th></tr>
   <tr><td><strong>create_artifact</strong></td><td>创建可视化报告 / 图表 / 仪表盘并在浏览器打开</td></tr>
 </table>
-
-    </div>
-  </div>
 </div>
 
 <!-- ==========================================
      13. 工作原则
      ========================================== -->
-<div class="accordion">
-  <button class="accordion-header" onclick="toggleAccordion(this)">
-    <span>13. 工作原则</span>
-    <span class="marker">[+]</span>
-  </button>
-  <div class="accordion-body">
-    <div class="accordion-body-inner">
-
+<div class="section">
 <h2>13. 工作原则</h2>
 <ol>
   <li><strong>先搜索，再阅读，再编辑，最后测试。</strong></li>
@@ -836,22 +518,12 @@ uv run rockycode bench --runner rockycode --tasks dev10 --prompt prompts/rocky-v
   <li>步骤预算有限时，<strong>立即停止探索</strong>，做出最佳编辑，验证一次，结束。</li>
   <li>成功后简短庆祝并停止。</li>
 </ol>
-
-    </div>
-  </div>
 </div>
 
 <!-- ==========================================
      14. 核心工作流
      ========================================== -->
-<div class="accordion">
-  <button class="accordion-header" onclick="toggleAccordion(this)">
-    <span>14. 核心工作流</span>
-    <span class="marker">[+]</span>
-  </button>
-  <div class="accordion-body">
-    <div class="accordion-body-inner">
-
+<div class="section">
 <h2>14. 核心工作流</h2>
 <div class="workflow">
   grep/glob 找到相关代码
@@ -865,22 +537,12 @@ uv run rockycode bench --runner rockycode --tasks dev10 --prompt prompts/rocky-v
   通过了？ —> 庆祝！停止
   失败了？ —> 回到第 1 步继续
 </div>
-
-    </div>
-  </div>
 </div>
 
 <!-- ==========================================
      15. 使用示例
      ========================================== -->
-<div class="accordion">
-  <button class="accordion-header" onclick="toggleAccordion(this)">
-    <span>15. 使用示例</span>
-    <span class="marker">[+]</span>
-  </button>
-  <div class="accordion-body">
-    <div class="accordion-body-inner">
-
+<div class="section">
 <h2>15. 使用示例</h2>
 
 <h3>示例 1：修 bug</h3>
@@ -914,22 +576,12 @@ uv run rockycode bench --runner rockycode --tasks dev10
 
 # 提示词 A/B 实验
 uv run rockycode bench --runner rockycode --tasks dev10 --prompt prompts/my-variant.txt</code></pre>
-
-    </div>
-  </div>
 </div>
 
 <!-- ==========================================
      16. 注意事项
      ========================================== -->
-<div class="accordion">
-  <button class="accordion-header" onclick="toggleAccordion(this)">
-    <span>16. 注意事项</span>
-    <span class="marker">[+]</span>
-  </button>
-  <div class="accordion-body">
-    <div class="accordion-body-inner">
-
+<div class="section">
 <h2>16. 注意事项</h2>
 <ul class="ascii-bullets">
   <li><code>edit_file</code> 的 <strong>old_string 必须在文件中唯一</strong>，否则会失败。需要包含足够的上下文。</li>
@@ -941,22 +593,12 @@ uv run rockycode bench --runner rockycode --tasks dev10 --prompt prompts/my-vari
   <li>基准测试中记忆 / MCP / Skills <strong>均不加载</strong>，确保分数纯净。</li>
   <li>Rocky 说话风格是简单英语（省略冠词、短句），但<strong>写的代码是正式、地道的</strong> — Rocky 风格只属于他本人，不属于代码库。</li>
 </ul>
-
-    </div>
-  </div>
 </div>
 
 <!-- ==========================================
      17. 测试命令参考
      ========================================== -->
-<div class="accordion">
-  <button class="accordion-header" onclick="toggleAccordion(this)">
-    <span>17. 测试命令参考</span>
-    <span class="marker">[+]</span>
-  </button>
-  <div class="accordion-body">
-    <div class="accordion-body-inner">
-
+<div class="section">
 <h2>17. 测试命令参考</h2>
 <table>
   <tr><th>语言 / 工具</th><th>测试命令</th></tr>
@@ -967,9 +609,6 @@ uv run rockycode bench --runner rockycode --tasks dev10 --prompt prompts/my-vari
   <tr><td>Rust</td><td><code>cargo test</code></td></tr>
   <tr><td>rockycode 冒烟测试</td><td><code>uv run python tests/smoke_engine.py</code></td></tr>
 </table>
-
-    </div>
-  </div>
 </div>
 
 <!-- ============ Footer ============ -->
@@ -978,32 +617,5 @@ uv run rockycode bench --runner rockycode --tasks dev10 --prompt prompts/my-vari
   <p class="sub">安装只需 3 步：clone &rarr; uv sync &rarr; 在 .env 填 Key</p>
 </div>
 
-<!-- ============ Scripts ============ -->
-<script>
-function toggleAccordion(header) {
-  var el = header.parentElement;
-  var marker = header.querySelector('.marker');
-  if (el.classList.contains('open')) {
-    el.classList.remove('open');
-    if (marker) marker.textContent = '[+]';
-  } else {
-    el.classList.add('open');
-    if (marker) marker.textContent = '[-]';
-  }
-}
-
-function toggleAll(open) {
-  document.querySelectorAll('.accordion').forEach(function(el) {
-    var marker = el.querySelector('.marker');
-    if (open) {
-      el.classList.add('open');
-      if (marker) marker.textContent = '[-]';
-    } else {
-      el.classList.remove('open');
-      if (marker) marker.textContent = '[+]';
-    }
-  });
-}
-</script>
 </body>
 </html>
