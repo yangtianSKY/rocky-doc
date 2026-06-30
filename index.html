@@ -179,6 +179,20 @@
   }
   .stat-card .label { font-size: 14px; color: var(--muted); }
 
+  /* --- Docs CTA Block --- */
+  .docs-block {
+    display: block; text-align: center;
+    margin-top: var(--s24);
+    font-family: var(--font); font-size: 16px; font-weight: 500;
+    color: #fff; text-decoration: none;
+    background: var(--accent);
+    padding: var(--s16) var(--s32);
+    border-radius: var(--r-sm);
+    border: 1px solid var(--accent);
+    transition: background 0.15s;
+  }
+  .docs-block:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+
   /* --- FAQ --- */
   .faq-item {
     border-top: 1px solid var(--hairline);
@@ -306,9 +320,7 @@
     <li><strong>MCP 支持</strong> — 自动发现 MCP 服务，扩展工具箱</li>
     <li><strong>技能系统</strong> — 按需加载自定义技能，按需使用</li>
   </ul>
-  <p style="margin-top:var(--s24)">
-    <a href="#" style="font-size:16px;font-weight:500;">阅读文档 &rarr;</a>
-  </p>
+  <a href="#" class="docs-block">阅读文档</a>
 </div>
 
 <!-- ============ Stats ============ -->
