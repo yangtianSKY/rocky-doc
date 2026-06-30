@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rocky 使用说明文档</title>
+<style>
+  /* ============================================
+     Rocky Doc — OpenCode Design System
+     Terminal-native · Monospace-first · Flat.
+     ============================================ */
+
+  /* --- Design Tokens --- */
+  :root {
+    /* Surfaces */
+    --ink:        #201d1d;
+    --canvas:     #302c2c;
+    --elevated:   #3a3535;
+
+    /* Text */
+    --text:       #fdfcfc;
+    --body:       #d6d3d3;
+    --muted:      #9a9898;
+    --stone:      #6e6e73;
+
+    /* Semantic — Purple primary */
+    --accent:       #7c3aed;
+    --accent-hover: #a78bfa;
+    --accent-soft:  rgba(124,58,237,0.15);
+    --success:      #30d158;
+    --warning:      #ff9f0a;
+    --danger:       #ff3b30;
+
+    /* Borders */
+    --hairline:        rgba(253,252,252,0.10);
+    --hairline-strong: rgba(253,252,252,0.16);
+
+    /* Spacing (8px grid) */
+    --s8:   8px;
+    --s16:  16px;
+    --s24:  24px;
+    --s32:  32px;
+    --s48:  48px;
+    --s64:  64px;
+
+    /* Radius */
+    --r-none: 0px;
+    --r-sm:   4px;
+    --r-pill: 9999px;
+
+    /* Typography */
+    --font: "Berkeley Mono", "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  }
+
+  /* --- Reset --- */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font);
+    background: var(--ink);
+    color: var(--body);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+    max-width: 880px;
+    margin: 0 auto;
+    padding: var(--s48) var(--s24) var(--s64);
+  }
+
+  /* --- Top Nav --- */
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--s16) 0;
+    margin-bottom: var(--s48);
+    border-bottom: 1px solid var(--hairline);
+  }
+  .nav-brand {
+    font-family: var(--font);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .nav-brand:hover { color: var(--accent-hover); }
+  .nav-tabs {
+    display: flex;
+    gap: var(--s8);
+  }
+  .nav-tab {
+    font-family: var(--font);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--muted);
+    text-decoration: none;
+    padding: var(--s8) var(--s16);
+    border: 1px solid var(--hairline);
+    border-radius: var(--r-sm);
+    transition: color 0.15s, border-color 0.15s, background 0.15s;
+  }
+  .nav-tab:hover {
+    color: var(--accent-hover);
+    border-color: var(--accent);
+  }
+  .nav-tab.active {
+    color: var(--accent);
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+
+  /* --- Hero (below nav) --- */
+  .hero {
+    text-align: center;
+    padding: var(--s48) 0 var(--s32);
+    border-bottom: 1px solid var(--hairline);
+    margin-bottom: var(--s48);
+  }
+  .hero .wordmark {
+    font-size: 12px;
+    line-height: 1.2;
+    color: var(--accent);
+    margin-bottom: var(--s16);
+    white-space: pre;
+  }
+  .hero h1 {
+    font-family: var(--font);
+    font-size: 38px;
+    font-weight: 700;
+    line-height: 1.5;
+    color: var(--text);
+    margin-bottom: var(--s8);
+    letter-spacing: -0.02em;
+  }
+  .hero .tagline {
+    font-size: 16px;
+    color: var(--muted);
+  }
+
+  /* --- Global Controls --- */
+  .global-controls {
+    text-align: center;
+    margin-bottom: var(--s32);
+  }
+  .global-controls button {
+    font-family: var(--font);
+    font-size: 14px;
+    font-weight: 500;
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: var(--s8) var(--s16);
+    border-radius: var(--r-sm);
+    cursor: pointer;
+    margin: 0 var(--s8);
+    transition: background 0.15s, color 0.15s;
+  }
+  .global-controls button:hover {
+    background: var(--accent);
+    color: var(--text);
+  }
+
+  /* --- Accordion --- */
+  .accordion {
+    margin-bottom: var(--s8);
+    border: 1px solid var(--hairline);
+    border-radius: var(--r-sm);
+    background: var(--canvas);
+  }
+  .accordion-header {
+    font-family: var(--font);
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+    padding: var(--s16);
+    width: 100%;
+    text-align: left;
+    border: none;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.5;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.15s;
+    border-radius: var(--r-sm);
+  }
+  .accordion-header:hover { background: var(--elevated); }
+  .accordion-header .marker {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--accent);
+    flex-shrink: 0;
+    margin-left: var(--s16);
+  }
+  .accordion-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+  }
+  .accordion.open .accordion-body { max-height: 20000px; }
+  .accordion-body-inner {
+    padding: 0 var(--s16) var(--s24) var(--s16);
+    border-top: 1px solid var(--hairline);
+  }
+
+  /* --- Typography --- */
+  h2 {
+    font-family: var(--font);
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.5;
+    color: var(--text);
+    margin: var(--s24) 0 var(--s8);
+  }
+  h3 {
+    font-family: var(--font);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--text);
+    margin: var(--s16) 0 var(--s8);
+  }
+  p { margin: var(--s8) 0; }
+  strong { color: var(--text); font-weight: 500; }
+  em { font-style: normal; color: var(--text); }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* --- Lists --- */
+  ul, ol { padding-left: var(--s24); margin: var(--s8) 0; }
+  li { margin: var(--s8) 0; }
+
+  /* ASCII bullet lists */
+  .ascii-bullets { list-style: none; padding-left: 0; }
+  .ascii-bullets li::before {
+    content: "[+]";
+    color: var(--accent);
+    margin-right: var(--s8);
+    font-size: 14px;
+  }
+  .ascii-bullets li.done::before {
+    content: "[x]";
+    color: var(--success);
+    margin-right: var(--s8);
+  }
+
+  /* --- Tables --- */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: var(--s16) 0;
+    font-size: 14px;
+  }
+  th {
+    text-align: left;
+    padding: var(--s8) var(--s16);
+    border-bottom: 1px solid var(--hairline-strong);
+    font-weight: 500;
+    color: var(--text);
+    white-space: nowrap;
+    font-family: var(--font);
+  }
+  td {
+    text-align: left;
+    padding: var(--s8) var(--s16);
+    border-bottom: 1px solid var(--hairline);
+    vertical-align: top;
+    font-family: var(--font);
+  }
+  tr:last-child td { border-bottom: none; }
+
+  /* --- Tags --- */
+  .tag {
+    display: inline-block;
+    padding: 2px var(--s8);
+    border-radius: var(--r-pill);
+    font-size: 12px;
+    font-weight: 500;
+    font-family: var(--font);
+    line-height: 1.6;
+    border: 1px solid;
+  }
+  .tag-purple { color: #a78bfa; border-color: rgba(167,139,250,0.35); }
+  .tag-amber  { color: var(--warning); border-color: rgba(255,159,10,0.35); }
+  .tag-red    { color: var(--danger);  border-color: rgba(255,59,48,0.35); }
+  .tag-green  { color: var(--success); border-color: rgba(48,209,88,0.35); }
+
+  /* --- Code --- */
+  code {
+    font-family: var(--font);
+    font-size: 14px;
+    color: var(--text);
+    background: var(--ink);
+    padding: 1px var(--s8);
+    border-radius: var(--r-sm);
+    border: 1px solid var(--hairline);
+  }
+  pre {
+    background: var(--ink);
+    border: 1px solid var(--hairline);
+    border-radius: var(--r-sm);
+    padding: var(--s16);
+    overflow-x: auto;
+    font-size: 14px;
+    line-height: 1.6;
+    margin: var(--s8) 0;
+    font-family: var(--font);
+    color: var(--body);
+  }
+  pre code {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: inherit;
+    color: inherit;
+  }
+
+  /* --- Step --- */
+  .step {
+    border-left: 3px solid var(--accent);
+    padding: var(--s8) var(--s16);
+    margin: var(--s8) 0;
+    font-weight: 500;
+    color: var(--text);
+  }
+  .step strong { color: var(--accent); }
+
+  /* --- Callouts --- */
+  .note {
+    border-left: 3px solid var(--warning);
+    padding: var(--s8) var(--s16);
+    margin: var(--s16) 0;
+    border-radius: 0 var(--r-sm) var(--r-sm) 0;
+    font-size: 14px;
+  }
+  .note strong { color: var(--warning); }
+  .tip {
+    border-left: 3px solid var(--success);
+    padding: var(--s8) var(--s16);
+    margin: var(--s16) 0;
+    border-radius: 0 var(--r-sm) var(--r-sm) 0;
+    font-size: 14px;
+  }
+  .tip strong { color: var(--success); }
+
+  /* --- Workflow diagram --- */
+  .workflow {
+    background: var(--ink);
+    border: 1px solid var(--hairline);
+    border-radius: var(--r-sm);
+    padding: var(--s16);
+    margin: var(--s8) 0;
+    font-size: 14px;
+    line-height: 1.8;
+    white-space: pre;
+    font-family: var(--font);
+    color: var(--body);
+  }
+
+  /* --- Footer --- */
+  .footer {
+    text-align: center;
+    margin-top: var(--s64);
+    padding-top: var(--s32);
+    border-top: 1px solid var(--hairline);
+  }
+  .footer .big {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .footer .sub {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--accent);
+    margin-top: var(--s8);
+  }
+
+  /* --- Responsive --- */
+  @media (max-width: 600px) {
+    body { padding: var(--s24) var(--s16); }
+    .hero h1 { font-size: 28px; }
+    .hero { padding: var(--s32) 0 var(--s24); }
+    table { font-size: 13px; }
+    th, td { padding: var(--s8); }
+    pre { font-size: 13px; padding: var(--s8); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ Top Nav ============ -->
+<nav class="nav">
+  <a href="#" class="nav-brand">Rocky</a>
+  <div class="nav-tabs">
+    <a href="#" class="nav-tab">Git</a>
+    <a href="#" class="nav-tab active">文档</a>
+    <a href="#" class="nav-tab">下载</a>
+  </div>
+</nav>
+
+<!-- ============ Hero ============ -->
+<div class="hero">
+  <div class="wordmark">
+  ██████╗   ██████╗   ██████╗ ██╗  ██╗██╗   ██╗
+  ██╔══██╗ ██╔═══██╗ ██╔════╝██║ ██╔╝╚██╗ ██╔╝
+  ██████╔╝ ██║   ██║ ██║     █████╔╝  ╚████╔╝
+  ██╔══██╗ ██║   ██║ ██║     ██╔═██╗   ╚██╔╝
+  ██║  ██║ ╚██████╔╝ ╚██████╗██║  ██╗   ██║
+  ╚═╝  ╚═╝  ╚═════╝   ╚═════╝╚═╝  ╚═╝   ╚═╝
+  </div>
+  <h1>Rocky 使用说明文档</h1>
+  <p class="tagline">AI 编程助手 Rocky — 修 bug &middot; 写代码 &middot; 跑测试 &middot; amaze!</p>
+</div>
+
+<!-- ============ Global Controls ============ -->
+<div class="global-controls">
+  <button onclick="toggleAll(true)">[+] expand all</button>
+  <button onclick="toggleAll(false)">[-] collapse all</button>
+</div>
+
+<!-- ==========================================
+     1. Rocky 是谁？
+     ========================================== -->
+<div class="accordion">
+  <button class="accordion-header" onclick="toggleAccordion(this)">
+    <span>1. Rocky 是谁？</span>
+    <span class="marker">[+]</span>
+  </button>
+  <div class="accordion-body">
+    <div class="accordion-body-inner">
+
+<h2>1. Rocky 是谁？</h2>
+<p>Rocky 是一个<strong>交互式 AI 编程智能体 (Agent)</strong>，名字来自《挽救计划》里的外星工程师 Rocky — 热情、好奇、偶尔出错、但总能搞定。</p>
+<p>Rocky 能在你的项目里<strong>读代码、改代码、跑命令</strong>，并实时流式展示推理过程。</p>
+<p>事情顺利时说 <span class="tag tag-green">amaze!</span>，困惑时说 <span class="tag tag-amber">i no know! i learn!</span></p>
+<ul class="ascii-bullets">
+  <li><strong>聊天伙伴</strong> — <code>rockycode chat</code>：在终端里用原生工具调用读写代码</li>
+  <li><strong>基准测试工具</strong> — <code>rockycode bench</code>：在 SWE-bench Verified 上打分</li>
+</ul>
+
+    </div>
+  </div>
+</div>
+
+<!-- ==========================================
+     2. 环境要求
+     ========================================== -->
+<div class="accordion">
+  <button class="accordion-header" onclick="toggleAccordion(this)">
+    <span>2. 环境要求</span>
+    <span class="marker">[+]</span>
+  </button>
+  <div class="accordion-body">
+    <div class="accordion-body-inner">
+
+<h2>2. 环境要求</h2>
+<table>
+  <tr><th>依赖</th><th>用途</th></tr>
+  <tr><td><strong>Python 3.11+</strong></td><td>运行核心引擎</td></tr>
+  <tr><td><strong>uv</strong></td><td>Python 包管理（比 pip 快很多）</td></tr>
+  <tr><td><strong>OpenAI 兼容 API Key</strong></td><td>驱动模型（默认目标：DeepSeek）</td></tr>
+  <tr><td><strong>Git</strong></td><td>克隆仓库</td></tr>
+  <tr><td><strong>Docker Desktop</strong></td><td>仅跑基准测试需要；纯聊天不需要</td></tr>
+  <tr><td><strong>Ollama</strong> <span class="tag tag-amber">可选</span></td><td>本地方案：语义记忆搜索 + 梦境</td></tr>
+</table>
+<div class="tip"><strong>提示：</strong>如果不跑 benchmark，只需 Python + uv + API Key，无需 Docker。</div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ==========================================
+     3. 安装步骤
+     ========================================== -->
+<div class="accordion">
+  <button class="accordion-header" onclick="toggleAccordion(this)">
+    <span>3. 安装步骤</span>
+    <span class="marker">[+]</span>
+  </button>
+  <div class="accordion-body">
+    <div class="accordion-body-inner">
+
+<h2>3. 安装步骤</h2>
+
+<div class="step"><strong>步骤 1：</strong>安装 <code>uv</code>（如果还没有）</div>
+<pre><code># macOS / Linux
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Windows
+powershell -c "irm https://astral.sh/uv/install.ps1 | iex"</code></pre>
+
+<div class="step"><strong>步骤 2：</strong>克隆仓库并安装依赖</div>
+<pre><code>git clone &lt;仓库地址&gt; rockycode && cd rockycode
+uv sync</code></pre>
+<p><code>uv sync</code> 会创建虚拟环境并安装所有依赖：openai, textual, rich, mcp, sqlite-vec 等。</p>
+
+<div class="step"><strong>步骤 3：</strong>配置 API Key</div>
+<pre><code>cp .env.example .env</code></pre>
+<p>编辑 <code>.env</code> 文件，填入你的 API Key（详见配置说明）。</p>
+
+<div class="step"><strong>步骤 4：</strong>验证安装</div>
+<pre><code>uv run rockycode --help</code></pre>
+<p>看到帮助信息即安装成功。</p>
+<div class="note"><strong>注意：</strong>所有命令都通过 <code>uv run</code> 运行，它自动使用项目的虚拟环境。</div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ==========================================
+     4. 配置说明
+     ========================================== -->
+<div class="accordion">
+  <button class="accordion-header" onclick="toggleAccordion(this)">
+    <span>4. 配置说明</span>
+    <span class="marker">[+]</span>
+  </button>
+  <div class="accordion-body">
+    <div class="accordion-body-inner">
+
+<h2>4. 配置说明</h2>
+<p>所有配置通过 <code>.env</code> 文件管理（位于项目根目录）。复制示例文件并编辑：</p>
+<pre><code>cp .env.example .env</code></pre>
+
+<h3>必备配置</h3>
+<table>
+  <tr><th>变量</th><th>说明</th><th>默认值</th></tr>
+  <tr><td><code>OPENAI_API_KEY</code></td><td>你的 API Key</td><td><code>sk-replace-me</code></td></tr>
+  <tr><td><code>OPENAI_BASE_URL</code></td><td>API 端点地址</td><td><code>https://api.deepseek.com/v1</code></td></tr>
+</table>
+
+<h3>模型配置</h3>
+<table>
+  <tr><th>变量</th><th>说明</th><th>默认值</th></tr>
+  <tr><td><code>ROCKYCODE_MODEL</code></td><td>使用的模型 ID</td><td><code>deepseek-v4-pro</code></td></tr>
+  <tr><td><code>ROCKYCODE_THINKING</code></td><td>启用思维链 (CoT)</td><td><code>true</code></td></tr>
+  <tr><td><code>ROCKYCODE_REASONING_EFFORT</code></td><td>推理深度：<code>high</code> 或 <code>max</code></td><td><code>max</code></td></tr>
+  <tr><td><code>ROCKYCODE_MAX_TOKENS</code></td><td>响应 token 上限</td><td><code>16384</code></td></tr>
+</table>
+
+<div class="tip"><strong>最佳实践：</strong>Pro Max 效果 = <code>deepseek-v4-pro</code> + <code>THINKING=true</code> + <code>REASONING_EFFORT=max</code></div>
+
+<h3>命令行覆盖</h3>
+<pre><code># 临时切换模型
+uv run rockycode chat --model deepseek-v4-flash
+
+# 关闭思考模式以加快速度
+uv run rockycode chat --no-thinking
+
+# 调整推理力度
+uv run rockycode chat --reasoning-effort high
+
+# 限制最大步数
+uv run rockycode chat --max-steps 20
+
+# 关闭记忆 / MCP / 技能
+uv run rockycode chat --no-memory --no-mcp --no-skills</code></pre>
+
+    </div>
+  </div>
+</div>
+
+<!-- ==========================================
+     5. 开始对话
+     ========================================== -->
+<div class="accordion">
+  <button class="accordion-header" onclick="toggleAccordion(this)">
+    <span>5. 开始对话</span>
+    <span class="marker">[+]</span>
+  </button>
+  <div class="accordion-body">
+    <div class="accordion-body-inner">
+
+<h2>5. 开始对话</h2>
+<pre><code># 在当前目录下启动 Rocky
+uv run rockycode chat
+
+# 在指定项目中启动
+uv run rockycode chat -C ~/code/myproject
+
+# 关闭可选功能
+uv run rockycode chat --no-memory
+uv run rockycode chat --no-mcp
+uv run rockycode chat --no-skills</code></pre>
+<p>启动后你会看到一个<strong>终端界面 (TUI)</strong>，底部有输入框，上面是对话历史。Rocky 会实时流式展示他的思考和工具调用过程。</p>
+
+    </div>
+  </div>
+</div>
+
+<!-- ==========================================
+     6. 对话命令
+     ========================================== -->
+<div class="accordion">
+  <button class="accordion-header" onclick="toggleAccordion(this)">
+    <span>6. 对话命令</span>
+    <span class="marker">[+]</span>
+  </button>
+  <div class="accordion-body">
+    <div class="accordion-body-inner">
+
+<h2>6. 对话命令 (Slash Commands)</h2>
+<table>
+  <tr><th>命令</th><th>功能</th></tr>
+  <tr><td><code>/help</code></td><td>显示帮助</td></tr>
+  <tr><td><code>/prompt</code></td><td>查看当前系统提示词</td></tr>
+  <tr><td><code>/mcp</code></td><td>查看已连接的 MCP 服务</td></tr>
+  <tr><td><code>/skills</code></td><td>查看已安装的技能</td></tr>
+  <tr><td><code>/memory</code></td><td>查看 Rocky 记得什么</td></tr>
+  <tr><td><code>/remember &lt;内容&gt;</code></td><td>保存一条记忆</td></tr>
+  <tr><td><code>/clear</code></td><td>清空对话</td></tr>
+  <tr><td><code>/exit</code></td><td>退出</td></tr>
+</table>
+
+<h3>Shell 集成</h3>
+<p>以 <code>!</code> 开头的一行会直接在 shell 中执行，输出显示在对话中并进入 Rocky 的上下文：</p>
+<pre><code>!ls -la
+!python --version
+!git status</code></pre>
+
+    </div>
+  </div>
+</div>
+
+<!-- ==========================================
+     7. 运行基准测试
+     ========================================== -->
+<div class="accordion">
+  <button class="accordion-header" onclick="toggleAccordion(this)">
+    <span>7. 运行基准测试 (Bench)</span>
+    <span class="marker">[+]</span>
+  </button>
+  <div class="accordion-body">
+    <div class="accordion-body-inner">
+
+<h2>7. 运行基准测试 (Bench)</h2>
+<p>Rocky 内置了对 <strong>SWE-bench Verified</strong> 的评测流程。每次改动提示词或循环逻辑，得到一个<strong>数字</strong>而非感觉。</p>
+
+<h3>三种分数</h3>
+<table>
+  <tr><th>模式</th><th>命令</th><th>衡量什么</th></tr>
+  <tr><td><span class="tag tag-purple">Raw 单次</span></td><td><code>--runner raw</code></td><td>纯模型能力：问题直接出 diff，无工具</td></tr>
+  <tr><td><span class="tag tag-amber">Rocky 引擎</span></td><td><code>--runner rockycode</code></td><td>Agent 循环带来的额外提升</td></tr>
+  <tr><td><span class="tag tag-red">前沿参考</span></td><td>—</td><td>DeepSeek V4 Pro Max: 80.6%（参考目标）</td></tr>
+</table>
+
+<h3>快速开始</h3>
+<pre><code># Raw 单次基线
+uv run rockycode bench --runner raw --tasks dev10
+
+# 完整 Rocky 引擎
+uv run rockycode bench --runner rockycode --tasks dev10
+
+# 快速冒烟测试（只跑 1 个任务）
+uv run rockycode bench --runner rockycode --tasks dev10 --limit 1</code></pre>
+
+<h3>常用参数</h3>
+<table>
+  <tr><th>参数</th><th>说明</th></tr>
+  <tr><td><code>--model</code></td><td>指定模型</td></tr>
+  <tr><td><code>--limit N</code></td><td>限制任务数</td></tr>
+  <tr><td><code>--skip-score</code></td><td>跳过评分（仅收集预测）</td></tr>
+  <tr><td><code>--run-id</code></td><td>自定义运行 ID</td></tr>
+  <tr><td><code>--thinking / --no-thinking</code></td><td>开关思维链</td></tr>
+  <tr><td><code>--reasoning-effort high|max</code></td><td>推理深度</td></tr>
+  <tr><td><code>--max-tokens N</code></td><td>token 上限</td></tr>
+  <tr><td><code>--max-steps N</code></td><td>最大步数（默认 30）</td></tr>
+  <tr><td><code>--context-window N</code></td><td>上下文窗口（触发压缩的点）</td></tr>
+  <tr><td><code>--prompt &lt;文件&gt;</code></td><td>A/B 测试：替换系统提示词</td></tr>
+</table>
+
+<div class="note"><strong>首次运行较慢：</strong>需要下载 HF 数据集（数百 MB）和 Docker 镜像（每个约 1GB，之后永久缓存）。Apple Silicon 用户需在 Docker Desktop 中开启 "Use Rosetta for x86_64/amd64 emulation"。</div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ==========================================
+     8. 记忆系统
+     ========================================== -->
+<div class="accordion">
+  <button class="accordion-header" onclick="toggleAccordion(this)">
+    <span>8. 记忆系统 (Memory)</span>
+    <span class="marker">[+]</span>
+  </button>
+  <div class="accordion-body">
+    <div class="accordion-body-inner">
+
+<h2>8. 记忆系统 (Memory)</h2>
+<p>Rocky 可以跨会话记忆。记忆以<strong>纯 Markdown 文件</strong>存储在 <code>.rockycode/memory/</code>，文件即真理，可随时编辑。</p>
+
+<table>
+  <tr><th>类型</th><th>说明</th></tr>
+  <tr><td><span class="tag tag-purple">fact</span></td><td>项目知识（如架构、配置方式）</td></tr>
+  <tr><td><span class="tag tag-amber">skill</span></td><td>验证过的操作技巧（如某个命令的正确用法）</td></tr>
+  <tr><td><span class="tag tag-red">episode</span></td><td>发生过的事情记录</td></tr>
+  <tr><td><code>feedback</code></td><td>用户指导反馈</td></tr>
+</table>
+
+<h3>记忆加载策略</h3>
+<ul class="ascii-bullets">
+  <li class="done"><code>MEMORY.md</code> 和用户反馈 — 每次会话自动加载进上下文</li>
+  <li>其余记忆 — 仅一行索引进入上下文，按需通过 <code>recall_memory</code> 工具取回</li>
+</ul>
+
+<h3>语义搜索</h3>
+<p>按含义查找记忆，底层跑本地 Ollama 向量：</p>
+<ul class="ascii-bullets">
+  <li>英文: <code>nomic-embed-text</code></li>
+  <li>中文 / 跨语言: <code>qwen3-embedding:0.6b</code></li>
+</ul>
+<p>底层是 <strong>sqlite-vec + FTS5</strong> 索引，自动重建。没有 Ollama 也能用，会自动降级为关键词搜索。</p>
+
+<pre><code># 命令行管理记忆
+rockycode memory list          # 列出所有记忆
+rockycode memory show &lt;name&gt;   # 查看一条
+rockycode memory search &lt;词&gt;   # 搜索
+rockycode memory reindex       # 重建索引
+rockycode memory edit &lt;name&gt;   # 编辑
+rockycode memory rm &lt;name&gt;     # 删除（归档，不真删）</code></pre>
+
+    </div>
+  </div>
+</div>
+
+<!-- ==========================================
+     9. 梦境系统
+     ========================================== -->
+<div class="accordion">
+  <button class="accordion-header" onclick="toggleAccordion(this)">
+    <span>9. 梦境系统 (Dream)</span>
+    <span class="marker">[+]</span>
+  </button>
+  <div class="accordion-body">
+    <div class="accordion-body-inner">
+
+<h2>9. 梦境系统 (Dream)</h2>
+<p><code>rockycode dream</code> 在你休息时整理近期对话：一个本地 Ollama 模型（默认 <code>qwen3.5:4b</code>，零 API 费用）把每条轨迹消化成经历笔记，将新事实和旧记忆对账（矛盾的记忆归档不删除），重写 <code>MEMORY.md</code> 中的 dream 状态摘要，并重建嵌入索引。</p>
+
+<pre><code># 预览决策（不真正执行）
+uv run rockycode dream --dry-run
+
+# 正式执行
+uv run rockycode dream</code></pre>
+
+    </div>
+  </div>
+</div>
+
+<!-- ==========================================
+     10. 提示词实验室
+     ========================================== -->
+<div class="accordion">
+  <button class="accordion-header" onclick="toggleAccordion(this)">
+    <span>10. 提示词实验室 (Prompt Lab)</span>
+    <span class="marker">[+]</span>
+  </button>
+  <div class="accordion-body">
+    <div class="accordion-body-inner">
+
+<h2>10. 提示词实验室 (Prompt Lab)</h2>
+<p>系统提示词是可替换的文件。复制 <code>prompts/rocky-v1.txt</code>，改一处，跑 dev10 对比分数 / 步数 / token。</p>
+
+<pre><code>cp prompts/rocky-v1.txt prompts/rocky-v2-strict-tests.txt
+# 编辑新文件...
+uv run rockycode bench --runner rockycode --tasks dev10 --prompt prompts/rocky-v2-strict-tests.txt</code></pre>
+
+<p>每次运行都会在轨迹元数据中记录提示词名称 + sha256，预测文件按变体分别存储，互不覆盖。</p>
+<p>值得测试的方向：read-before-write 规则、强制探索 vs 自由决策、简洁 vs 详细工具指导、Rocky 个性 vs 中性风格。</p>
+
+    </div>
+  </div>
+</div>
+
+<!-- ==========================================
+     11. 技巧 & MCP
+     ========================================== -->
+<div class="accordion">
+  <button class="accordion-header" onclick="toggleAccordion(this)">
+    <span>11. 技巧 (Skills) &amp; MCP</span>
+    <span class="marker">[+]</span>
+  </button>
+  <div class="accordion-body">
+    <div class="accordion-body-inner">
+
+<h2>11. 技巧 (Skills) &amp; MCP</h2>
+<p>Rocky 可以直接读取你已有工具的配置，<strong>零迁移成本</strong>：</p>
+
+<h3>MCP 服务</h3>
+<p>从以下位置自动发现：</p>
+<ul class="ascii-bullets">
+  <li>项目的 <code>.mcp.json</code></li>
+  <li>Claude Code 用户配置</li>
+  <li>Claude Desktop 配置</li>
+  <li>Codex 的 <code>~/.codex/config.toml</code>（仅 stdio）</li>
+</ul>
+<p>同名服务以先定义的为准（项目优先）。工具以 <code>mcp__&lt;服务&gt;__&lt;工具&gt;</code> 的形式加入 Rocky 的工具箱。</p>
+
+<h3>技能 Skills</h3>
+<p>从以下位置自动发现：</p>
+<ul class="ascii-bullets">
+  <li><code>.claude/skills/</code></li>
+  <li><code>.rockycode/skills/</code></li>
+  <li><code>~/.claude/skills/</code>（SKILL.md 文件夹）</li>
+  <li><code>~/.codex/prompts/</code>（*.md）</li>
+</ul>
+<p>仅名称 + 描述进入上下文；Rocky 通过 <code>skill</code> 工具按需加载完整说明。</p>
+
+<div class="note"><strong>注意：</strong>基准测试 (bench) 中记忆、MCP、Skills <strong>均不加载</strong> — 公开分数衡量的是 harness 本身，而非你的插件。</div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ==========================================
+     12. 工具清单
+     ========================================== -->
+<div class="accordion">
+  <button class="accordion-header" onclick="toggleAccordion(this)">
+    <span>12. 工具清单</span>
+    <span class="marker">[+]</span>
+  </button>
+  <div class="accordion-body">
+    <div class="accordion-body-inner">
+
+<h2>12. 工具清单</h2>
+
+<h3>搜索工具</h3>
+<table>
+  <tr><th>工具</th><th>说明</th></tr>
+  <tr><td><strong>grep</strong></td><td>用正则表达式搜索文件内容，跳过二进制和垃圾目录</td></tr>
+  <tr><td><strong>glob</strong></td><td>按路径模式列出文件，支持 <code>**</code> 递归</td></tr>
+  <tr><td><strong>web_search</strong></td><td>搜索网络（服务端在 DeepSeek 上执行，穿透网络限制）</td></tr>
+  <tr><td><strong>research</strong></td><td>并行搜索多个独立问题（最多 8 个）</td></tr>
+  <tr><td><strong>web_fetch</strong></td><td>抓取 URL 文本内容（客户端执行）</td></tr>
+</table>
+
+<h3>读写工具</h3>
+<table>
+  <tr><th>工具</th><th>说明</th></tr>
+  <tr><td><strong>read_file</strong></td><td>读取文件（带行号）或列出目录</td></tr>
+  <tr><td><strong>edit_file</strong></td><td>精确替换旧字符串为新字符串（old_string 必须唯一）</td></tr>
+  <tr><td><strong>write_file</strong></td><td>创建或覆盖文件</td></tr>
+</table>
+
+<h3>运行工具</h3>
+<table>
+  <tr><th>工具</th><th>说明</th></tr>
+  <tr><td><strong>bash</strong></td><td>在仓库目录中运行 shell 命令</td></tr>
+</table>
+
+<h3>记忆工具</h3>
+<table>
+  <tr><th>工具</th><th>说明</th></tr>
+  <tr><td><strong>remember</strong></td><td>保存记忆：事实、技巧、经历、反馈</td></tr>
+  <tr><td><strong>recall_memory</strong></td><td>按名称或含义查找记忆</td></tr>
+</table>
+
+<h3>可视化工具</h3>
+<table>
+  <tr><th>工具</th><th>说明</th></tr>
+  <tr><td><strong>create_artifact</strong></td><td>创建可视化报告 / 图表 / 仪表盘并在浏览器打开</td></tr>
+</table>
+
+    </div>
+  </div>
+</div>
+
+<!-- ==========================================
+     13. 工作原则
+     ========================================== -->
+<div class="accordion">
+  <button class="accordion-header" onclick="toggleAccordion(this)">
+    <span>13. 工作原则</span>
+    <span class="marker">[+]</span>
+  </button>
+  <div class="accordion-body">
+    <div class="accordion-body-inner">
+
+<h2>13. 工作原则</h2>
+<ol>
+  <li><strong>先搜索，再阅读，再编辑，最后测试。</strong></li>
+  <li><strong>读前先写？不行。</strong> Always read before write.</li>
+  <li>用 <strong>grep/glob</strong> 找代码；用 <strong>bash</strong> 跑测试。</li>
+  <li><strong>每次改动后都要跑测试。</strong></li>
+  <li>探索是为了理解，然后<strong>提交</strong>。交付的修复胜过完美的地图。</li>
+  <li>步骤预算有限时，<strong>立即停止探索</strong>，做出最佳编辑，验证一次，结束。</li>
+  <li>成功后简短庆祝并停止。</li>
+</ol>
+
+    </div>
+  </div>
+</div>
+
+<!-- ==========================================
+     14. 核心工作流
+     ========================================== -->
+<div class="accordion">
+  <button class="accordion-header" onclick="toggleAccordion(this)">
+    <span>14. 核心工作流</span>
+    <span class="marker">[+]</span>
+  </button>
+  <div class="accordion-body">
+    <div class="accordion-body-inner">
+
+<h2>14. 核心工作流</h2>
+<div class="workflow">
+  grep/glob 找到相关代码
+       |
+  read_file 理解代码上下文
+       |
+  edit_file 做出修改
+       |
+  bash 运行测试验证
+       |
+  通过了？ —> 庆祝！停止
+  失败了？ —> 回到第 1 步继续
+</div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ==========================================
+     15. 使用示例
+     ========================================== -->
+<div class="accordion">
+  <button class="accordion-header" onclick="toggleAccordion(this)">
+    <span>15. 使用示例</span>
+    <span class="marker">[+]</span>
+  </button>
+  <div class="accordion-body">
+    <div class="accordion-body-inner">
+
+<h2>15. 使用示例</h2>
+
+<h3>示例 1：修 bug</h3>
+<pre><code>用户: "fix the null pointer in login"
+Rocky:
+  1. grep "NullPointer" -> 找到 LoginService.java
+  2. read_file LoginService.java -> 理解上下文
+  3. edit_file LoginService.java -> 添加 null 检查
+  4. bash "./gradlew test" -> 测试通过！
+  5. "amaze! bug fixed!"</code></pre>
+
+<h3>示例 2：搜代码</h3>
+<pre><code>用户: "find where auth logic is"
+Rocky:
+  1. grep "authenticate" --include="*.py"
+  2. 返回匹配文件和行号</code></pre>
+
+<h3>示例 3：创建报告</h3>
+<pre><code>用户: "show me a diagram of the architecture"
+Rocky:
+  1. 探索代码结构
+  2. create_artifact 用 Mermaid 画架构图
+  3. 浏览器自动打开！</code></pre>
+
+<h3>示例 4：运行基准测试</h3>
+<pre><code># 快速验证：dev10 子集上跑 raw 基线
+uv run rockycode bench --runner raw --tasks dev10
+
+# 对比 Rocky 引擎的表现
+uv run rockycode bench --runner rockycode --tasks dev10
+
+# 提示词 A/B 实验
+uv run rockycode bench --runner rockycode --tasks dev10 --prompt prompts/my-variant.txt</code></pre>
+
+    </div>
+  </div>
+</div>
+
+<!-- ==========================================
+     16. 注意事项
+     ========================================== -->
+<div class="accordion">
+  <button class="accordion-header" onclick="toggleAccordion(this)">
+    <span>16. 注意事项</span>
+    <span class="marker">[+]</span>
+  </button>
+  <div class="accordion-body">
+    <div class="accordion-body-inner">
+
+<h2>16. 注意事项</h2>
+<ul class="ascii-bullets">
+  <li><code>edit_file</code> 的 <strong>old_string 必须在文件中唯一</strong>，否则会失败。需要包含足够的上下文。</li>
+  <li><code>create_artifact</code> 只传 BODY 内容 — 不要写 <code>&lt;html&gt;</code>、<code>&lt;head&gt;</code>、<code>&lt;style&gt;</code>，也不要用自己的颜色背景。Rocky 主题会自动应用。</li>
+  <li>内嵌 SVG/Mermaid 直接用，不要引外部 CDN。</li>
+  <li>用相同 title 调用 <code>create_artifact</code> 会<strong>原地更新</strong>（live 模式自动刷新）。</li>
+  <li>首次运行 bench 较慢：需下载数据集和 Docker 镜像（永久缓存）。</li>
+  <li>Apple Silicon: Docker Desktop 中需开启 <em>"Use Rosetta for x86_64/amd64 emulation"</em>。</li>
+  <li>基准测试中记忆 / MCP / Skills <strong>均不加载</strong>，确保分数纯净。</li>
+  <li>Rocky 说话风格是简单英语（省略冠词、短句），但<strong>写的代码是正式、地道的</strong> — Rocky 风格只属于他本人，不属于代码库。</li>
+</ul>
+
+    </div>
+  </div>
+</div>
+
+<!-- ==========================================
+     17. 测试命令参考
+     ========================================== -->
+<div class="accordion">
+  <button class="accordion-header" onclick="toggleAccordion(this)">
+    <span>17. 测试命令参考</span>
+    <span class="marker">[+]</span>
+  </button>
+  <div class="accordion-body">
+    <div class="accordion-body-inner">
+
+<h2>17. 测试命令参考</h2>
+<table>
+  <tr><th>语言 / 工具</th><th>测试命令</th></tr>
+  <tr><td>Python</td><td><code>python -m pytest</code></td></tr>
+  <tr><td>Java / Gradle</td><td><code>./gradlew test</code></td></tr>
+  <tr><td>JavaScript</td><td><code>npm test</code></td></tr>
+  <tr><td>Go</td><td><code>go test ./...</code></td></tr>
+  <tr><td>Rust</td><td><code>cargo test</code></td></tr>
+  <tr><td>rockycode 冒烟测试</td><td><code>uv run python tests/smoke_engine.py</code></td></tr>
+</table>
+
+    </div>
+  </div>
+</div>
+
+<!-- ============ Footer ============ -->
+<div class="footer">
+  <p class="big">amaze! 开始使用 Rocky 吧！</p>
+  <p class="sub">安装只需 3 步：clone &rarr; uv sync &rarr; 在 .env 填 Key</p>
+</div>
+
+<!-- ============ Scripts ============ -->
+<script>
+function toggleAccordion(header) {
+  var el = header.parentElement;
+  var marker = header.querySelector('.marker');
+  if (el.classList.contains('open')) {
+    el.classList.remove('open');
+    if (marker) marker.textContent = '[+]';
+  } else {
+    el.classList.add('open');
+    if (marker) marker.textContent = '[-]';
+  }
+}
+
+function toggleAll(open) {
+  document.querySelectorAll('.accordion').forEach(function(el) {
+    var marker = el.querySelector('.marker');
+    if (open) {
+      el.classList.add('open');
+      if (marker) marker.textContent = '[-]';
+    } else {
+      el.classList.remove('open');
+      if (marker) marker.textContent = '[+]';
+    }
+  });
+}
+</script>
+</body>
+</html>
