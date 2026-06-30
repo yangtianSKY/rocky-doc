@@ -182,14 +182,31 @@
   /* --- FAQ --- */
   .faq-item {
     border-top: 1px solid var(--hairline);
-    padding: var(--s24) 0;
   }
   .faq-item:last-child { border-bottom: 1px solid var(--hairline); }
   .faq-q {
-    font-size: 18px; font-weight: 500; color: var(--text);
-    margin-bottom: var(--s8);
+    display: flex; justify-content: space-between; align-items: center;
+    width: 100%; text-align: left;
+    font-family: var(--font); font-size: 18px; font-weight: 500;
+    color: var(--text); background: transparent;
+    border: none; cursor: pointer;
+    padding: var(--s24) 0;
+    transition: color 0.15s;
   }
-  .faq-a { font-size: 16px; color: var(--body); }
+  .faq-q:hover { color: var(--accent); }
+  .faq-q .faq-marker {
+    font-size: 18px; font-weight: 400; color: var(--accent);
+    flex-shrink: 0; margin-left: var(--s16);
+  }
+  .faq-a {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+  .faq-item.open .faq-a { max-height: 500px; }
+  .faq-a-inner {
+    font-size: 16px; color: var(--body);
+    padding: 0 0 var(--s24) 0;
+  }
 
   /* --- Footer --- */
   .footer {
@@ -328,38 +345,59 @@
   <h2>常见问题</h2>
 
   <div class="faq-item">
-    <div class="faq-q">什么是 Rocky？</div>
-    <div class="faq-a">Rocky 是一个交互式 AI 编程智能体，名字来自《挽救计划》里的外星工程师。他能在你的项目里读代码、改代码、跑命令，并实时流式展示推理过程。</div>
+    <button class="faq-q" onclick="toggleFaq(this)">
+      <span>什么是 Rocky？</span>
+      <span class="faq-marker">[+]</span>
+    </button>
+    <div class="faq-a"><div class="faq-a-inner">Rocky 是一个交互式 AI 编程智能体，名字来自《挽救计划》里的外星工程师。他能在你的项目里读代码、改代码、跑命令，并实时流式展示推理过程。</div></div>
   </div>
 
   <div class="faq-item">
-    <div class="faq-q">如何使用 Rocky？</div>
-    <div class="faq-a">安装 Python 3.11+ 和 uv，克隆仓库，<code>uv sync</code>，配置 <code>.env</code> 中的 API Key，然后 <code>uv run rockycode chat</code> 即可启动。</div>
+    <button class="faq-q" onclick="toggleFaq(this)">
+      <span>如何使用 Rocky？</span>
+      <span class="faq-marker">[+]</span>
+    </button>
+    <div class="faq-a"><div class="faq-a-inner">安装 Python 3.11+ 和 uv，克隆仓库，<code>uv sync</code>，配置 <code>.env</code> 中的 API Key，然后 <code>uv run rockycode chat</code> 即可启动。</div></div>
   </div>
 
   <div class="faq-item">
-    <div class="faq-q">使用 Rocky 需要额外的 AI 订阅吗？</div>
-    <div class="faq-a">Rocky 本身免费开源，但你需要一个 OpenAI 兼容的 API Key（默认指向 DeepSeek）。你也可以使用自己的 Claude、GPT 或 Gemini API Key。</div>
+    <button class="faq-q" onclick="toggleFaq(this)">
+      <span>使用 Rocky 需要额外的 AI 订阅吗？</span>
+      <span class="faq-marker">[+]</span>
+    </button>
+    <div class="faq-a"><div class="faq-a-inner">Rocky 本身免费开源，但你需要一个 OpenAI 兼容的 API Key（默认指向 DeepSeek）。你也可以使用自己的 Claude、GPT 或 Gemini API Key。</div></div>
   </div>
 
   <div class="faq-item">
-    <div class="faq-q">Rocky 只能在终端使用吗？</div>
-    <div class="faq-a">Rocky 目前以终端界面 (TUI) 为主。社区正在开发桌面应用和 IDE 扩展。</div>
+    <button class="faq-q" onclick="toggleFaq(this)">
+      <span>Rocky 只能在终端使用吗？</span>
+      <span class="faq-marker">[+]</span>
+    </button>
+    <div class="faq-a"><div class="faq-a-inner">Rocky 目前以终端界面 (TUI) 为主。社区正在开发桌面应用和 IDE 扩展。</div></div>
   </div>
 
   <div class="faq-item">
-    <div class="faq-q">Rocky 多少钱？</div>
-    <div class="faq-a">Rocky 完全免费，MIT 开源协议。你只需支付所使用模型提供商的 API 费用。</div>
+    <button class="faq-q" onclick="toggleFaq(this)">
+      <span>Rocky 多少钱？</span>
+      <span class="faq-marker">[+]</span>
+    </button>
+    <div class="faq-a"><div class="faq-a-inner">Rocky 完全免费，MIT 开源协议。你只需支付所使用模型提供商的 API 费用。</div></div>
   </div>
 
   <div class="faq-item">
-    <div class="faq-q">数据和隐私如何？</div>
-    <div class="faq-a">Rocky 将所有数据保存在你的本地机器上。记忆文件是纯 Markdown，你随时可以查看、编辑或删除。代码和对话数据不会上传到任何 Rocky 服务器。</div>
+    <button class="faq-q" onclick="toggleFaq(this)">
+      <span>数据和隐私如何？</span>
+      <span class="faq-marker">[+]</span>
+    </button>
+    <div class="faq-a"><div class="faq-a-inner">Rocky 将所有数据保存在你的本地机器上。记忆文件是纯 Markdown，你随时可以查看、编辑或删除。代码和对话数据不会上传到任何 Rocky 服务器。</div></div>
   </div>
 
   <div class="faq-item">
-    <div class="faq-q">Rocky 是开源的吗？</div>
-    <div class="faq-a">是的，Rocky 采用 MIT 协议，100% 开源。你可以在 GitHub 上查看、修改和贡献代码。</div>
+    <button class="faq-q" onclick="toggleFaq(this)">
+      <span>Rocky 是开源的吗？</span>
+      <span class="faq-marker">[+]</span>
+    </button>
+    <div class="faq-a"><div class="faq-a-inner">是的，Rocky 采用 MIT 协议，100% 开源。你可以在 GitHub 上查看、修改和贡献代码。</div></div>
   </div>
 </div>
 
@@ -370,6 +408,18 @@
 </div>
 
 <script>
+function toggleFaq(btn) {
+  var item = btn.parentElement;
+  var marker = btn.querySelector('.faq-marker');
+  if (item.classList.contains('open')) {
+    item.classList.remove('open');
+    if (marker) marker.textContent = '[+]';
+  } else {
+    item.classList.add('open');
+    if (marker) marker.textContent = '[-]';
+  }
+}
+
 var cmds = {
   uv:   'uv run rockycode chat',
   pip:  'pip install rockycode && rockycode chat',
