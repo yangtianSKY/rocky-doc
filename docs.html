@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rocky 文档</title>
+<style>
+  :root {
+    --ink:      #ffffff;
+    --canvas:   #f8f7f7;
+    --elevated: #f1eeee;
+    --text:     #1d1d1f;
+    --body:     #424245;
+    --muted:    #6e6e73;
+    --stone:    #9a9898;
+    --accent:       #7c3aed;
+    --accent-hover: #6d28d9;
+    --accent-soft:  rgba(124,58,237,0.08);
+    --success:  #059669;
+    --warning:  #d97706;
+    --danger:   #dc2626;
+    --hairline:       rgba(0,0,0,0.08);
+    --hairline-strong:rgba(0,0,0,0.12);
+    --s8:8px; --s16:16px; --s24:24px; --s32:32px; --s48:48px; --s64:64px; --s80:80px;
+    --r-sm:4px; --r-pill:9999px;
+    --font: "Berkeley Mono", "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font);
+    background: var(--ink);
+    color: var(--body);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+    padding: 0;
+  }
+
+  /* --- Banner --- */
+  .banner {
+    text-align: center; padding: var(--s8) var(--s24); font-size: 14px;
+    color: var(--body); border-bottom: 1px solid var(--hairline);
+  }
+  .banner a { color: var(--accent); text-decoration: none; font-weight: 500; }
+  .banner a:hover { text-decoration: underline; }
+
+  /* --- Nav --- */
+  .nav-bar { max-width: 1100px; margin: 0 auto; padding: 0 var(--s24); }
+  .nav {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: var(--s16) 0; border-bottom: 1px solid var(--hairline);
+  }
+  .nav-wordmark {
+    font-size: 10px; line-height: 1.1; color: var(--accent);
+    white-space: pre; text-decoration: none; display: block;
+  }
+  .nav-wordmark:hover { color: var(--accent-hover); }
+  .nav-right { display: flex; align-items: center; gap: var(--s16); }
+  .nav-tabs { display: flex; gap: var(--s8); }
+  .nav-tab {
+    font-size: 14px; font-weight: 500; color: var(--muted); text-decoration: none;
+    padding: var(--s8) var(--s16); border: 1px solid var(--hairline); border-radius: var(--r-sm);
+    transition: color 0.15s, border-color 0.15s, background 0.15s;
+  }
+  .nav-tab:hover { color: var(--accent-hover); border-color: var(--accent); }
+  .nav-tab.active { color: var(--accent); border-color: var(--accent); background: var(--accent-soft); }
+  .nav-cta {
+    font-size: 14px; font-weight: 500; color: #fff; text-decoration: none;
+    padding: var(--s8) var(--s16); background: var(--accent); border-radius: var(--r-sm);
+    border: 1px solid var(--accent); transition: background 0.15s;
+  }
+  .nav-cta:hover { background: var(--accent-hover); }
+
+  /* --- Layout --- */
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 var(--s24); }
+  .layout { display: flex; gap: var(--s48); padding: var(--s48) 0; }
+  .content { flex: 1; min-width: 0; }
+  .sidebar { width: 200px; flex-shrink: 0; }
+
+  /* --- Sidebar --- */
+  .sidebar-nav { position: sticky; top: var(--s32); }
+  .sidebar-nav .sidebar-title {
+    font-size: 12px; font-weight: 500; color: var(--stone);
+    text-transform: uppercase; letter-spacing: 0.05em;
+    margin-bottom: var(--s16);
+  }
+  .sidebar-nav a {
+    display: block; font-size: 14px; color: var(--muted); text-decoration: none;
+    padding: var(--s8) 0; border-left: 2px solid transparent;
+    padding-left: var(--s16); margin-left: -2px;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .sidebar-nav a:hover { color: var(--accent-hover); }
+  .sidebar-nav a.active { color: var(--accent); border-left-color: var(--accent); }
+
+  /* --- Content --- */
+  .section { margin-bottom: var(--s64); }
+  .section h2 {
+    font-size: 24px; font-weight: 700; color: var(--text);
+    padding-bottom: var(--s16); border-bottom: 1px solid var(--hairline);
+    margin-bottom: var(--s24);
+  }
+  .section h3 {
+    font-size: 16px; font-weight: 500; color: var(--text);
+    margin: var(--s32) 0 var(--s8);
+  }
+  p { margin: var(--s8) 0; }
+  strong { color: var(--text); font-weight: 500; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  ul, ol { padding-left: var(--s24); margin: var(--s8) 0; }
+  li { margin: var(--s8) 0; }
+
+  .ascii-bullets { list-style: none; padding-left: 0; }
+  .ascii-bullets li::before { content: "[*]"; color: var(--accent); margin-right: var(--s8); font-size: 14px; }
+
+  table { width: 100%; border-collapse: collapse; margin: var(--s16) 0; font-size: 14px; }
+  th { text-align: left; padding: var(--s8) var(--s16); border-bottom: 1px solid var(--hairline-strong); font-weight: 500; color: var(--text); white-space: nowrap; }
+  td { text-align: left; padding: var(--s8) var(--s16); border-bottom: 1px solid var(--hairline); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+
+  .tag { display: inline-block; padding: 2px var(--s8); border-radius: var(--r-pill); font-size: 12px; font-weight: 500; line-height: 1.6; border: 1px solid; }
+  .tag-purple { color: #7c3aed; border-color: rgba(124,58,237,0.30); }
+  .tag-amber  { color: #b45309; border-color: rgba(180,83,9,0.30); }
+  .tag-red    { color: #dc2626; border-color: rgba(220,38,38,0.30); }
+  .tag-green  { color: #059669; border-color: rgba(5,150,105,0.30); }
+
+  code { font-size: 14px; color: var(--accent); background: var(--accent-soft); padding: 1px var(--s8); border-radius: var(--r-sm); border: 1px solid rgba(124,58,237,0.12); }
+  pre {
+    background: var(--canvas); border: 1px solid var(--hairline); border-radius: var(--r-sm);
+    padding: var(--s16); overflow-x: auto; font-size: 14px; line-height: 1.6;
+    margin: var(--s8) 0; color: var(--body);
+  }
+  pre code { background: none; border: none; padding: 0; font-size: inherit; color: inherit; }
+
+  .step { border-left: 3px solid var(--accent); padding: var(--s8) var(--s16); margin: var(--s8) 0; font-weight: 500; color: var(--text); }
+  .step strong { color: var(--accent); }
+  .note { border-left: 3px solid var(--warning); padding: var(--s8) var(--s16); margin: var(--s16) 0; border-radius: 0 var(--r-sm) var(--r-sm) 0; font-size: 14px; }
+  .note strong { color: var(--warning); }
+  .tip { border-left: 3px solid var(--success); padding: var(--s8) var(--s16); margin: var(--s16) 0; border-radius: 0 var(--r-sm) var(--r-sm) 0; font-size: 14px; }
+  .tip strong { color: var(--success); }
+
+  /* --- Footer --- */
+  .footer { text-align: center; padding: var(--s64) var(--s24); border-top: 1px solid var(--hairline); color: var(--muted); font-size: 14px; }
+  .footer a { color: var(--accent); text-decoration: none; }
+  .footer a:hover { text-decoration: underline; }
+
+  @media (max-width: 800px) {
+    .layout { flex-direction: column; }
+    .sidebar { width: 100%; order: -1; }
+    .sidebar-nav { position: static; display: flex; gap: var(--s16); overflow-x: auto; flex-wrap: wrap; }
+    .sidebar-nav a { border-left: none; border-bottom: 2px solid transparent; padding: var(--s8) 0; margin: 0; white-space: nowrap; }
+    .sidebar-nav a.active { border-left-color: transparent; border-bottom-color: var(--accent); }
+    .nav { flex-direction: column; align-items: flex-start; gap: var(--s8); }
+    .nav-wordmark { font-size: 7px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ Banner ============ -->
+<div class="banner">
+  Rocky Beta 版现已推出 — 支持 macOS、Windows 和 Linux。<a href="#">立即下载</a>
+</div>
+
+<!-- ============ Nav ============ -->
+<div class="nav-bar">
+<nav class="nav">
+  <a href="index.html" class="nav-wordmark">
+  ██████╗   ██████╗   ██████╗ ██╗  ██╗██╗   ██╗
+  ██╔══██╗ ██╔═══██╗ ██╔════╝██║ ██╔╝╚██╗ ██╔╝
+  ██████╔╝ ██║   ██║ ██║     █████╔╝  ╚████╔╝
+  ██╔══██╗ ██║   ██║ ██║     ██╔═██╗   ╚██╔╝
+  ██║  ██║ ╚██████╔╝ ╚██████╗██║  ██╗   ██║
+  ╚═╝  ╚═╝  ╚═════╝   ╚═════╝╚═╝  ╚═╝   ╚═╝
+  </a>
+  <div class="nav-right">
+    <div class="nav-tabs">
+      <a href="#" class="nav-tab">Git</a>
+      <a href="docs.html" class="nav-tab active">文档</a>
+      <a href="#" class="nav-tab">下载</a>
+    </div>
+    <a href="#" class="nav-cta">立即下载</a>
+  </div>
+</nav>
+</div>
+
+<!-- ============ Page ============ -->
+<div class="page">
+<div class="layout">
+
+<!-- ===== Sidebar ===== -->
+<aside class="sidebar">
+  <nav class="sidebar-nav">
+    <div class="sidebar-title">页面导航</div>
+    <a href="#install" class="active">安装</a>
+    <a href="#intro">简介</a>
+    <a href="#usage">使用</a>
+    <a href="#config">配置</a>
+  </nav>
+</aside>
+
+<!-- ===== Content ===== -->
+<main class="content">
+
+<!-- ====== 安装 ====== -->
+<div class="section" id="install">
+<h2>安装</h2>
+
+<h3>环境要求</h3>
+<table>
+  <tr><th>依赖</th><th>用途</th></tr>
+  <tr><td><strong>Python 3.11+</strong></td><td>运行核心引擎</td></tr>
+  <tr><td><strong>uv</strong></td><td>Python 包管理（比 pip 快很多）</td></tr>
+  <tr><td><strong>OpenAI 兼容 API Key</strong></td><td>驱动模型（默认目标：DeepSeek）</td></tr>
+  <tr><td><strong>Git</strong></td><td>克隆仓库</td></tr>
+  <tr><td><strong>Docker Desktop</strong></td><td>仅跑基准测试需要；纯聊天不需要</td></tr>
+  <tr><td><strong>Ollama</strong> <span class="tag tag-amber">可选</span></td><td>本地方案：语义记忆搜索 + 梦境</td></tr>
+</table>
+<div class="tip"><strong>提示：</strong>如果不跑 benchmark，只需 Python + uv + API Key，无需 Docker。</div>
+
+<h3>安装步骤</h3>
+
+<div class="step"><strong>步骤 1：</strong>安装 <code>uv</code></div>
+<pre><code># macOS / Linux
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Windows
+powershell -c "irm https://astral.sh/uv/install.ps1 | iex"</code></pre>
+
+<div class="step"><strong>步骤 2：</strong>克隆仓库并安装依赖</div>
+<pre><code>git clone &lt;仓库地址&gt; rockycode && cd rockycode
+uv sync</code></pre>
+
+<div class="step"><strong>步骤 3：</strong>配置 API Key</div>
+<pre><code>cp .env.example .env</code></pre>
+
+<div class="step"><strong>步骤 4：</strong>验证安装</div>
+<pre><code>uv run rockycode --help</code></pre>
+<div class="note"><strong>注意：</strong>所有命令都通过 <code>uv run</code> 运行。</div>
+</div>
+
+<!-- ====== 简介 ====== -->
+<div class="section" id="intro">
+<h2>简介</h2>
+
+<p>Rocky 是一个<strong>交互式 AI 编程智能体 (Agent)</strong>，名字来自《挽救计划》里的外星工程师 Rocky — 热情、好奇、偶尔出错、但总能搞定。</p>
+<p>Rocky 能在你的项目里<strong>读代码、改代码、跑命令</strong>，并实时流式展示推理过程。</p>
+<p>事情顺利时说 <span class="tag tag-green">amaze!</span>，困惑时说 <span class="tag tag-amber">i no know! i learn!</span></p>
+
+<h3>两种形态</h3>
+<ul class="ascii-bullets">
+  <li><strong>聊天伙伴</strong> — <code>rockycode chat</code>：在终端里用原生工具调用读写代码</li>
+  <li><strong>基准测试工具</strong> — <code>rockycode bench</code>：在 SWE-bench Verified 上打分</li>
+</ul>
+
+<h3>工作原则</h3>
+<ol>
+  <li><strong>先搜索，再阅读，再编辑，最后测试。</strong></li>
+  <li><strong>读前先写？不行。</strong> Always read before write.</li>
+  <li>用 <strong>grep/glob</strong> 找代码；用 <strong>bash</strong> 跑测试。</li>
+  <li><strong>每次改动后都要跑测试。</strong></li>
+  <li>探索是为了理解，然后<strong>提交</strong>。交付的修复胜过完美的地图。</li>
+</ol>
+
+<h3>工具清单</h3>
+<h4>搜索工具</h4>
+<table>
+  <tr><th>工具</th><th>说明</th></tr>
+  <tr><td><strong>grep</strong></td><td>用正则表达式搜索文件内容</td></tr>
+  <tr><td><strong>glob</strong></td><td>按路径模式列出文件</td></tr>
+  <tr><td><strong>web_search</strong></td><td>搜索网络</td></tr>
+  <tr><td><strong>web_fetch</strong></td><td>抓取 URL 文本内容</td></tr>
+</table>
+
+<h4>读写工具</h4>
+<table>
+  <tr><th>工具</th><th>说明</th></tr>
+  <tr><td><strong>read_file</strong></td><td>读取文件或列出目录</td></tr>
+  <tr><td><strong>edit_file</strong></td><td>精确替换旧字符串为新字符串</td></tr>
+  <tr><td><strong>write_file</strong></td><td>创建或覆盖文件</td></tr>
+</table>
+
+<h4>运行 & 记忆工具</h4>
+<table>
+  <tr><th>工具</th><th>说明</th></tr>
+  <tr><td><strong>bash</strong></td><td>运行 shell 命令</td></tr>
+  <tr><td><strong>remember</strong></td><td>保存记忆</td></tr>
+  <tr><td><strong>recall_memory</strong></td><td>查找记忆</td></tr>
+  <tr><td><strong>create_artifact</strong></td><td>创建可视化报告并在浏览器打开</td></tr>
+</table>
+</div>
+
+<!-- ====== 使用 ====== -->
+<div class="section" id="usage">
+<h2>使用</h2>
+
+<h3>开始对话</h3>
+<pre><code># 在当前目录下启动 Rocky
+uv run rockycode chat
+
+# 在指定项目中启动
+uv run rockycode chat -C ~/code/myproject
+
+# 关闭可选功能
+uv run rockycode chat --no-memory
+uv run rockycode chat --no-mcp
+uv run rockycode chat --no-skills</code></pre>
+<p>启动后看到<strong>终端界面 (TUI)</strong>，底部输入框，上面对话历史。Rocky 实时流式展示思考和工具调用过程。</p>
+
+<h3>对话命令</h3>
+<table>
+  <tr><th>命令</th><th>功能</th></tr>
+  <tr><td><code>/help</code></td><td>显示帮助</td></tr>
+  <tr><td><code>/prompt</code></td><td>查看当前系统提示词</td></tr>
+  <tr><td><code>/mcp</code></td><td>查看已连接的 MCP 服务</td></tr>
+  <tr><td><code>/skills</code></td><td>查看已安装的技能</td></tr>
+  <tr><td><code>/memory</code></td><td>查看 Rocky 记得什么</td></tr>
+  <tr><td><code>/remember &lt;内容&gt;</code></td><td>保存一条记忆</td></tr>
+  <tr><td><code>/clear</code></td><td>清空对话</td></tr>
+  <tr><td><code>/exit</code></td><td>退出</td></tr>
+</table>
+
+<h3>Shell 集成</h3>
+<p>以 <code>!</code> 开头直接在 shell 执行：</p>
+<pre><code>!ls -la
+!python --version
+!git status</code></pre>
+
+<h3>运行基准测试</h3>
+<p>内置 <strong>SWE-bench Verified</strong> 评测：</p>
+<pre><code># Raw 单次基线
+uv run rockycode bench --runner raw --tasks dev10
+
+# 完整 Rocky 引擎
+uv run rockycode bench --runner rockycode --tasks dev10</code></pre>
+
+<h3>记忆系统</h3>
+<p>跨会话记忆，纯 Markdown 文件存储在 <code>.rockycode/memory/</code>：</p>
+<pre><code>rockycode memory list          # 列出所有记忆
+rockycode memory show &lt;name&gt;   # 查看一条
+rockycode memory search &lt;词&gt;   # 搜索</code></pre>
+
+<h3>梦境系统</h3>
+<p>离线整理对话，零 API 费用：</p>
+<pre><code>uv run rockycode dream --dry-run   # 预览
+uv run rockycode dream             # 正式执行</code></pre>
+
+<h3>提示词实验室</h3>
+<pre><code>cp prompts/rocky-v1.txt prompts/my-variant.txt
+uv run rockycode bench --runner rockycode --tasks dev10 --prompt prompts/my-variant.txt</code></pre>
+
+<h3>Skills &amp; MCP</h3>
+<p>Rocky 零迁移成本读取已有工具配置。MCP 服务从 <code>.mcp.json</code>、Claude Code、Claude Desktop、Codex 自动发现。Skills 从 <code>.claude/skills/</code>、<code>.rockycode/skills/</code> 等位置自动发现。</p>
+
+<h3>测试命令参考</h3>
+<table>
+  <tr><th>语言 / 工具</th><th>测试命令</th></tr>
+  <tr><td>Python</td><td><code>python -m pytest</code></td></tr>
+  <tr><td>Java / Gradle</td><td><code>./gradlew test</code></td></tr>
+  <tr><td>JavaScript</td><td><code>npm test</code></td></tr>
+  <tr><td>Go</td><td><code>go test ./...</code></td></tr>
+  <tr><td>Rust</td><td><code>cargo test</code></td></tr>
+</table>
+</div>
+
+<!-- ====== 配置 ====== -->
+<div class="section" id="config">
+<h2>配置</h2>
+<p>所有配置通过 <code>.env</code> 文件管理：</p>
+<pre><code>cp .env.example .env</code></pre>
+
+<h3>必备配置</h3>
+<table>
+  <tr><th>变量</th><th>说明</th><th>默认值</th></tr>
+  <tr><td><code>OPENAI_API_KEY</code></td><td>你的 API Key</td><td><code>sk-replace-me</code></td></tr>
+  <tr><td><code>OPENAI_BASE_URL</code></td><td>API 端点地址</td><td><code>https://api.deepseek.com/v1</code></td></tr>
+</table>
+
+<h3>模型配置</h3>
+<table>
+  <tr><th>变量</th><th>说明</th><th>默认值</th></tr>
+  <tr><td><code>ROCKYCODE_MODEL</code></td><td>使用的模型 ID</td><td><code>deepseek-v4-pro</code></td></tr>
+  <tr><td><code>ROCKYCODE_THINKING</code></td><td>启用思维链 (CoT)</td><td><code>true</code></td></tr>
+  <tr><td><code>ROCKYCODE_REASONING_EFFORT</code></td><td>推理深度</td><td><code>max</code></td></tr>
+  <tr><td><code>ROCKYCODE_MAX_TOKENS</code></td><td>响应 token 上限</td><td><code>16384</code></td></tr>
+</table>
+
+<div class="tip"><strong>最佳实践：</strong>Pro Max = <code>deepseek-v4-pro</code> + <code>THINKING=true</code> + <code>REASONING_EFFORT=max</code></div>
+
+<h3>命令行覆盖</h3>
+<pre><code>uv run rockycode chat --model deepseek-v4-flash
+uv run rockycode chat --no-thinking
+uv run rockycode chat --reasoning-effort high
+uv run rockycode chat --max-steps 20
+uv run rockycode chat --no-memory --no-mcp --no-skills</code></pre>
+
+<h3>注意事项</h3>
+<ul class="ascii-bullets">
+  <li><code>edit_file</code> 的 <strong>old_string 必须在文件中唯一</strong>，否则会失败</li>
+  <li><code>create_artifact</code> 只传 BODY 内容，不用写 HTML 外壳</li>
+  <li>内嵌 SVG/Mermaid 直接用，不引外部 CDN</li>
+  <li>用相同 title 调用 <code>create_artifact</code> 会原地更新</li>
+  <li>首次 bench 较慢：需下载数据集和 Docker 镜像（永久缓存）</li>
+  <li>Apple Silicon: Docker Desktop 开启 "Use Rosetta"</li>
+  <li>Bench 中记忆 / MCP / Skills 均不加载，确保分数纯净</li>
+</ul>
+</div>
+
+</main>
+</div>
+</div>
+
+<!-- ============ Footer ============ -->
+<div class="footer">
+  <p>Rocky — amaze!</p>
+  <p style="margin-top:var(--s8)"><a href="#">GitHub</a> &middot; <a href="docs.html">文档</a> &middot; <a href="#">下载</a></p>
+</div>
+
+<script>
+// Active sidebar link on scroll
+var sections = document.querySelectorAll('.section');
+var links = document.querySelectorAll('.sidebar-nav a');
+window.addEventListener('scroll', function() {
+  var top = window.scrollY + 120;
+  sections.forEach(function(sec, i) {
+    if (sec.offsetTop <= top && sec.offsetTop + sec.offsetHeight > top) {
+      links.forEach(function(l) { l.classList.remove('active'); });
+      if (links[i]) links[i].classList.add('active');
+    }
+  });
+});
+
+// Smooth anchor scroll
+links.forEach(function(link) {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    var target = document.querySelector(this.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+</script>
+</body>
+</html>
