@@ -11,21 +11,21 @@
      ============================================ */
 
   :root {
-    --ink:           #201d1d;
-    --canvas:        #302c2c;
-    --elevated:      #3a3535;
-    --text:          #fdfcfc;
-    --body:          #d6d3d3;
-    --muted:         #9a9898;
-    --stone:         #6e6e73;
+    --ink:           #ffffff;
+    --canvas:        #f8f7f7;
+    --elevated:      #f1eeee;
+    --text:          #1d1d1f;
+    --body:          #424245;
+    --muted:         #6e6e73;
+    --stone:         #9a9898;
     --accent:        #7c3aed;
-    --accent-hover:  #a78bfa;
-    --accent-soft:   rgba(124,58,237,0.15);
-    --success:       #30d158;
-    --warning:       #ff9f0a;
-    --danger:        #ff3b30;
-    --hairline:      rgba(253,252,252,0.10);
-    --hairline-strong: rgba(253,252,252,0.16);
+    --accent-hover:  #6d28d9;
+    --accent-soft:   rgba(124,58,237,0.08);
+    --success:       #059669;
+    --warning:       #d97706;
+    --danger:        #dc2626;
+    --hairline:      rgba(0,0,0,0.08);
+    --hairline-strong: rgba(0,0,0,0.12);
     --s8:  8px;  --s16: 16px; --s24: 24px;
     --s32: 32px; --s48: 48px; --s64: 64px;
     --r-none: 0px; --r-sm: 4px; --r-pill: 9999px;
@@ -104,15 +104,15 @@
 
   /* --- Tags --- */
   .tag { display: inline-block; padding: 2px var(--s8); border-radius: var(--r-pill); font-size: 12px; font-weight: 500; line-height: 1.6; border: 1px solid; }
-  .tag-purple { color: #a78bfa; border-color: rgba(167,139,250,0.35); }
-  .tag-amber  { color: var(--warning); border-color: rgba(255,159,10,0.35); }
-  .tag-red    { color: var(--danger);  border-color: rgba(255,59,48,0.35); }
-  .tag-green  { color: var(--success); border-color: rgba(48,209,88,0.35); }
+  .tag-purple { color: #7c3aed; border-color: rgba(124,58,237,0.30); }
+  .tag-amber  { color: #b45309; border-color: rgba(180,83,9,0.30); }
+  .tag-red    { color: #dc2626; border-color: rgba(220,38,38,0.30); }
+  .tag-green  { color: #059669; border-color: rgba(5,150,105,0.30); }
 
   /* --- Code --- */
-  code { font-size: 14px; color: var(--text); background: var(--ink); padding: 1px var(--s8); border-radius: var(--r-sm); border: 1px solid var(--hairline); }
+  code { font-size: 14px; color: var(--accent); background: var(--accent-soft); padding: 1px var(--s8); border-radius: var(--r-sm); border: 1px solid rgba(124,58,237,0.12); }
   pre {
-    background: var(--ink); border: 1px solid var(--hairline); border-radius: var(--r-sm);
+    background: var(--canvas); border: 1px solid var(--hairline); border-radius: var(--r-sm);
     padding: var(--s16); overflow-x: auto; font-size: 14px; line-height: 1.6;
     margin: var(--s8) 0; color: var(--body);
   }
@@ -130,7 +130,7 @@
 
   /* --- Workflow --- */
   .workflow {
-    background: var(--ink); border: 1px solid var(--hairline); border-radius: var(--r-sm);
+    background: var(--canvas); border: 1px solid var(--hairline); border-radius: var(--r-sm);
     padding: var(--s16); margin: var(--s8) 0; font-size: 14px; line-height: 1.8;
     white-space: pre; color: var(--body);
   }
