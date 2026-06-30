@@ -23,12 +23,13 @@
     --muted:      #9a9898;
     --stone:      #6e6e73;
 
-    /* Semantic (Apple HIG) */
-    --accent:     #007aff;
-    --accent-hover: #3395ff;
-    --success:    #30d158;
-    --warning:    #ff9f0a;
-    --danger:     #ff3b30;
+    /* Semantic — Purple primary */
+    --accent:       #7c3aed;
+    --accent-hover: #a78bfa;
+    --accent-soft:  rgba(124,58,237,0.15);
+    --success:      #30d158;
+    --warning:      #ff9f0a;
+    --danger:       #ff3b30;
 
     /* Borders */
     --hairline:        rgba(253,252,252,0.10);
@@ -66,7 +67,49 @@
     padding: var(--s48) var(--s24) var(--s64);
   }
 
-  /* --- Hero --- */
+  /* --- Top Nav --- */
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--s16) 0;
+    margin-bottom: var(--s48);
+    border-bottom: 1px solid var(--hairline);
+  }
+  .nav-brand {
+    font-family: var(--font);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .nav-brand:hover { color: var(--accent-hover); }
+  .nav-tabs {
+    display: flex;
+    gap: var(--s8);
+  }
+  .nav-tab {
+    font-family: var(--font);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--muted);
+    text-decoration: none;
+    padding: var(--s8) var(--s16);
+    border: 1px solid var(--hairline);
+    border-radius: var(--r-sm);
+    transition: color 0.15s, border-color 0.15s, background 0.15s;
+  }
+  .nav-tab:hover {
+    color: var(--accent-hover);
+    border-color: var(--accent);
+  }
+  .nav-tab.active {
+    color: var(--accent);
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+
+  /* --- Hero (below nav) --- */
   .hero {
     text-align: center;
     padding: var(--s48) 0 var(--s32);
@@ -346,6 +389,16 @@
 </style>
 </head>
 <body>
+
+<!-- ============ Top Nav ============ -->
+<nav class="nav">
+  <a href="#" class="nav-brand">Rocky</a>
+  <div class="nav-tabs">
+    <a href="#" class="nav-tab">Git</a>
+    <a href="#" class="nav-tab active">文档</a>
+    <a href="#" class="nav-tab">下载</a>
+  </div>
+</nav>
 
 <!-- ============ Hero ============ -->
 <div class="hero">
