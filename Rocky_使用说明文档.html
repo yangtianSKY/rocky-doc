@@ -269,7 +269,7 @@
   ╚═╝  ╚═╝  ╚═════╝   ╚═════╝╚═╝  ╚═╝   ╚═╝
   </a>
   <div class="nav-right">
-    <button class="lang-toggle" onclick="switchLang()" data-l10n-attrs="aria-label">中</button>
+    <button class="lang-toggle" onclick="switchLang()">EN</button>
     <div class="nav-tabs">
       <a href="https://github.com/cicialgo/rockycode" class="nav-tab">Git</a>
       <a href="docs.html" class="nav-tab" data-l10n="nav_docs">文档</a>
@@ -491,7 +491,7 @@ var L_idx = (L === 'en') ? 1 : 0;
 function applyLang() {
   L_idx = (L === 'en') ? 1 : 0;
   var btn = document.querySelector('.lang-toggle');
-  if (btn) btn.textContent = L === 'en' ? 'EN' : '中';
+  if (btn) btn.textContent = L === 'en' ? '中' : 'EN';
   document.documentElement.lang = L === 'en' ? 'en' : 'zh-CN';
 
   document.querySelectorAll('[data-l10n]').forEach(function(el) {
