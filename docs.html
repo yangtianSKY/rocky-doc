@@ -453,9 +453,7 @@ var L_idx = (L === 'en') ? 1 : 0;
 function applyLang() {
   L_idx = (L === 'en') ? 1 : 0;
   var btn = document.querySelector('.lang-toggle');
-  if (btn) btn.innerHTML = L === 'en'
-    ? '<span style="color:var(--stone)">EN</span> / <span style="color:var(--accent);font-weight:700">中</span>'
-    : '<span style="color:var(--accent);font-weight:700">EN</span> / <span style="color:var(--stone)">中</span>';
+  if (btn) btn.textContent = L === 'en' ? '中' : 'EN';
   document.documentElement.lang = L === 'en' ? 'en' : 'zh-CN';
   document.querySelectorAll('[data-l10n]').forEach(function(el) {
     var k = el.getAttribute('data-l10n');
