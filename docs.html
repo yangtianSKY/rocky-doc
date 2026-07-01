@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rocky 文档</title>
+<title>Rocky Docs</title>
 <style>
   :root {
     --ink:      #ffffff;
@@ -38,7 +38,6 @@
     padding: 0;
   }
 
-  /* --- Banner --- */
   .banner {
     text-align: center; padding: var(--s8) var(--s24); font-size: 14px;
     color: var(--body); border-bottom: 1px solid var(--hairline);
@@ -46,16 +45,12 @@
   .banner a { color: var(--accent); text-decoration: none; font-weight: 500; }
   .banner a:hover { text-decoration: underline; }
 
-  /* --- Nav --- */
   .nav-bar { max-width: 1100px; margin: 0 auto; padding: 0 var(--s24); }
   .nav {
     display: flex; justify-content: space-between; align-items: center;
     padding: var(--s16) 0; border-bottom: 1px solid var(--hairline);
   }
-  .nav-wordmark {
-    font-size: 10px; line-height: 1.1; color: var(--accent);
-    white-space: pre; text-decoration: none; display: block;
-  }
+  .nav-wordmark { font-size: 10px; line-height: 1.1; color: var(--accent); white-space: pre; text-decoration: none; display: block; }
   .nav-wordmark:hover { color: var(--accent-hover); }
   .nav-right { display: flex; align-items: center; gap: var(--s16); }
   .nav-tabs { display: flex; gap: var(--s8); }
@@ -73,7 +68,6 @@
   }
   .nav-cta:hover { background: var(--accent-hover); }
 
-  /* --- Lang Toggle --- */
   .lang-toggle {
     position: fixed; top: var(--s16); right: var(--s24); z-index: 100;
     font-family: var(--font); font-size: 13px; font-weight: 500;
@@ -85,19 +79,13 @@
   }
   .lang-toggle:hover { color: var(--accent); border-color: var(--accent); }
 
-  /* --- Layout --- */
   .page { max-width: 1100px; margin: 0 auto; padding: 0 var(--s24); }
   .layout { display: flex; gap: var(--s48); padding: var(--s48) 0; }
   .content { flex: 1; min-width: 0; }
   .sidebar { width: 200px; flex-shrink: 0; }
 
-  /* --- Sidebar --- */
   .sidebar-nav { position: sticky; top: var(--s32); }
-  .sidebar-nav .sidebar-title {
-    font-size: 12px; font-weight: 500; color: var(--stone);
-    text-transform: uppercase; letter-spacing: 0.05em;
-    margin-bottom: var(--s16);
-  }
+  .sidebar-nav .sidebar-title { font-size: 12px; font-weight: 500; color: var(--stone); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--s16); }
   .sidebar-nav a {
     display: block; font-size: 14px; color: var(--muted); text-decoration: none;
     padding: var(--s8) 0; border-left: 2px solid transparent;
@@ -107,17 +95,9 @@
   .sidebar-nav a:hover { color: var(--accent-hover); }
   .sidebar-nav a.active { color: var(--accent); border-left-color: var(--accent); }
 
-  /* --- Content --- */
   .section { margin-bottom: var(--s64); }
-  .section h2 {
-    font-size: 24px; font-weight: 700; color: var(--text);
-    padding-bottom: var(--s16); border-bottom: 1px solid var(--hairline);
-    margin-bottom: var(--s24);
-  }
-  .section h3 {
-    font-size: 16px; font-weight: 500; color: var(--text);
-    margin: var(--s32) 0 var(--s8);
-  }
+  .section h2 { font-size: 24px; font-weight: 700; color: var(--text); padding-bottom: var(--s16); border-bottom: 1px solid var(--hairline); margin-bottom: var(--s24); }
+  .section h3 { font-size: 16px; font-weight: 500; color: var(--text); margin: var(--s32) 0 var(--s8); }
   p { margin: var(--s8) 0; }
   strong { color: var(--text); font-weight: 500; }
   a { color: var(--accent); text-decoration: none; }
@@ -141,11 +121,7 @@
   .tag-green  { color: #059669; border-color: rgba(5,150,105,0.30); }
 
   code { font-size: 14px; color: var(--accent); background: var(--accent-soft); padding: 1px var(--s8); border-radius: var(--r-sm); border: 1px solid rgba(124,58,237,0.12); }
-  pre {
-    background: var(--canvas); border: 1px solid var(--hairline); border-radius: var(--r-sm);
-    padding: var(--s16); overflow-x: auto; font-size: 14px; line-height: 1.6;
-    margin: var(--s8) 0; color: var(--body);
-  }
+  pre { background: var(--canvas); border: 1px solid var(--hairline); border-radius: var(--r-sm); padding: var(--s16); overflow-x: auto; font-size: 14px; line-height: 1.6; margin: var(--s8) 0; color: var(--body); }
   pre code { background: none; border: none; padding: 0; font-size: inherit; color: inherit; }
 
   .step { border-left: 3px solid var(--accent); padding: var(--s8) var(--s16); margin: var(--s8) 0; font-weight: 500; color: var(--text); }
@@ -155,7 +131,6 @@
   .tip { border-left: 3px solid var(--success); padding: var(--s8) var(--s16); margin: var(--s16) 0; border-radius: 0 var(--r-sm) var(--r-sm) 0; font-size: 14px; }
   .tip strong { color: var(--success); }
 
-  /* --- Footer --- */
   .footer { text-align: center; padding: var(--s64) var(--s24); border-top: 1px solid var(--hairline); color: var(--muted); font-size: 14px; }
   .footer a { color: var(--accent); text-decoration: none; }
   .footer a:hover { text-decoration: underline; }
@@ -173,12 +148,11 @@
 </head>
 <body>
 
-<!-- ============ Banner ============ -->
 <div class="banner">
-  Rocky Beta 版现已推出 — 支持 macOS、Windows 和 Linux。<a href="#">立即下载</a>
+  <span data-l10n="banner">Rocky Beta 版现已推出 — 支持 macOS、Windows 和 Linux。</span>
+  <a href="#" data-l10n="banner_cta">立即下载</a>
 </div>
 
-<!-- ============ Nav ============ -->
 <div class="nav-bar">
 <nav class="nav">
   <a href="index.html" class="nav-wordmark">
@@ -192,21 +166,19 @@
   <div class="nav-right">
     <div class="nav-tabs">
       <a href="https://github.com/cicialgo/rockycode" class="nav-tab">Git</a>
-      <a href="docs.html" class="nav-tab active">文档</a>
-      <a href="#" class="nav-tab">下载</a>
+      <a href="docs.html" class="nav-tab active" data-l10n="nav_docs">文档</a>
+      <a href="#" class="nav-tab" data-l10n="nav_download">下载</a>
     </div>
-    <a href="#" class="nav-cta">立即下载</a>
+    <a href="#" class="nav-cta" data-l10n="nav_cta">立即下载</a>
   </div>
 </nav>
 </div>
 
-<button class="lang-toggle" onclick="switchLang()">EN / 中</button>
+<button class="lang-toggle" onclick="switchLang()">EN</button>
 
-<!-- ============ Page ============ -->
 <div class="page">
 <div class="layout">
 
-<!-- ===== Sidebar ===== -->
 <aside class="sidebar">
   <nav class="sidebar-nav">
     <div class="sidebar-title" data-l10n="side_title">页面导航</div>
@@ -217,145 +189,144 @@
   </nav>
 </aside>
 
-<!-- ===== Content ===== -->
 <main class="content">
 
-<!-- ====== 简介 ====== -->
+<!-- ====== Intro ====== -->
 <div class="section" id="intro">
 <h2 data-l10n="sec_intro">简介</h2>
 
-<p>Rocky 是一个<strong>交互式 AI 编程智能体 (Agent)</strong>，名字来自《挽救计划》里的外星工程师 Rocky — 热情、好奇、偶尔出错、但总能搞定。</p>
-<p>Rocky 能在你的项目里<strong>读代码、改代码、跑命令</strong>，并实时流式展示推理过程。</p>
-<p>事情顺利时说 <span class="tag tag-green">amaze!</span>，困惑时说 <span class="tag tag-amber">i no know! i learn!</span></p>
+<p data-l10n="intro_p1">Rocky 是一个<strong>交互式 AI 编程智能体 (Agent)</strong>，名字来自《挽救计划》里的外星工程师 Rocky — 热情、好奇、偶尔出错、但总能搞定。</p>
+<p data-l10n="intro_p2">Rocky 能在你的项目里<strong>读代码、改代码、跑命令</strong>，并实时流式展示推理过程。</p>
+<p data-l10n="intro_p3">事情顺利时说 <span class="tag tag-green">amaze!</span>，困惑时说 <span class="tag tag-amber">i no know! i learn!</span></p>
 
-<h3>两种形态</h3>
+<h3 data-l10n="intro_modes">两种形态</h3>
 <ul class="ascii-bullets">
-  <li><strong>聊天伙伴</strong> — <code>rockycode chat</code>：在终端里用原生工具调用读写代码</li>
-  <li><strong>基准测试工具</strong> — <code>rockycode bench</code>：在 SWE-bench Verified 上打分</li>
+  <li data-l10n="intro_chat"><strong>聊天伙伴</strong> — <code>rockycode chat</code>：在终端里用原生工具调用读写代码</li>
+  <li data-l10n="intro_bench"><strong>基准测试工具</strong> — <code>rockycode bench</code>：在 SWE-bench Verified 上打分</li>
 </ul>
 
-<h3>工作原则</h3>
+<h3 data-l10n="intro_principles">工作原则</h3>
 <ol>
-  <li><strong>先搜索，再阅读，再编辑，最后测试。</strong></li>
-  <li><strong>读前先写？不行。</strong> Always read before write.</li>
-  <li>用 <strong>grep/glob</strong> 找代码；用 <strong>bash</strong> 跑测试。</li>
-  <li><strong>每次改动后都要跑测试。</strong></li>
-  <li>探索是为了理解，然后<strong>提交</strong>。交付的修复胜过完美的地图。</li>
+  <li data-l10n="intro_r1"><strong>先搜索，再阅读，再编辑，最后测试。</strong></li>
+  <li data-l10n="intro_r2"><strong>读前先写？不行。</strong> Always read before write.</li>
+  <li data-l10n="intro_r3">用 <strong>grep/glob</strong> 找代码；用 <strong>bash</strong> 跑测试。</li>
+  <li data-l10n="intro_r4"><strong>每次改动后都要跑测试。</strong></li>
+  <li data-l10n="intro_r5">探索是为了理解，然后<strong>提交</strong>。交付的修复胜过完美的地图。</li>
 </ol>
 
-<h3>工具清单</h3>
-<h4>搜索工具</h4>
+<h3 data-l10n="intro_tools">工具清单</h3>
+<h4 data-l10n="intro_search_tools">搜索工具</h4>
 <table>
-  <tr><th>工具</th><th>说明</th></tr>
-  <tr><td><strong>grep</strong></td><td>用正则表达式搜索文件内容</td></tr>
-  <tr><td><strong>glob</strong></td><td>按路径模式列出文件</td></tr>
-  <tr><td><strong>web_search</strong></td><td>搜索网络</td></tr>
-  <tr><td><strong>web_fetch</strong></td><td>抓取 URL 文本内容</td></tr>
+  <tr><th data-l10n="th_tool">工具</th><th data-l10n="th_desc">说明</th></tr>
+  <tr><td><strong>grep</strong></td><td data-l10n="td_grep">用正则表达式搜索文件内容</td></tr>
+  <tr><td><strong>glob</strong></td><td data-l10n="td_glob">按路径模式列出文件</td></tr>
+  <tr><td><strong>web_search</strong></td><td data-l10n="td_websearch">搜索网络</td></tr>
+  <tr><td><strong>web_fetch</strong></td><td data-l10n="td_webfetch">抓取 URL 文本内容</td></tr>
 </table>
 
-<h4>读写工具</h4>
+<h4 data-l10n="intro_rw_tools">读写工具</h4>
 <table>
-  <tr><th>工具</th><th>说明</th></tr>
-  <tr><td><strong>read_file</strong></td><td>读取文件或列出目录</td></tr>
-  <tr><td><strong>edit_file</strong></td><td>精确替换旧字符串为新字符串</td></tr>
-  <tr><td><strong>write_file</strong></td><td>创建或覆盖文件</td></tr>
+  <tr><th data-l10n="th_tool">工具</th><th data-l10n="th_desc">说明</th></tr>
+  <tr><td><strong>read_file</strong></td><td data-l10n="td_read">读取文件或列出目录</td></tr>
+  <tr><td><strong>edit_file</strong></td><td data-l10n="td_edit">精确替换旧字符串为新字符串</td></tr>
+  <tr><td><strong>write_file</strong></td><td data-l10n="td_write">创建或覆盖文件</td></tr>
 </table>
 
-<h4>运行 & 记忆工具</h4>
+<h4 data-l10n="intro_run_tools">运行 & 记忆工具</h4>
 <table>
-  <tr><th>工具</th><th>说明</th></tr>
-  <tr><td><strong>bash</strong></td><td>运行 shell 命令</td></tr>
-  <tr><td><strong>remember</strong></td><td>保存记忆</td></tr>
-  <tr><td><strong>recall_memory</strong></td><td>查找记忆</td></tr>
-  <tr><td><strong>create_artifact</strong></td><td>创建可视化报告并在浏览器打开</td></tr>
+  <tr><th data-l10n="th_tool">工具</th><th data-l10n="th_desc">说明</th></tr>
+  <tr><td><strong>bash</strong></td><td data-l10n="td_bash">运行 shell 命令</td></tr>
+  <tr><td><strong>remember</strong></td><td data-l10n="td_remember">保存记忆</td></tr>
+  <tr><td><strong>recall_memory</strong></td><td data-l10n="td_recall">查找记忆</td></tr>
+  <tr><td><strong>create_artifact</strong></td><td data-l10n="td_artifact">创建可视化报告并在浏览器打开</td></tr>
 </table>
 </div>
 
-<!-- ====== 安装 ====== -->
+<!-- ====== Install ====== -->
 <div class="section" id="install">
 <h2 data-l10n="sec_install">安装</h2>
 
-<h3>环境要求</h3>
+<h3 data-l10n="inst_reqs">环境要求</h3>
 <table>
-  <tr><th>依赖</th><th>用途</th></tr>
-  <tr><td><strong>Python 3.11+</strong></td><td>运行核心引擎</td></tr>
-  <tr><td><strong>uv</strong></td><td>Python 包管理（比 pip 快很多）</td></tr>
-  <tr><td><strong>OpenAI 兼容 API Key</strong></td><td>驱动模型（默认目标：DeepSeek）</td></tr>
-  <tr><td><strong>Git</strong></td><td>克隆仓库</td></tr>
-  <tr><td><strong>Docker Desktop</strong></td><td>仅跑基准测试需要；纯聊天不需要</td></tr>
-  <tr><td><strong>Ollama</strong> <span class="tag tag-amber">可选</span></td><td>本地方案：语义记忆搜索 + 梦境</td></tr>
+  <tr><th data-l10n="th_dep">依赖</th><th data-l10n="th_use">用途</th></tr>
+  <tr><td><strong>Python 3.11+</strong></td><td data-l10n="td_python">运行核心引擎</td></tr>
+  <tr><td><strong>uv</strong></td><td data-l10n="td_uv">Python 包管理（比 pip 快很多）</td></tr>
+  <tr><td><strong>OpenAI 兼容 API Key</strong></td><td data-l10n="td_apikey">驱动模型（默认目标：DeepSeek）</td></tr>
+  <tr><td><strong>Git</strong></td><td data-l10n="td_git">克隆仓库</td></tr>
+  <tr><td><strong>Docker Desktop</strong></td><td data-l10n="td_docker">仅跑基准测试需要；纯聊天不需要</td></tr>
+  <tr><td><strong>Ollama</strong> <span class="tag tag-amber" data-l10n="tag_opt">可选</span></td><td data-l10n="td_ollama">本地方案：语义记忆搜索 + 梦境</td></tr>
 </table>
-<div class="tip"><strong>提示：</strong>如果不跑 benchmark，只需 Python + uv + API Key，无需 Docker。</div>
+<div class="tip"><strong data-l10n="tip_label">提示：</strong><span data-l10n="tip_nodocker">如果不跑 benchmark，只需 Python + uv + API Key，无需 Docker。</span></div>
 
-<h3>安装步骤</h3>
+<h3 data-l10n="inst_steps">安装步骤</h3>
 
-<div class="step"><strong>步骤 1：</strong>安装 <code>uv</code></div>
+<div class="step"><strong data-l10n="step_label">步骤 1：</strong><span data-l10n="step1_text">安装</span> <code>uv</code></div>
 <pre><code># macOS / Linux
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # Windows
 powershell -c "irm https://astral.sh/uv/install.ps1 | iex"</code></pre>
 
-<div class="step"><strong>步骤 2：</strong>克隆仓库并安装依赖</div>
+<div class="step"><strong data-l10n="step_label2">步骤 2：</strong><span data-l10n="step2_text">克隆仓库并安装依赖</span></div>
 <pre><code>git clone &lt;仓库地址&gt; rockycode && cd rockycode
 uv sync</code></pre>
 
-<div class="step"><strong>步骤 3：</strong>配置 API Key</div>
+<div class="step"><strong data-l10n="step_label3">步骤 3：</strong><span data-l10n="step3_text">配置 API Key</span></div>
 <pre><code>cp .env.example .env</code></pre>
 
-<div class="step"><strong>步骤 4：</strong>验证安装</div>
+<div class="step"><strong data-l10n="step_label4">步骤 4：</strong><span data-l10n="step4_text">验证安装</span></div>
 <pre><code>uv run rockycode --help</code></pre>
-<div class="note"><strong>注意：</strong>所有命令都通过 <code>uv run</code> 运行。</div>
+<div class="note"><strong data-l10n="note_label">注意：</strong><span data-l10n="note_uv">所有命令都通过</span> <code>uv run</code> <span data-l10n="note_uv2">运行。</span></div>
 </div>
 
-<!-- ====== 配置 ====== -->
+<!-- ====== Config ====== -->
 <div class="section" id="config">
 <h2 data-l10n="sec_config">配置</h2>
-<p>所有配置通过 <code>.env</code> 文件管理：</p>
+<p data-l10n="cfg_desc">所有配置通过 <code>.env</code> 文件管理：</p>
 <pre><code>cp .env.example .env</code></pre>
 
-<h3>必备配置</h3>
+<h3 data-l10n="cfg_required">必备配置</h3>
 <table>
-  <tr><th>变量</th><th>说明</th><th>默认值</th></tr>
-  <tr><td><code>OPENAI_API_KEY</code></td><td>你的 API Key</td><td><code>sk-replace-me</code></td></tr>
-  <tr><td><code>OPENAI_BASE_URL</code></td><td>API 端点地址</td><td><code>https://api.deepseek.com/v1</code></td></tr>
+  <tr><th data-l10n="th_var">变量</th><th data-l10n="th_desc">说明</th><th data-l10n="th_default">默认值</th></tr>
+  <tr><td><code>OPENAI_API_KEY</code></td><td data-l10n="td_apikey2">你的 API Key</td><td><code>sk-replace-me</code></td></tr>
+  <tr><td><code>OPENAI_BASE_URL</code></td><td data-l10n="td_baseurl">API 端点地址</td><td><code>https://api.deepseek.com/v1</code></td></tr>
 </table>
 
-<h3>模型配置</h3>
+<h3 data-l10n="cfg_model">模型配置</h3>
 <table>
-  <tr><th>变量</th><th>说明</th><th>默认值</th></tr>
-  <tr><td><code>ROCKYCODE_MODEL</code></td><td>使用的模型 ID</td><td><code>deepseek-v4-pro</code></td></tr>
-  <tr><td><code>ROCKYCODE_THINKING</code></td><td>启用思维链 (CoT)</td><td><code>true</code></td></tr>
-  <tr><td><code>ROCKYCODE_REASONING_EFFORT</code></td><td>推理深度</td><td><code>max</code></td></tr>
-  <tr><td><code>ROCKYCODE_MAX_TOKENS</code></td><td>响应 token 上限</td><td><code>16384</code></td></tr>
+  <tr><th data-l10n="th_var">变量</th><th data-l10n="th_desc">说明</th><th data-l10n="th_default">默认值</th></tr>
+  <tr><td><code>ROCKYCODE_MODEL</code></td><td data-l10n="td_modelid">使用的模型 ID</td><td><code>deepseek-v4-pro</code></td></tr>
+  <tr><td><code>ROCKYCODE_THINKING</code></td><td data-l10n="td_thinking">启用思维链 (CoT)</td><td><code>true</code></td></tr>
+  <tr><td><code>ROCKYCODE_REASONING_EFFORT</code></td><td data-l10n="td_effort">推理深度</td><td><code>max</code></td></tr>
+  <tr><td><code>ROCKYCODE_MAX_TOKENS</code></td><td data-l10n="td_tokens">响应 token 上限</td><td><code>16384</code></td></tr>
 </table>
 
-<div class="tip"><strong>最佳实践：</strong>Pro Max = <code>deepseek-v4-pro</code> + <code>THINKING=true</code> + <code>REASONING_EFFORT=max</code></div>
+<div class="tip"><strong data-l10n="tip_label2">最佳实践：</strong><span data-l10n="tip_promax">Pro Max = </span><code>deepseek-v4-pro</code> + <code>THINKING=true</code> + <code>REASONING_EFFORT=max</code></div>
 
-<h3>命令行覆盖</h3>
+<h3 data-l10n="cfg_cli">命令行覆盖</h3>
 <pre><code>uv run rockycode chat --model deepseek-v4-flash
 uv run rockycode chat --no-thinking
 uv run rockycode chat --reasoning-effort high
 uv run rockycode chat --max-steps 20
 uv run rockycode chat --no-memory --no-mcp --no-skills</code></pre>
 
-<h3>注意事项</h3>
+<h3 data-l10n="cfg_notes">注意事项</h3>
 <ul class="ascii-bullets">
-  <li><code>edit_file</code> 的 <strong>old_string 必须在文件中唯一</strong>，否则会失败</li>
-  <li><code>create_artifact</code> 只传 BODY 内容，不用写 HTML 外壳</li>
-  <li>内嵌 SVG/Mermaid 直接用，不引外部 CDN</li>
-  <li>用相同 title 调用 <code>create_artifact</code> 会原地更新</li>
-  <li>首次 bench 较慢：需下载数据集和 Docker 镜像（永久缓存）</li>
-  <li>Apple Silicon: Docker Desktop 开启 "Use Rosetta"</li>
-  <li>Bench 中记忆 / MCP / Skills 均不加载，确保分数纯净</li>
+  <li data-l10n="cfg_n1"><code>edit_file</code> 的 <strong>old_string 必须在文件中唯一</strong>，否则会失败</li>
+  <li data-l10n="cfg_n2"><code>create_artifact</code> 只传 BODY 内容，不用写 HTML 外壳</li>
+  <li data-l10n="cfg_n3">内嵌 SVG/Mermaid 直接用，不引外部 CDN</li>
+  <li data-l10n="cfg_n4">用相同 title 调用 <code>create_artifact</code> 会原地更新</li>
+  <li data-l10n="cfg_n5">首次 bench 较慢：需下载数据集和 Docker 镜像（永久缓存）</li>
+  <li data-l10n="cfg_n6">Apple Silicon: Docker Desktop 开启 "Use Rosetta"</li>
+  <li data-l10n="cfg_n7">Bench 中记忆 / MCP / Skills 均不加载，确保分数纯净</li>
 </ul>
 </div>
 
-<!-- ====== 使用 ====== -->
+<!-- ====== Usage ====== -->
 <div class="section" id="usage">
 <h2 data-l10n="sec_usage">使用</h2>
 
-<h3>开始对话</h3>
+<h3 data-l10n="use_chat">开始对话</h3>
 <pre><code># 在当前目录下启动 Rocky
 uv run rockycode chat
 
@@ -366,56 +337,56 @@ uv run rockycode chat -C ~/code/myproject
 uv run rockycode chat --no-memory
 uv run rockycode chat --no-mcp
 uv run rockycode chat --no-skills</code></pre>
-<p>启动后看到<strong>终端界面 (TUI)</strong>，底部输入框，上面对话历史。Rocky 实时流式展示思考和工具调用过程。</p>
+<p data-l10n="use_chat_desc">启动后看到<strong>终端界面 (TUI)</strong>，底部输入框，上面对话历史。Rocky 实时流式展示思考和工具调用过程。</p>
 
-<h3>对话命令</h3>
+<h3 data-l10n="use_cmds">对话命令</h3>
 <table>
-  <tr><th>命令</th><th>功能</th></tr>
-  <tr><td><code>/help</code></td><td>显示帮助</td></tr>
-  <tr><td><code>/prompt</code></td><td>查看当前系统提示词</td></tr>
-  <tr><td><code>/mcp</code></td><td>查看已连接的 MCP 服务</td></tr>
-  <tr><td><code>/skills</code></td><td>查看已安装的技能</td></tr>
-  <tr><td><code>/memory</code></td><td>查看 Rocky 记得什么</td></tr>
-  <tr><td><code>/remember &lt;内容&gt;</code></td><td>保存一条记忆</td></tr>
-  <tr><td><code>/clear</code></td><td>清空对话</td></tr>
-  <tr><td><code>/exit</code></td><td>退出</td></tr>
+  <tr><th data-l10n="th_cmd">命令</th><th data-l10n="th_func">功能</th></tr>
+  <tr><td><code>/help</code></td><td data-l10n="td_help">显示帮助</td></tr>
+  <tr><td><code>/prompt</code></td><td data-l10n="td_prompt">查看当前系统提示词</td></tr>
+  <tr><td><code>/mcp</code></td><td data-l10n="td_mcp">查看已连接的 MCP 服务</td></tr>
+  <tr><td><code>/skills</code></td><td data-l10n="td_skills">查看已安装的技能</td></tr>
+  <tr><td><code>/memory</code></td><td data-l10n="td_memory">查看 Rocky 记得什么</td></tr>
+  <tr><td><code>/remember &lt;内容&gt;</code></td><td data-l10n="td_remember_cmd">保存一条记忆</td></tr>
+  <tr><td><code>/clear</code></td><td data-l10n="td_clear">清空对话</td></tr>
+  <tr><td><code>/exit</code></td><td data-l10n="td_exit">退出</td></tr>
 </table>
 
-<h3>Shell 集成</h3>
-<p>以 <code>!</code> 开头直接在 shell 执行：</p>
+<h3 data-l10n="use_shell">Shell 集成</h3>
+<p data-l10n="use_shell_desc">以 <code>!</code> 开头直接在 shell 执行：</p>
 <pre><code>!ls -la
 !python --version
 !git status</code></pre>
 
-<h3>运行基准测试</h3>
-<p>内置 <strong>SWE-bench Verified</strong> 评测：</p>
+<h3 data-l10n="use_bench">运行基准测试</h3>
+<p data-l10n="use_bench_desc">内置 <strong>SWE-bench Verified</strong> 评测：</p>
 <pre><code># Raw 单次基线
 uv run rockycode bench --runner raw --tasks dev10
 
 # 完整 Rocky 引擎
 uv run rockycode bench --runner rockycode --tasks dev10</code></pre>
 
-<h3>记忆系统</h3>
-<p>跨会话记忆，纯 Markdown 文件存储在 <code>.rockycode/memory/</code>：</p>
+<h3 data-l10n="use_memory">记忆系统</h3>
+<p data-l10n="use_memory_desc">跨会话记忆，纯 Markdown 文件存储在 <code>.rockycode/memory/</code>：</p>
 <pre><code>rockycode memory list          # 列出所有记忆
 rockycode memory show &lt;name&gt;   # 查看一条
 rockycode memory search &lt;词&gt;   # 搜索</code></pre>
 
-<h3>梦境系统</h3>
-<p>离线整理对话，零 API 费用：</p>
+<h3 data-l10n="use_dream">梦境系统</h3>
+<p data-l10n="use_dream_desc">离线整理对话，零 API 费用：</p>
 <pre><code>uv run rockycode dream --dry-run   # 预览
 uv run rockycode dream             # 正式执行</code></pre>
 
-<h3>提示词实验室</h3>
+<h3 data-l10n="use_promptlab">提示词实验室</h3>
 <pre><code>cp prompts/rocky-v1.txt prompts/my-variant.txt
 uv run rockycode bench --runner rockycode --tasks dev10 --prompt prompts/my-variant.txt</code></pre>
 
-<h3>Skills &amp; MCP</h3>
-<p>Rocky 零迁移成本读取已有工具配置。MCP 服务从 <code>.mcp.json</code>、Claude Code、Claude Desktop、Codex 自动发现。Skills 从 <code>.claude/skills/</code>、<code>.rockycode/skills/</code> 等位置自动发现。</p>
+<h3 data-l10n="use_mcp">Skills &amp; MCP</h3>
+<p data-l10n="use_mcp_desc">Rocky 零迁移成本读取已有工具配置。MCP 服务从 <code>.mcp.json</code>、Claude Code、Claude Desktop、Codex 自动发现。Skills 从 <code>.claude/skills/</code>、<code>.rockycode/skills/</code> 等位置自动发现。</p>
 
-<h3>测试命令参考</h3>
+<h3 data-l10n="use_testref">测试命令参考</h3>
 <table>
-  <tr><th>语言 / 工具</th><th>测试命令</th></tr>
+  <tr><th data-l10n="th_lang">语言 / 工具</th><th data-l10n="th_testcmd">测试命令</th></tr>
   <tr><td>Python</td><td><code>python -m pytest</code></td></tr>
   <tr><td>Java / Gradle</td><td><code>./gradlew test</code></td></tr>
   <tr><td>JavaScript</td><td><code>npm test</code></td></tr>
@@ -428,25 +399,134 @@ uv run rockycode bench --runner rockycode --tasks dev10 --prompt prompts/my-vari
 </div>
 </div>
 
-<!-- ============ Footer ============ -->
 <div class="footer">
   <p>Rocky — amaze!</p>
-  <p style="margin-top:var(--s8)"><a href="https://github.com/cicialgo/rockycode">GitHub</a> &middot; <a href="docs.html">文档</a> &middot; <a href="#">下载</a></p>
+  <p style="margin-top:var(--s8)"><a href="https://github.com/cicialgo/rockycode">GitHub</a> &middot; <a href="docs.html" data-l10n="footer_docs">文档</a> &middot; <a href="#" data-l10n="footer_download">下载</a></p>
 </div>
 
 <script>
 // ===== L10n =====
 var T = {
-  side_intro:   ["简介","Overview"],
-  side_install: ["安装","Install"],
-  side_config:  ["配置","Config"],
-  side_usage:   ["使用","Usage"],
-  side_title:   ["页面导航","On this page"],
-  sec_intro:    ["简介","Overview"],
-  sec_install:  ["安装","Installation"],
-  sec_config:   ["配置","Configuration"],
-  sec_usage:    ["使用","Usage"],
+  banner:["Rocky Beta 版现已推出 — 支持 macOS、Windows 和 Linux。","Rocky Beta is now available for macOS, Windows, and Linux."],
+  banner_cta:["立即下载","Download"],
+  nav_docs:["文档","Docs"],
+  nav_download:["下载","Download"],
+  nav_cta:["立即下载","Download"],
+  side_title:["页面导航","On This Page"],
+  side_intro:["简介","Overview"],
+  side_install:["安装","Install"],
+  side_config:["配置","Config"],
+  side_usage:["使用","Usage"],
+  sec_intro:["简介","Overview"],
+  sec_install:["安装","Installation"],
+  sec_config:["配置","Configuration"],
+  sec_usage:["使用","Usage"],
+  intro_p1:["Rocky 是一个<strong>交互式 AI 编程智能体 (Agent)</strong>，名字来自《挽救计划》里的外星工程师 Rocky — 热情、好奇、偶尔出错、但总能搞定。","Rocky is an <strong>interactive AI coding agent</strong>, named after the alien engineer from <i>Project Hail Mary</i> — enthusiastic, curious, occasionally wrong, but always gets it done."],
+  intro_p2:["Rocky 能在你的项目里<strong>读代码、改代码、跑命令</strong>，并实时流式展示推理过程。","Rocky can <strong>read code, edit code, and run commands</strong> in your project, streaming its reasoning in real time."],
+  intro_p3:["事情顺利时说 <span class=\"tag tag-green\">amaze!</span>，困惑时说 <span class=\"tag tag-amber\">i no know! i learn!</span>","When things go well: <span class=\"tag tag-green\">amaze!</span> When confused: <span class=\"tag tag-amber\">i no know! i learn!</span>"],
+  intro_modes:["两种形态","Two Modes"],
+  intro_chat:["<strong>聊天伙伴</strong> — <code>rockycode chat</code>：在终端里用原生工具调用读写代码","<strong>Chat Partner</strong> — <code>rockycode chat</code>: Read and write code in the terminal with native tool calls"],
+  intro_bench:["<strong>基准测试工具</strong> — <code>rockycode bench</code>：在 SWE-bench Verified 上打分","<strong>Benchmark Tool</strong> — <code>rockycode bench</code>: Score on SWE-bench Verified"],
+  intro_principles:["工作原则","Working Principles"],
+  intro_r1:["<strong>先搜索，再阅读，再编辑，最后测试。</strong>","<strong>Search first, read next, then edit, finally test.</strong>"],
+  intro_r2:["<strong>读前先写？不行。</strong> Always read before write.","<strong>Write before read? No.</strong> Always read before write."],
+  intro_r3:["用 <strong>grep/glob</strong> 找代码；用 <strong>bash</strong> 跑测试。","Use <strong>grep/glob</strong> to find code; use <strong>bash</strong> to run tests."],
+  intro_r4:["<strong>每次改动后都要跑测试。</strong>","<strong>Run tests after every change.</strong>"],
+  intro_r5:["探索是为了理解，然后<strong>提交</strong>。交付的修复胜过完美的地图。","Explore to understand, then <strong>commit</strong>. Delivered fixes beat perfect maps."],
+  intro_tools:["工具清单","Tool List"],
+  intro_search_tools:["搜索工具","Search Tools"],
+  th_tool:["工具","Tool"],
+  th_desc:["说明","Description"],
+  td_grep:["用正则表达式搜索文件内容","Search file contents with regex"],
+  td_glob:["按路径模式列出文件","List files by path pattern"],
+  td_websearch:["搜索网络","Search the web"],
+  td_webfetch:["抓取 URL 文本内容","Fetch URL text content"],
+  intro_rw_tools:["读写工具","Read & Write Tools"],
+  td_read:["读取文件或列出目录","Read a file or list a directory"],
+  td_edit:["精确替换旧字符串为新字符串","Replace old string with new string exactly"],
+  td_write:["创建或覆盖文件","Create or overwrite a file"],
+  intro_run_tools:["运行 & 记忆工具","Run & Memory Tools"],
+  td_bash:["运行 shell 命令","Run shell commands"],
+  td_remember:["保存记忆","Save a memory"],
+  td_recall:["查找记忆","Recall a memory"],
+  td_artifact:["创建可视化报告并在浏览器打开","Create a visual report and open in browser"],
+  inst_reqs:["环境要求","Requirements"],
+  th_dep:["依赖","Dependency"],
+  th_use:["用途","Purpose"],
+  td_python:["运行核心引擎","Run the core engine"],
+  td_uv:["Python 包管理（比 pip 快很多）","Python package manager (much faster than pip)"],
+  td_apikey:["驱动模型（默认目标：DeepSeek）","Power the model (defaults to DeepSeek)"],
+  td_git:["克隆仓库","Clone the repository"],
+  td_docker:["仅跑基准测试需要；纯聊天不需要","Only needed for benchmarks; not needed for chat"],
+  td_ollama:["本地方案：语义记忆搜索 + 梦境","Local: semantic memory search + dream"],
+  tag_opt:["可选","Optional"],
+  tip_label:["提示：","Tip: "],
+  tip_nodocker:["如果不跑 benchmark，只需 Python + uv + API Key，无需 Docker。","If you don't run benchmarks, you only need Python + uv + API Key, no Docker."],
+  inst_steps:["安装步骤","Installation Steps"],
+  step_label:["步骤 1：","Step 1: "],
+  step1_text:["安装","Install"],
+  step_label2:["步骤 2：","Step 2: "],
+  step2_text:["克隆仓库并安装依赖","Clone the repo and install dependencies"],
+  step_label3:["步骤 3：","Step 3: "],
+  step3_text:["配置 API Key","Configure API Key"],
+  step_label4:["步骤 4：","Step 4: "],
+  step4_text:["验证安装","Verify installation"],
+  note_label:["注意：","Note: "],
+  note_uv:["所有命令都通过","All commands run via"],
+  note_uv2:["运行。","."],
+  cfg_desc:["所有配置通过 <code>.env</code> 文件管理：","All configuration is managed via the <code>.env</code> file:"],
+  cfg_required:["必备配置","Required Configuration"],
+  th_var:["变量","Variable"],
+  th_default:["默认值","Default"],
+  td_apikey2:["你的 API Key","Your API key"],
+  td_baseurl:["API 端点地址","API endpoint URL"],
+  cfg_model:["模型配置","Model Configuration"],
+  td_modelid:["使用的模型 ID","Model ID to use"],
+  td_thinking:["启用思维链 (CoT)","Enable Chain-of-Thought"],
+  td_effort:["推理深度","Reasoning depth"],
+  td_tokens:["响应 token 上限","Response token limit"],
+  tip_label2:["最佳实践：","Best Practice: "],
+  tip_promax:["Pro Max = ","Pro Max = "],
+  cfg_cli:["命令行覆盖","CLI Overrides"],
+  cfg_notes:["注意事项","Notes"],
+  cfg_n1:["<code>edit_file</code> 的 <strong>old_string 必须在文件中唯一</strong>，否则会失败","<code>edit_file</code> requires <strong>old_string to be unique in the file</strong>, or it will fail"],
+  cfg_n2:["<code>create_artifact</code> 只传 BODY 内容，不用写 HTML 外壳","<code>create_artifact</code> only takes BODY content, don't write HTML shell"],
+  cfg_n3:["内嵌 SVG/Mermaid 直接用，不引外部 CDN","Embed SVG/Mermaid directly, no external CDN"],
+  cfg_n4:["用相同 title 调用 <code>create_artifact</code> 会原地更新","Calling <code>create_artifact</code> with the same title updates in-place"],
+  cfg_n5:["首次 bench 较慢：需下载数据集和 Docker 镜像（永久缓存）","First bench run is slow: downloads datasets and Docker images (cached permanently)"],
+  cfg_n6:["Apple Silicon: Docker Desktop 开启 \"Use Rosetta\"","Apple Silicon: Enable \"Use Rosetta\" in Docker Desktop"],
+  cfg_n7:["Bench 中记忆 / MCP / Skills 均不加载，确保分数纯净","Memory / MCP / Skills are not loaded in bench for clean scores"],
+  use_chat:["开始对话","Start Chatting"],
+  use_chat_desc:["启动后看到<strong>终端界面 (TUI)</strong>，底部输入框，上面对话历史。Rocky 实时流式展示思考和工具调用过程。","Launches a <strong>Terminal UI (TUI)</strong> with an input box at the bottom and chat history above. Rocky streams its reasoning and tool calls in real time."],
+  use_cmds:["对话命令","Chat Commands"],
+  th_cmd:["命令","Command"],
+  th_func:["功能","Function"],
+  td_help:["显示帮助","Show help"],
+  td_prompt:["查看当前系统提示词","View current system prompt"],
+  td_mcp:["查看已连接的 MCP 服务","View connected MCP services"],
+  td_skills:["查看已安装的技能","View installed skills"],
+  td_memory:["查看 Rocky 记得什么","See what Rocky remembers"],
+  td_remember_cmd:["保存一条记忆","Save a memory"],
+  td_clear:["清空对话","Clear conversation"],
+  td_exit:["退出","Exit"],
+  use_shell:["Shell 集成","Shell Integration"],
+  use_shell_desc:["以 <code>!</code> 开头直接在 shell 执行：","Lines starting with <code>!</code> execute directly in the shell:"],
+  use_bench:["运行基准测试","Running Benchmarks"],
+  use_bench_desc:["内置 <strong>SWE-bench Verified</strong> 评测：","Built-in <strong>SWE-bench Verified</strong> evaluation:"],
+  use_memory:["记忆系统","Memory System"],
+  use_memory_desc:["跨会话记忆，纯 Markdown 文件存储在 <code>.rockycode/memory/</code>：","Cross-session memory stored as plain Markdown files in <code>.rockycode/memory/</code>:"],
+  use_dream:["梦境系统","Dream System"],
+  use_dream_desc:["离线整理对话，零 API 费用：","Digest conversations offline, zero API cost:"],
+  use_promptlab:["提示词实验室","Prompt Lab"],
+  use_mcp:["Skills &amp; MCP","Skills &amp; MCP"],
+  use_mcp_desc:["Rocky 零迁移成本读取已有工具配置。MCP 服务从 <code>.mcp.json</code>、Claude Code、Claude Desktop、Codex 自动发现。Skills 从 <code>.claude/skills/</code>、<code>.rockycode/skills/</code> 等位置自动发现。","Rocky reads your existing tool configs with zero migration. MCP services auto-discovered from <code>.mcp.json</code>, Claude Code, Claude Desktop, Codex. Skills auto-discovered from <code>.claude/skills/</code>, <code>.rockycode/skills/</code>, and more."],
+  use_testref:["测试命令参考","Test Command Reference"],
+  th_lang:["语言 / 工具","Language / Tool"],
+  th_testcmd:["测试命令","Test Command"],
+  footer_docs:["文档","Docs"],
+  footer_download:["下载","Download"],
 };
+
 var L = (localStorage.getItem('rocky-lang') || 'zh');
 var L_idx = (L === 'en') ? 1 : 0;
 
@@ -457,7 +537,7 @@ function applyLang() {
   document.documentElement.lang = L === 'en' ? 'en' : 'zh-CN';
   document.querySelectorAll('[data-l10n]').forEach(function(el) {
     var k = el.getAttribute('data-l10n');
-    if (T[k]) { el.textContent = T[k][L_idx]; }
+    if (T[k]) { el.innerHTML = T[k][L_idx]; }
   });
   localStorage.setItem('rocky-lang', L);
 }
@@ -480,7 +560,6 @@ window.addEventListener('scroll', function() {
   });
 });
 
-// Smooth anchor scroll
 links.forEach(function(link) {
   link.addEventListener('click', function(e) {
     e.preventDefault();
