@@ -81,11 +81,12 @@
 
   /* --- Lang Toggle --- */
   .lang-toggle {
+    position: fixed; top: var(--s16); right: var(--s24); z-index: 100;
     font-family: var(--font); font-size: 13px; font-weight: 500;
-    color: var(--muted); background: transparent;
+    color: var(--muted); background: var(--ink);
     border: 1px solid var(--hairline); border-radius: var(--r-sm);
     padding: var(--s8) var(--s16); cursor: pointer;
-    transition: color 0.15s, border-color 0.15s;
+    transition: color 0.15s, border-color 0.15s, background 0.15s;
     line-height: 1;
   }
   .lang-toggle:hover { color: var(--accent); border-color: var(--accent); }
@@ -269,7 +270,6 @@
   ╚═╝  ╚═╝  ╚═════╝   ╚═════╝╚═╝  ╚═╝   ╚═╝
   </a>
   <div class="nav-right">
-    <button class="lang-toggle" onclick="switchLang()">EN</button>
     <div class="nav-tabs">
       <a href="https://github.com/cicialgo/rockycode" class="nav-tab">Git</a>
       <a href="docs.html" class="nav-tab" data-l10n="nav_docs">文档</a>
@@ -278,6 +278,8 @@
     <a href="#" class="nav-cta" data-l10n="nav_cta">立即下载</a>
   </div>
 </nav>
+
+<button class="lang-toggle" onclick="switchLang()">EN / 中</button>
 
 <!-- ============ Hero ============ -->
 <div class="hero">
@@ -491,7 +493,9 @@ var L_idx = (L === 'en') ? 1 : 0;
 function applyLang() {
   L_idx = (L === 'en') ? 1 : 0;
   var btn = document.querySelector('.lang-toggle');
-  if (btn) btn.textContent = L === 'en' ? '中' : 'EN';
+  if (btn) btn.innerHTML = L === 'en'
+    ? '<span style="color:var(--stone)">EN</span> / <span style="color:var(--accent);font-weight:700">中</span>'
+    : '<span style="color:var(--accent);font-weight:700">EN</span> / <span style="color:var(--stone)">中</span>';
   document.documentElement.lang = L === 'en' ? 'en' : 'zh-CN';
 
   document.querySelectorAll('[data-l10n]').forEach(function(el) {
