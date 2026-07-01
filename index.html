@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rocky — 开源 AI 编程代理</title>
+<title>Rocky — Open Source AI Coding Agent</title>
 <meta name="author" content="Rocky">
 <style>
   :root {
@@ -79,6 +79,17 @@
   }
   .nav-cta:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
 
+  /* --- Lang Toggle --- */
+  .lang-toggle {
+    font-family: var(--font); font-size: 13px; font-weight: 500;
+    color: var(--muted); background: transparent;
+    border: 1px solid var(--hairline); border-radius: var(--r-sm);
+    padding: var(--s8) var(--s16); cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+    line-height: 1;
+  }
+  .lang-toggle:hover { color: var(--accent); border-color: var(--accent); }
+
   /* --- Hero --- */
   .hero {
     text-align: center;
@@ -95,7 +106,6 @@
   .hero .subtitle a { color: var(--accent); text-decoration: none; }
   .hero .subtitle a:hover { text-decoration: underline; }
 
-  /* --- Install Tabs --- */
   .install-tabs {
     display: flex; justify-content: center; gap: var(--s8);
     margin-bottom: var(--s8); flex-wrap: wrap;
@@ -110,7 +120,6 @@
   .install-tab:hover { color: var(--accent-hover); border-color: var(--accent); }
   .install-tab.active { color: var(--accent); border-color: var(--accent); background: var(--accent-soft); }
 
-  /* --- Install Command --- */
   .install-cmd {
     max-width: 640px; margin: 0 auto var(--s16);
     background: var(--canvas); border: 1px solid var(--hairline);
@@ -128,7 +137,6 @@
   }
   .install-cmd .copy-btn:hover { color: var(--accent); border-color: var(--accent); }
 
-  /* --- Hero CTA --- */
   .hero-cta {
     display: inline-block; margin-top: var(--s8);
     font-family: var(--font); font-size: 16px; font-weight: 500;
@@ -152,7 +160,6 @@
   .section .desc a { color: var(--accent); text-decoration: none; }
   .section .desc a:hover { text-decoration: underline; }
 
-  /* --- Feature List --- */
   .feature-list { list-style: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: var(--s16); }
   .feature-list li {
     font-size: 16px; color: var(--body); line-height: 1.5;
@@ -164,7 +171,6 @@
   }
   .feature-list li strong { color: var(--text); font-weight: 500; }
 
-  /* --- Stat Cards --- */
   .stat-grid {
     display: grid; grid-template-columns: repeat(3, 1fr);
     gap: var(--s16); margin-top: var(--s32);
@@ -180,7 +186,6 @@
   }
   .stat-card .label { font-size: 14px; color: var(--muted); }
 
-  /* --- Docs CTA Block --- */
   .docs-block {
     display: inline-block;
     margin-top: var(--s24);
@@ -194,10 +199,7 @@
   }
   .docs-block:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
 
-  /* --- FAQ --- */
-  .faq-item {
-    border-top: 1px solid var(--hairline);
-  }
+  .faq-item { border-top: 1px solid var(--hairline); }
   .faq-item:last-child { border-bottom: 1px solid var(--hairline); }
   .faq-q {
     display: flex; justify-content: space-between; align-items: center;
@@ -223,7 +225,6 @@
     padding: 0 0 var(--s24) 0;
   }
 
-  /* --- Footer --- */
   .footer {
     text-align: center; padding: var(--s64) 0;
     border-top: 1px solid var(--hairline);
@@ -232,7 +233,6 @@
   .footer a { color: var(--accent); text-decoration: none; }
   .footer a:hover { text-decoration: underline; }
 
-  /* --- Responsive --- */
   @media (max-width: 640px) {
     .hero { padding: var(--s48) 0 var(--s32); }
     .hero h1 { font-size: 32px; }
@@ -254,7 +254,8 @@
 
 <!-- ============ Banner ============ -->
 <div class="banner">
-  Rocky Beta 版现已推出 — 支持 macOS、Windows 和 Linux。<a href="#">立即下载</a>
+  <span data-l10n="banner">Rocky Beta 版现已推出 — 支持 macOS、Windows 和 Linux。</span>
+  <a href="#" data-l10n="banner_cta">立即下载</a>
 </div>
 
 <!-- ============ Nav ============ -->
@@ -268,24 +269,24 @@
   ╚═╝  ╚═╝  ╚═════╝   ╚═════╝╚═╝  ╚═╝   ╚═╝
   </a>
   <div class="nav-right">
+    <button class="lang-toggle" onclick="switchLang()" data-l10n-attrs="aria-label">中</button>
     <div class="nav-tabs">
       <a href="https://github.com/cicialgo/rockycode" class="nav-tab">Git</a>
-      <a href="docs.html" class="nav-tab">文档</a>
-      <a href="#" class="nav-tab">下载</a>
+      <a href="docs.html" class="nav-tab" data-l10n="nav_docs">文档</a>
+      <a href="#" class="nav-tab" data-l10n="nav_download">下载</a>
     </div>
-    <a href="#" class="nav-cta">立即下载</a>
+    <a href="#" class="nav-cta" data-l10n="nav_cta">立即下载</a>
   </div>
 </nav>
 
 <!-- ============ Hero ============ -->
 <div class="hero">
-  <h1>开源 AI 编程代理</h1>
+  <h1 data-l10n="hero_title">开源 AI 编程代理</h1>
   <p class="subtitle">
-    内置免费模型，或连接任意提供商的任意模型，<br>
-    包括 <a href="#">DeepSeek</a>、<a href="#">Claude</a>、<a href="#">GPT</a>、<a href="#">Gemini</a> 等。
+    <span data-l10n="hero_desc">内置免费模型，或连接任意提供商的任意模型，<br>包括</span>
+    <a href="#">DeepSeek</a>、<a href="#">Claude</a>、<a href="#">GPT</a>、<a href="#">Gemini</a> <span data-l10n="hero_etc">等</span>。
   </p>
 
-  <!-- Install tabs -->
   <div class="install-tabs">
     <button class="install-tab active" onclick="switchInstall(this, 'uv')">uv</button>
     <button class="install-tab" onclick="switchInstall(this, 'pip')">pip</button>
@@ -293,137 +294,226 @@
     <button class="install-tab" onclick="switchInstall(this, 'git')">git</button>
   </div>
 
-  <!-- Install command -->
   <div class="install-cmd" id="installCmd">
     <code>uv run rockycode chat</code>
-    <button class="copy-btn" onclick="copyCmd()">复制</button>
+    <button class="copy-btn" onclick="copyCmd()" data-l10n="copy">复制</button>
   </div>
 
-  <a href="#" class="hero-cta">立即下载</a>
+  <a href="#" class="hero-cta" data-l10n="hero_cta">立即下载</a>
 </div>
 
-<!-- ============ 什么是 Rocky ============ -->
+<!-- ============ What is Rocky ============ -->
 <div class="section">
-  <h2>什么是 Rocky？</h2>
+  <h2 data-l10n="what_title">什么是 Rocky？</h2>
   <p class="desc">
-    Rocky 是一个开源 AI 编程代理，帮助你在终端、IDE 或桌面端编写代码。它读代码、改代码、跑测试，实时流式展示推理过程。事情顺利时他说 <strong>amaze!</strong>，困惑时说 <strong>i no know! i learn!</strong>
+    <span data-l10n="what_desc">Rocky 是一个开源 AI 编程代理，帮助你在终端、IDE 或桌面端编写代码。它读代码、改代码、跑测试，实时流式展示推理过程。事情顺利时他说</span>
+    <strong>amaze!</strong>，<span data-l10n="what_confused">困惑时说</span>
+    <strong>i no know! i learn!</strong>
   </p>
 
   <ul class="feature-list">
-    <li><strong>思维链推理</strong> — 实时展示推理过程，透明可解释</li>
-    <li><strong>多模型支持</strong> — DeepSeek、Claude、GPT、Gemini 等 75+ 提供商</li>
-    <li><strong>LSP 集成</strong> — 自动加载合适的语言服务器，实时诊断</li>
-    <li><strong>多会话并行</strong> — 同一项目启动多个代理同时工作</li>
-    <li><strong>记忆系统</strong> — 跨会话持久记忆，文件即真理</li>
-    <li><strong>梦境系统</strong> — 离线整理对话，零 API 费用</li>
-    <li><strong>基准测试</strong> — SWE-bench Verified 打分，数字说话</li>
-    <li><strong>零迁移成本</strong> — 直接读取 Claude Code / Codex 已有配置</li>
-    <li><strong>MCP 支持</strong> — 自动发现 MCP 服务，扩展工具箱</li>
-    <li><strong>技能系统</strong> — 按需加载自定义技能，按需使用</li>
+    <li data-l10n="feat_reasoning"><strong>思维链推理</strong> — 实时展示推理过程，透明可解释</li>
+    <li data-l10n="feat_models"><strong>多模型支持</strong> — DeepSeek、Claude、GPT、Gemini 等 75+ 提供商</li>
+    <li data-l10n="feat_lsp"><strong>LSP 集成</strong> — 自动加载合适的语言服务器，实时诊断</li>
+    <li data-l10n="feat_parallel"><strong>多会话并行</strong> — 同一项目启动多个代理同时工作</li>
+    <li data-l10n="feat_memory"><strong>记忆系统</strong> — 跨会话持久记忆，文件即真理</li>
+    <li data-l10n="feat_dream"><strong>梦境系统</strong> — 离线整理对话，零 API 费用</li>
+    <li data-l10n="feat_bench"><strong>基准测试</strong> — SWE-bench Verified 打分，数字说话</li>
+    <li data-l10n="feat_migrate"><strong>零迁移成本</strong> — 直接读取 Claude Code / Codex 已有配置</li>
+    <li data-l10n="feat_mcp"><strong>MCP 支持</strong> — 自动发现 MCP 服务，扩展工具箱</li>
+    <li data-l10n="feat_skills"><strong>技能系统</strong> — 按需加载自定义技能，按需使用</li>
   </ul>
-  <a href="docs.html" class="docs-block">阅读文档</a>
+  <a href="docs.html" class="docs-block" data-l10n="read_docs">阅读文档</a>
 </div>
 
 <!-- ============ Stats ============ -->
 <div class="section">
-  <h2>开源 AI 编程代理</h2>
+  <h2 data-l10n="stats_title">开源 AI 编程代理</h2>
   <p class="desc">
-    Rocky 是 <strong>100% 开源的 AI 编程代理</strong>，采用 MIT 协议。从终端出发，为热爱命令行的开发者而生。
+    <span data-l10n="stats_desc">Rocky 是</span> <strong data-l10n="stats_bold">100% 开源的 AI 编程代理</strong>，<span data-l10n="stats_desc2">采用 MIT 协议。从终端出发，为热爱命令行的开发者而生。</span>
   </p>
 
   <div class="stat-grid">
     <div class="stat-card">
       <div class="num">75+</div>
-      <div class="label">模型提供商支持</div>
+      <div class="label" data-l10n="stat_providers">模型提供商支持</div>
     </div>
     <div class="stat-card">
       <div class="num">SWE-bench</div>
-      <div class="label">Verified 基准测试</div>
+      <div class="label" data-l10n="stat_bench">Verified 基准测试</div>
     </div>
     <div class="stat-card">
       <div class="num">MIT</div>
-      <div class="label">开源协议</div>
+      <div class="label" data-l10n="stat_license">开源协议</div>
     </div>
   </div>
 </div>
 
 <!-- ============ Privacy ============ -->
 <div class="section">
-  <h2>隐私优先的设计</h2>
+  <h2 data-l10n="privacy_title">隐私优先的设计</h2>
   <p class="desc">
-    Rocky <strong>不存储</strong>任何代码或上下文数据。所有记忆以纯 Markdown 文件存储在你本地 <code>.rockycode/memory/</code>，你拥有完全控制权。
-    <a href="#">了解更多关于隐私。</a>
+    <span data-l10n="privacy_desc">Rocky</span> <strong data-l10n="privacy_bold">不存储</strong><span data-l10n="privacy_desc2">任何代码或上下文数据。所有记忆以纯 Markdown 文件存储在你本地</span> <code>.rockycode/memory/</code>，<span data-l10n="privacy_desc3">你拥有完全控制权。</span>
+    <a href="#" data-l10n="privacy_link">了解更多关于隐私。</a>
   </p>
 </div>
 
 <!-- ============ FAQ ============ -->
 <div class="section">
-  <h2>常见问题</h2>
+  <h2 data-l10n="faq_title">常见问题</h2>
 
   <div class="faq-item">
     <button class="faq-q" onclick="toggleFaq(this)">
-      <span>什么是 Rocky？</span>
+      <span data-l10n="faq1_q">什么是 Rocky？</span>
       <span class="faq-marker">[+]</span>
     </button>
-    <div class="faq-a"><div class="faq-a-inner">Rocky 是一个交互式 AI 编程智能体，名字来自《挽救计划》里的外星工程师。他能在你的项目里读代码、改代码、跑命令，并实时流式展示推理过程。</div></div>
+    <div class="faq-a"><div class="faq-a-inner" data-l10n="faq1_a">Rocky 是一个交互式 AI 编程智能体，名字来自《挽救计划》里的外星工程师。他能在你的项目里读代码、改代码、跑命令，并实时流式展示推理过程。</div></div>
   </div>
 
   <div class="faq-item">
     <button class="faq-q" onclick="toggleFaq(this)">
-      <span>如何使用 Rocky？</span>
+      <span data-l10n="faq2_q">如何使用 Rocky？</span>
       <span class="faq-marker">[+]</span>
     </button>
-    <div class="faq-a"><div class="faq-a-inner">安装 Python 3.11+ 和 uv，克隆仓库，<code>uv sync</code>，配置 <code>.env</code> 中的 API Key，然后 <code>uv run rockycode chat</code> 即可启动。</div></div>
+    <div class="faq-a"><div class="faq-a-inner" data-l10n="faq2_a">安装 Python 3.11+ 和 uv，克隆仓库，<code>uv sync</code>，配置 <code>.env</code> 中的 API Key，然后 <code>uv run rockycode chat</code> 即可启动。</div></div>
   </div>
 
   <div class="faq-item">
     <button class="faq-q" onclick="toggleFaq(this)">
-      <span>使用 Rocky 需要额外的 AI 订阅吗？</span>
+      <span data-l10n="faq3_q">使用 Rocky 需要额外的 AI 订阅吗？</span>
       <span class="faq-marker">[+]</span>
     </button>
-    <div class="faq-a"><div class="faq-a-inner">Rocky 本身免费开源，但你需要一个 OpenAI 兼容的 API Key（默认指向 DeepSeek）。你也可以使用自己的 Claude、GPT 或 Gemini API Key。</div></div>
+    <div class="faq-a"><div class="faq-a-inner" data-l10n="faq3_a">Rocky 本身免费开源，但你需要一个 OpenAI 兼容的 API Key（默认指向 DeepSeek）。你也可以使用自己的 Claude、GPT 或 Gemini API Key。</div></div>
   </div>
 
   <div class="faq-item">
     <button class="faq-q" onclick="toggleFaq(this)">
-      <span>Rocky 只能在终端使用吗？</span>
+      <span data-l10n="faq4_q">Rocky 只能在终端使用吗？</span>
       <span class="faq-marker">[+]</span>
     </button>
-    <div class="faq-a"><div class="faq-a-inner">Rocky 目前以终端界面 (TUI) 为主。社区正在开发桌面应用和 IDE 扩展。</div></div>
+    <div class="faq-a"><div class="faq-a-inner" data-l10n="faq4_a">Rocky 目前以终端界面 (TUI) 为主。社区正在开发桌面应用和 IDE 扩展。</div></div>
   </div>
 
   <div class="faq-item">
     <button class="faq-q" onclick="toggleFaq(this)">
-      <span>Rocky 多少钱？</span>
+      <span data-l10n="faq5_q">Rocky 多少钱？</span>
       <span class="faq-marker">[+]</span>
     </button>
-    <div class="faq-a"><div class="faq-a-inner">Rocky 完全免费，MIT 开源协议。你只需支付所使用模型提供商的 API 费用。</div></div>
+    <div class="faq-a"><div class="faq-a-inner" data-l10n="faq5_a">Rocky 完全免费，MIT 开源协议。你只需支付所使用模型提供商的 API 费用。</div></div>
   </div>
 
   <div class="faq-item">
     <button class="faq-q" onclick="toggleFaq(this)">
-      <span>数据和隐私如何？</span>
+      <span data-l10n="faq6_q">数据和隐私如何？</span>
       <span class="faq-marker">[+]</span>
     </button>
-    <div class="faq-a"><div class="faq-a-inner">Rocky 将所有数据保存在你的本地机器上。记忆文件是纯 Markdown，你随时可以查看、编辑或删除。代码和对话数据不会上传到任何 Rocky 服务器。</div></div>
+    <div class="faq-a"><div class="faq-a-inner" data-l10n="faq6_a">Rocky 将所有数据保存在你的本地机器上。记忆文件是纯 Markdown，你随时可以查看、编辑或删除。代码和对话数据不会上传到任何 Rocky 服务器。</div></div>
   </div>
 
   <div class="faq-item">
     <button class="faq-q" onclick="toggleFaq(this)">
-      <span>Rocky 是开源的吗？</span>
+      <span data-l10n="faq7_q">Rocky 是开源的吗？</span>
       <span class="faq-marker">[+]</span>
     </button>
-    <div class="faq-a"><div class="faq-a-inner">是的，Rocky 采用 MIT 协议，100% 开源。你可以在 GitHub 上查看、修改和贡献代码。</div></div>
+    <div class="faq-a"><div class="faq-a-inner" data-l10n="faq7_a">是的，Rocky 采用 MIT 协议，100% 开源。你可以在 GitHub 上查看、修改和贡献代码。</div></div>
   </div>
 </div>
 
 <!-- ============ Footer ============ -->
 <div class="footer">
-  <p>Rocky — amaze! 开始使用吧。</p>
-  <p style="margin-top:var(--s8)"><a href="https://github.com/cicialgo/rockycode">GitHub</a> &middot; <a href="docs.html">文档</a> &middot; <a href="#">下载</a></p>
+  <p data-l10n="footer_tagline">Rocky — amaze! 开始使用吧。</p>
+  <p style="margin-top:var(--s8)"><a href="https://github.com/cicialgo/rockycode">GitHub</a> &middot; <a href="docs.html" data-l10n="footer_docs">文档</a> &middot; <a href="#" data-l10n="footer_download">下载</a></p>
 </div>
 
 <script>
+// ===== L10n =====
+var T = {
+  banner:       ["Rocky Beta 版现已推出 — 支持 macOS、Windows 和 Linux。", "Rocky Beta is now available for macOS, Windows, and Linux."],
+  banner_cta:   ["立即下载", "Download"],
+  nav_docs:     ["文档", "Docs"],
+  nav_download: ["下载", "Download"],
+  nav_cta:      ["立即下载", "Download"],
+  hero_title:   ["开源 AI 编程代理", "Open Source AI Coding Agent"],
+  hero_desc:    ["内置免费模型，或连接任意提供商的任意模型，<br>包括", "Built-in free models, or connect any model from any provider,<br>including"],
+  hero_etc:     ["等", ""],
+  hero_cta:     ["立即下载", "Download"],
+  copy:         ["复制", "Copy"],
+  what_title:   ["什么是 Rocky？", "What is Rocky?"],
+  what_desc:    ["Rocky 是一个开源 AI 编程代理，帮助你在终端、IDE 或桌面端编写代码。它读代码、改代码、跑测试，实时流式展示推理过程。事情顺利时他说", "Rocky is an open-source AI coding agent that helps you write code in the terminal, IDE, or desktop. It reads code, edits code, runs tests, and streams its reasoning in real time. When things go well, it says"],
+  what_confused:["困惑时说", "when confused, it says"],
+  feat_reasoning:["<strong>思维链推理</strong> — 实时展示推理过程，透明可解释","<strong>Chain-of-Thought</strong> — Real-time reasoning, transparent and explainable"],
+  feat_models:["<strong>多模型支持</strong> — DeepSeek、Claude、GPT、Gemini 等 75+ 提供商","<strong>Multi-Model</strong> — DeepSeek, Claude, GPT, Gemini and 75+ providers"],
+  feat_lsp:    ["<strong>LSP 集成</strong> — 自动加载合适的语言服务器，实时诊断","<strong>LSP Integration</strong> — Auto-loads language servers for real-time diagnostics"],
+  feat_parallel:["<strong>多会话并行</strong> — 同一项目启动多个代理同时工作","<strong>Multi-Session</strong> — Run multiple agents in parallel on the same project"],
+  feat_memory: ["<strong>记忆系统</strong> — 跨会话持久记忆，文件即真理","<strong>Memory System</strong> — Persistent cross-session memory, files as source of truth"],
+  feat_dream:  ["<strong>梦境系统</strong> — 离线整理对话，零 API 费用","<strong>Dream System</strong> — Offline conversation digestion, zero API cost"],
+  feat_bench:  ["<strong>基准测试</strong> — SWE-bench Verified 打分，数字说话","<strong>Benchmarks</strong> — SWE-bench Verified scoring, numbers don't lie"],
+  feat_migrate:["<strong>零迁移成本</strong> — 直接读取 Claude Code / Codex 已有配置","<strong>Zero Migration</strong> — Reads existing Claude Code / Codex configs directly"],
+  feat_mcp:    ["<strong>MCP 支持</strong> — 自动发现 MCP 服务，扩展工具箱","<strong>MCP Support</strong> — Auto-discovers MCP services to extend the toolbox"],
+  feat_skills: ["<strong>技能系统</strong> — 按需加载自定义技能，按需使用","<strong>Skills System</strong> — On-demand custom skills, loaded when needed"],
+  read_docs:   ["阅读文档", "Read the Docs"],
+  stats_title: ["开源 AI 编程代理", "Open Source AI Coding Agent"],
+  stats_desc:  ["Rocky 是","Rocky is a"],
+  stats_bold:  ["100% 开源的 AI 编程代理","100% open-source AI coding agent"],
+  stats_desc2: ["采用 MIT 协议。从终端出发，为热爱命令行的开发者而生。","licensed under MIT. Built for the terminal, by developers who love the command line."],
+  stat_providers:["模型提供商支持","Model Providers Supported"],
+  stat_bench: ["Verified 基准测试","Verified Benchmark"],
+  stat_license:["开源协议","Open Source License"],
+  privacy_title:["隐私优先的设计","Privacy-First Design"],
+  privacy_desc:["Rocky","Rocky"],
+  privacy_bold:["不存储","does not store"],
+  privacy_desc2:["任何代码或上下文数据。所有记忆以纯 Markdown 文件存储在你本地","any code or context data. All memory is stored as plain Markdown files locally in"],
+  privacy_desc3:["你拥有完全控制权。","You have full control."],
+  privacy_link:["了解更多关于隐私。","Learn more about privacy."],
+  faq_title:   ["常见问题", "FAQ"],
+  faq1_q:      ["什么是 Rocky？","What is Rocky?"],
+  faq1_a:      ["Rocky 是一个交互式 AI 编程智能体，名字来自《挽救计划》里的外星工程师。他能在你的项目里读代码、改代码、跑命令，并实时流式展示推理过程。","Rocky is an interactive AI coding agent, named after the alien engineer from Project Hail Mary. It reads code, edits code, runs commands, and streams its reasoning in real time."],
+  faq2_q:      ["如何使用 Rocky？","How do I use Rocky?"],
+  faq2_a:      ["安装 Python 3.11+ 和 uv，克隆仓库，<code>uv sync</code>，配置 <code>.env</code> 中的 API Key，然后 <code>uv run rockycode chat</code> 即可启动。","Install Python 3.11+ and uv, clone the repo, run <code>uv sync</code>, set your API key in <code>.env</code>, then <code>uv run rockycode chat</code> to start."],
+  faq3_q:      ["使用 Rocky 需要额外的 AI 订阅吗？","Do I need an extra AI subscription?"],
+  faq3_a:      ["Rocky 本身免费开源，但你需要一个 OpenAI 兼容的 API Key（默认指向 DeepSeek）。你也可以使用自己的 Claude、GPT 或 Gemini API Key。","Rocky itself is free and open-source, but you need an OpenAI-compatible API key (defaults to DeepSeek). You can also use your own Claude, GPT, or Gemini API key."],
+  faq4_q:      ["Rocky 只能在终端使用吗？","Is Rocky terminal-only?"],
+  faq4_a:      ["Rocky 目前以终端界面 (TUI) 为主。社区正在开发桌面应用和 IDE 扩展。","Rocky currently runs as a terminal UI (TUI). Desktop apps and IDE extensions are in development by the community."],
+  faq5_q:      ["Rocky 多少钱？","How much does Rocky cost?"],
+  faq5_a:      ["Rocky 完全免费，MIT 开源协议。你只需支付所使用模型提供商的 API 费用。","Rocky is completely free under the MIT license. You only pay for the model provider API usage."],
+  faq6_q:      ["数据和隐私如何？","What about data and privacy?"],
+  faq6_a:      ["Rocky 将所有数据保存在你的本地机器上。记忆文件是纯 Markdown，你随时可以查看、编辑或删除。代码和对话数据不会上传到任何 Rocky 服务器。","Rocky keeps all data on your local machine. Memory files are plain Markdown that you can view, edit, or delete anytime. Code and conversation data is never uploaded to any Rocky server."],
+  faq7_q:      ["Rocky 是开源的吗？","Is Rocky open source?"],
+  faq7_a:      ["是的，Rocky 采用 MIT 协议，100% 开源。你可以在 GitHub 上查看、修改和贡献代码。","Yes, Rocky is 100% open source under the MIT license. You can view, modify, and contribute on GitHub."],
+  footer_tagline:["Rocky — amaze! 开始使用吧。","Rocky — amaze! Start coding."],
+  footer_docs: ["文档","Docs"],
+  footer_download:["下载","Download"],
+};
+
+var L = (localStorage.getItem('rocky-lang') || 'zh');
+var L_idx = (L === 'en') ? 1 : 0;
+
+function applyLang() {
+  L_idx = (L === 'en') ? 1 : 0;
+  var btn = document.querySelector('.lang-toggle');
+  if (btn) btn.textContent = L === 'en' ? 'EN' : '中';
+  document.documentElement.lang = L === 'en' ? 'en' : 'zh-CN';
+
+  document.querySelectorAll('[data-l10n]').forEach(function(el) {
+    var k = el.getAttribute('data-l10n');
+    if (T[k]) {
+      el.innerHTML = T[k][L_idx];
+    }
+  });
+  localStorage.setItem('rocky-lang', L);
+}
+
+function switchLang() {
+  L = (L === 'zh') ? 'en' : 'zh';
+  applyLang();
+}
+
+// Apply saved language on load
+document.addEventListener('DOMContentLoaded', function() {
+  applyLang();
+});
+
+// ===== FAQ =====
 function toggleFaq(btn) {
   var item = btn.parentElement;
   var marker = btn.querySelector('.faq-marker');
@@ -436,6 +526,7 @@ function toggleFaq(btn) {
   }
 }
 
+// ===== Install =====
 var cmds = {
   uv:   'uv run rockycode chat',
   pip:  'pip install rockycode && rockycode chat',
@@ -453,8 +544,8 @@ function copyCmd() {
   var txt = document.querySelector('#installCmd code').textContent;
   navigator.clipboard.writeText(txt).then(function(){
     var b = document.querySelector('#installCmd .copy-btn');
-    b.textContent = '已复制';
-    setTimeout(function(){ b.textContent = '复制'; }, 1500);
+    b.textContent = T.copy[L_idx] === '复制' ? '已复制' : 'Copied';
+    setTimeout(function(){ b.textContent = T.copy[L_idx]; }, 1500);
   });
 }
 </script>
