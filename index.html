@@ -150,6 +150,14 @@
   }
   .hero-cta:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
 
+  /* --- Demo Stage --- */
+  .demo-stage { position: relative; max-width: 720px; margin: 0 auto var(--s48); }
+  .demo-stage .term-demo, .demo-stage .hero-shot {
+    transition: opacity 0.5s ease;
+  }
+
+  .term-launch { color: var(--accent); font-style: italic; }
+
   /* --- Terminal Demo --- */
   .term-demo {
     max-width: 680px; margin: 0 auto var(--s48);
@@ -360,28 +368,33 @@
   <a href="#" class="hero-cta" data-l10n="hero_cta">立即下载</a>
 </div>
 
-<!-- ============ Hero Screenshot ============ -->
-<div class="hero-shot" id="heroShot">
-  <img src="ROCKY.png" alt="Rocky TUI Interface" id="heroFrame">
-</div>
+<!-- ============ Demo Stage ============ -->
+<div class="demo-stage">
 
-<!-- ============ Terminal Demo ============ -->
-<div class="term-demo">
-  <div class="term-bar"><span class="term-dot"></span><span class="term-dot"></span><span class="term-dot"></span><span class="term-title">Rocky — Terminal Session</span></div>
-  <div class="term-body" id="termBody">
-    <div class="term-line"><span class="term-prompt">~ $</span> <span class="term-cmd">uv run rockycode chat</span></div>
-    <div class="term-line term-rocky">Rocky: amaze! ready to help! what we fix today?</div>
-    <div class="term-line"><span class="term-prompt">~ $</span> <span class="term-cmd">fix the null pointer in login</span></div>
-    <div class="term-line term-rocky">Rocky: i search... <span class="term-dim">grep "NullPointer" src/</span></div>
-    <div class="term-line term-dim">src/auth/LoginService.java:42: NullPointerException</div>
-    <div class="term-line term-rocky">Rocky: i read file... <span class="term-dim">read_file LoginService.java</span></div>
-    <div class="term-line term-rocky">Rocky: i see problem! line 42, no null check before .getUser()</div>
-    <div class="term-line term-rocky">Rocky: i edit... <span class="term-dim">edit_file LoginService.java</span></div>
-    <div class="term-line term-success">+ if (session != null) { return session.getUser(); }</div>
-    <div class="term-line term-rocky">Rocky: i run test... <span class="term-dim">./gradlew test</span></div>
-    <div class="term-line term-success">BUILD SUCCESSFUL — all tests passing!</div>
-    <div class="term-line term-rocky">Rocky: <strong>amaze! bug fixed!</strong></div>
+  <!-- Phase 1: Terminal -->
+  <div class="term-demo" id="termDemo">
+    <div class="term-bar"><span class="term-dot"></span><span class="term-dot"></span><span class="term-dot"></span><span class="term-title">Terminal — uv run rockycode chat</span></div>
+    <div class="term-body" id="termBody">
+      <div class="term-line"><span class="term-prompt">~/project $</span> <span class="term-cmd">uv run rockycode chat</span></div>
+      <div class="term-line term-rocky">Rocky: amaze! hello! what we build today?</div>
+      <div class="term-line"><span class="term-prompt">~/project $</span> <span class="term-cmd">fix the null pointer in login</span></div>
+      <div class="term-line term-rocky">Rocky: i search... <span class="term-dim">grep "NullPointer" src/</span></div>
+      <div class="term-line term-dim">src/auth/LoginService.java:42</div>
+      <div class="term-line term-rocky">Rocky: i see! line 42, no null check</div>
+      <div class="term-line term-rocky">Rocky: i edit... <span class="term-dim">edit_file LoginService.java</span></div>
+      <div class="term-line term-success">+ if (session != null) { ... }</div>
+      <div class="term-line term-rocky">Rocky: i run test... <span class="term-dim">bash ./gradlew test</span></div>
+      <div class="term-line term-success">BUILD SUCCESSFUL</div>
+      <div class="term-line term-rocky">Rocky: <strong>amaze! bug fixed!</strong></div>
+      <div class="term-line term-launch">...launching Rocky TUI...</div>
+    </div>
   </div>
+
+  <!-- Phase 2: Rocky TUI frames -->
+  <div class="hero-shot" id="heroShot" style="display:none">
+    <img src="ROCKY.png" alt="Rocky TUI Interface" id="heroFrame">
+  </div>
+
 </div>
 
 <!-- ============ What is Rocky ============ -->
@@ -515,62 +528,64 @@
     frames.push('frames/frame_' + String(i).padStart(3,'0') + '.png');
   }
   var img = document.getElementById('heroFrame');
+  var shot = document.getElementById('heroShot');
   var idx = 0;
-  var playing = false;
   var timer;
   var FPS = 15;
+  var running = false;
 
-  // Preload first batch
-  var loaded = 0;
-  var firstFew = frames.slice(0, 10);
-  firstFew.forEach(function(src) {
+  // Preload first 10 frames
+  frames.slice(0, 10).forEach(function(src) {
     var pre = new Image();
-    pre.onload = function(){ loaded++; if (loaded >= 3 && !playing) startSlideshow(); };
     pre.src = src;
   });
 
-  function startSlideshow() {
-    playing = true;
+  function startFrames() {
+    shot.style.display = 'block';
+    running = true;
     timer = setInterval(function() {
       idx = (idx + 1) % frames.length;
       img.src = frames[idx];
     }, 1000 / FPS);
   }
 
-  var shot = document.getElementById('heroShot');
-  shot.addEventListener('mouseenter', function(){ clearInterval(timer); });
+  shot.addEventListener('mouseenter', function(){ if(running) clearInterval(timer); });
   shot.addEventListener('mouseleave', function(){
-    timer = setInterval(function() {
-      idx = (idx + 1) % frames.length;
-      img.src = frames[idx];
-    }, 1000 / FPS);
+    if(running) { timer = setInterval(function() { idx = (idx + 1) % frames.length; img.src = frames[idx]; }, 1000 / FPS); }
   });
+
+  // Expose to terminal animation
+  window.startFrames = startFrames;
 })();
 
-// ===== Terminal Animation =====
+// ===== Terminal Animation → Frames =====
 (function(){
+  var termDemo = document.getElementById('termDemo');
   var body = document.getElementById('termBody');
   var lines = body.querySelectorAll('.term-line');
   var i = 0;
-  var delay = 600;
+  var delay = 550;
 
   function showNext() {
-    lines.forEach(function(l){ l.classList.remove('show'); });
     if (i < lines.length) {
+      lines.forEach(function(l){ l.classList.remove('show'); });
       for (var j = 0; j <= i; j++) { lines[j].classList.add('show'); }
       body.scrollTop = body.scrollHeight;
       i++;
-      setTimeout(showNext, i === 2 ? 400 : delay);
+      var d = (i === 2) ? 350 : delay;
+      setTimeout(showNext, d);
     } else {
-      // All shown — pause then loop
-      setTimeout(function(){
-        i = 0;
-        lines.forEach(function(l){ l.classList.remove('show'); });
-        setTimeout(showNext, 800);
-      }, 3000);
+      // All lines shown, pause, then switch to frames
+      setTimeout(function() {
+        termDemo.style.opacity = '0';
+        setTimeout(function() {
+          termDemo.style.display = 'none';
+          if (window.startFrames) window.startFrames();
+        }, 500);
+      }, 1500);
     }
   }
-  setTimeout(showNext, 1000);
+  setTimeout(showNext, 800);
 })();
 
 // ===== L10n =====
