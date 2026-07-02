@@ -50,8 +50,10 @@
     display: flex; justify-content: space-between; align-items: center;
     padding: var(--s16) 0; border-bottom: 1px solid var(--hairline);
   }
-  .nav-wordmark { font-size: 10px; line-height: 1.1; color: var(--accent); white-space: pre; text-decoration: none; display: block; }
-  .nav-wordmark:hover { color: var(--accent-hover); }
+  .nav-brand { display: flex; align-items: center; gap: var(--s8); text-decoration: none; }
+  .nav-wordmark { font-size: 10px; line-height: 1.1; color: var(--accent); white-space: pre; display: block; }
+  .nav-brand:hover .nav-wordmark { color: var(--accent-hover); }
+  .nav-code { font-size: 26px; font-weight: 900; color: #1d1d1f; line-height: 1; letter-spacing: 0.04em; }
   .nav-right { display: flex; align-items: center; gap: var(--s16); }
   .nav-tabs { display: flex; gap: var(--s8); }
   .nav-tab {
@@ -155,13 +157,16 @@
 
 <div class="nav-bar">
 <nav class="nav">
-  <a href="index.html" class="nav-wordmark">
+  <a href="index.html" class="nav-brand">
+    <span class="nav-wordmark">
   ██████╗   ██████╗   ██████╗ ██╗  ██╗██╗   ██╗
   ██╔══██╗ ██╔═══██╗ ██╔════╝██║ ██╔╝╚██╗ ██╔╝
   ██████╔╝ ██║   ██║ ██║     █████╔╝  ╚████╔╝
   ██╔══██╗ ██║   ██║ ██║     ██╔═██╗   ╚██╔╝
   ██║  ██║ ╚██████╔╝ ╚██████╗██║  ██╗   ██║
   ╚═╝  ╚═╝  ╚═════╝   ╚═════╝╚═╝  ╚═╝   ╚═╝
+    </span>
+    <span class="nav-code">CODE</span>
   </a>
   <div class="nav-right">
     <div class="nav-tabs">
