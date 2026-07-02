@@ -12,72 +12,60 @@ for f in os.listdir(out_dir):
 cap = cv2.VideoCapture(video_path)
 fps = cap.get(cv2.CAP_PROP_FPS)
 total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+duration = total_frames / fps if fps > 0 else 0
+print(f"Video: {total_frames} frames, {fps:.1f} fps, {duration:.1f}s")
 
-# Sample a few frames from the middle to detect content bounds
-sample_frames = [int(total_frames * p) for p in [0.2, 0.3, 0.4, 0.5, 0.6]]
-bounds = []
+# Content bounds (from previous auto-detect)
+crop_left, crop_top = 4, 70
+crop_right, crop_bottom = 1454, 946
 
-for sf in sample_frames:
-    cap.set(cv2.CAP_PROP_POS_FRAMES, sf)
-    ret, frame = cap.read()
-    if not ret:
-        continue
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    # Find non-black (value > 15) pixels
-    _, thresh = cv2.threshold(gray, 15, 255, cv2.THRESH_BINARY)
-    coords = cv2.findNonZero(thresh)
-    if coords is not None:
-        x, y, w, h = cv2.boundingRect(coords)
-        bounds.append((x, y, x+w, y+h))
-        print(f"  Sample @ {sf}: content box x={x} y={y} w={w} h={h} (frame {frame.shape[1]}x{frame.shape[0]})")
-
-# Use the widest content bounds across samples
-if bounds:
-    left = min(b[0] for b in bounds)
-    top = min(b[1] for b in bounds)
-    right = max(b[2] for b in bounds)
-    bottom = max(b[3] for b in bounds)
-else:
-    left, top, right, bottom = 0, 0, 1920, 1080
-
-# Add padding + remove Windows title bar from top
-pad = 4
-title_bar = 70  # Windows title bar + menu ribbon
-left = max(0, left + pad)
-top = max(0, top + title_bar)
-right = min(1920, right - pad)
-bottom = min(1080, bottom - pad)
-
-print(f"\nAuto crop: left={left} top={top} right={right} bottom={bottom}")
-print(f"Crop region: {right-left}x{bottom-top}")
-
-# 15fps, 8 seconds
-target_fps = 15
-target_frames = 120
-start_pct, end_pct = 0.10, 0.90
+# Sample densely, but only keep frames that differ significantly
+sample_step = 8  # sample every 8 frames at 60fps = ~7.5 samples/sec
+start_pct, end_pct = 0.08, 0.92
 start_frame = int(total_frames * start_pct)
 end_frame = int(total_frames * end_pct)
-step = max(1, (end_frame - start_frame) // target_frames)
 
+# Scene change threshold (lower = more sensitive to changes)
+threshold = 2.5
+
+prev_gray = None
 extracted = []
 frame_num = start_frame
-count = 0
-while count < target_frames and frame_num < end_frame:
+target_count = 120
+
+while len(extracted) < target_count and frame_num < end_frame:
     cap.set(cv2.CAP_PROP_POS_FRAMES, frame_num)
     ret, frame = cap.read()
     if not ret:
         break
 
-    frame = frame[top:bottom, left:right]
+    # Crop
+    frame = frame[crop_top:crop_bottom, crop_left:crop_right]
+
+    # Convert to grayscale and resize small for comparison
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    small = cv2.resize(gray, (160, 100))
+
+    if prev_gray is not None:
+        diff = cv2.absdiff(small, prev_gray)
+        mean_diff = np.mean(diff)
+
+        if mean_diff < threshold:
+            frame_num += sample_step
+            continue  # Skip — too similar to previous
+
+    # Keep this frame
     h, w = frame.shape[:2]
     ratio = 720 / w
     frame = cv2.resize(frame, (720, int(h * ratio)))
 
-    out_path = os.path.join(out_dir, f"frame_{count:03d}.png")
+    out_path = os.path.join(out_dir, f"frame_{len(extracted):03d}.png")
     cv2.imwrite(out_path, frame)
     extracted.append(out_path)
-    frame_num += step
-    count += 1
+    print(f"  [{len(extracted)}] frame {frame_num} diff={mean_diff:.1f}" if prev_gray is not None else f"  [1] frame {frame_num} (start)")
+
+    prev_gray = small
+    frame_num += sample_step
 
 cap.release()
-print(f"Done: {len(extracted)} frames")
+print(f"\nDone: {len(extracted)} unique frames (scene-change filtered, threshold={threshold})")
