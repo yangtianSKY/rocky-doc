@@ -54,10 +54,11 @@ while len(extracted) < target_count and frame_num < end_frame:
             frame_num += sample_step
             continue  # Skip — too similar to previous
 
-    # Keep this frame
+    # Keep this frame — output at higher resolution
     h, w = frame.shape[:2]
-    ratio = 720 / w
-    frame = cv2.resize(frame, (720, int(h * ratio)))
+    target_w = 960  # up from 720 for sharper output
+    ratio = target_w / w
+    frame = cv2.resize(frame, (target_w, int(h * ratio)), interpolation=cv2.INTER_LANCZOS4)
 
     out_path = os.path.join(out_dir, f"frame_{len(extracted):03d}.png")
     cv2.imwrite(out_path, frame)
