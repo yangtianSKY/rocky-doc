@@ -40,10 +40,11 @@ if bounds:
 else:
     left, top, right, bottom = 0, 0, 1920, 1080
 
-# Add small padding inside
+# Add padding + remove Windows title bar from top
 pad = 4
+title_bar = 40  # Windows title bar height
 left = max(0, left + pad)
-top = max(0, top + pad)
+top = max(0, top + title_bar)
 right = min(1920, right - pad)
 bottom = min(1080, bottom - pad)
 
