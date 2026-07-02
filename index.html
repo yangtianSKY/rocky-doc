@@ -377,15 +377,6 @@
     <div class="term-body" id="termBody">
       <div class="term-line"><span class="term-prompt">~/project $</span> <span class="term-cmd">uv run rockycode chat</span></div>
       <div class="term-line term-rocky">Rocky: amaze! hello! what we build today?</div>
-      <div class="term-line"><span class="term-prompt">~/project $</span> <span class="term-cmd">fix the null pointer in login</span></div>
-      <div class="term-line term-rocky">Rocky: i search... <span class="term-dim">grep "NullPointer" src/</span></div>
-      <div class="term-line term-dim">src/auth/LoginService.java:42</div>
-      <div class="term-line term-rocky">Rocky: i see! line 42, no null check</div>
-      <div class="term-line term-rocky">Rocky: i edit... <span class="term-dim">edit_file LoginService.java</span></div>
-      <div class="term-line term-success">+ if (session != null) { ... }</div>
-      <div class="term-line term-rocky">Rocky: i run test... <span class="term-dim">bash ./gradlew test</span></div>
-      <div class="term-line term-success">BUILD SUCCESSFUL</div>
-      <div class="term-line term-rocky">Rocky: <strong>amaze! bug fixed!</strong></div>
       <div class="term-line term-launch">...launching Rocky TUI...</div>
     </div>
   </div>
@@ -572,17 +563,17 @@
       for (var j = 0; j <= i; j++) { lines[j].classList.add('show'); }
       body.scrollTop = body.scrollHeight;
       i++;
-      var d = (i === 2) ? 350 : delay;
+      var d = (i === 0) ? 800 : 600;
       setTimeout(showNext, d);
     } else {
-      // All lines shown, pause, then switch to frames
+      // After "launching TUI", transition to frames
       setTimeout(function() {
         termDemo.style.opacity = '0';
         setTimeout(function() {
           termDemo.style.display = 'none';
           if (window.startFrames) window.startFrames();
-        }, 500);
-      }, 1500);
+        }, 400);
+      }, 600);
     }
   }
   setTimeout(showNext, 800);
