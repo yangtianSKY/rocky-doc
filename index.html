@@ -525,13 +525,14 @@
   var FPS = 15;
   var running = false;
 
-  // Preload first 10 frames
-  frames.slice(0, 10).forEach(function(src) {
+  // Preload first 30 frames aggressively
+  frames.slice(0, 30).forEach(function(src) {
     var pre = new Image();
     pre.src = src;
   });
 
   function startFrames() {
+    img.src = frames[0];  // Show first frame immediately
     shot.style.display = 'block';
     running = true;
     timer = setInterval(function() {
@@ -566,14 +567,14 @@
       var d = (i === 0) ? 800 : 600;
       setTimeout(showNext, d);
     } else {
-      // After "launching TUI", transition to frames
+      // Quick transition to frames
       setTimeout(function() {
         termDemo.style.opacity = '0';
         setTimeout(function() {
           termDemo.style.display = 'none';
           if (window.startFrames) window.startFrames();
-        }, 400);
-      }, 600);
+        }, 200);
+      }, 300);
     }
   }
   setTimeout(showNext, 800);
