@@ -42,7 +42,7 @@ else:
 
 # Add padding + remove Windows title bar from top
 pad = 4
-title_bar = 40  # Windows title bar height
+title_bar = 70  # Windows title bar + menu ribbon
 left = max(0, left + pad)
 top = max(0, top + title_bar)
 right = min(1920, right - pad)

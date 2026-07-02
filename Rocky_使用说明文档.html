@@ -151,16 +151,17 @@
   .hero-cta:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
 
   /* --- Demo Stage --- */
-  .demo-stage { position: relative; max-width: 720px; margin: 0 auto var(--s48); }
+  .demo-stage { position: relative; max-width: 720px; margin: 0 auto var(--s48); min-height: 440px; }
   .demo-stage .term-demo, .demo-stage .hero-shot {
+    position: absolute; top: 0; left: 0; width: 100%;
     transition: opacity 0.5s ease;
   }
+  .demo-stage .term-demo { position: relative; }
 
   .term-launch { color: var(--accent); font-style: italic; }
 
   /* --- Terminal Demo --- */
   .term-demo {
-    max-width: 680px; margin: 0 auto var(--s48);
     background: #1a1820; border: 1px solid rgba(124,58,237,0.2);
     border-radius: 8px; overflow: hidden;
     box-shadow: 0 0 40px rgba(124,58,237,0.08);
@@ -195,7 +196,6 @@
 
   /* --- Hero Screenshot --- */
   .hero-shot {
-    position: relative; max-width: 720px; margin: 0 auto var(--s48);
     border: 1px solid var(--hairline); border-radius: 8px;
     overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.06);
   }
