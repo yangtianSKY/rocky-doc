@@ -150,6 +150,41 @@
   }
   .hero-cta:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
 
+  /* --- Terminal Demo --- */
+  .term-demo {
+    max-width: 680px; margin: 0 auto var(--s48);
+    background: #1a1820; border: 1px solid rgba(124,58,237,0.2);
+    border-radius: 8px; overflow: hidden;
+    box-shadow: 0 0 40px rgba(124,58,237,0.08);
+  }
+  .term-bar {
+    display: flex; align-items: center; gap: 6px;
+    padding: var(--s8) var(--s16);
+    background: #25222b; border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .term-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: #ff5f57;
+  }
+  .term-dot:nth-child(2) { background: #febc2e; }
+  .term-dot:nth-child(3) { background: #28c840; }
+  .term-title {
+    font-size: 12px; color: #6e6e73; margin-left: var(--s8);
+    font-family: var(--font);
+  }
+  .term-body {
+    padding: var(--s16) var(--s24);
+    font-family: var(--font); font-size: 13px; line-height: 1.7;
+    min-height: 260px;
+  }
+  .term-line { color: #d6d3d3; opacity: 0; transform: translateY(8px); transition: all 0.3s ease; }
+  .term-line.show { opacity: 1; transform: translateY(0); }
+  .term-prompt { color: var(--accent); }
+  .term-cmd { color: #fdfcfc; }
+  .term-rocky { color: #c4b5fd; }
+  .term-dim { color: #6e6e73; }
+  .term-success { color: #30d158; }
+
   /* --- Sections --- */
   .section { padding: var(--s80) 0; border-top: 1px solid var(--hairline); }
   .section h2 {
@@ -317,6 +352,25 @@
   <a href="#" class="hero-cta" data-l10n="hero_cta">立即下载</a>
 </div>
 
+<!-- ============ Terminal Demo ============ -->
+<div class="term-demo">
+  <div class="term-bar"><span class="term-dot"></span><span class="term-dot"></span><span class="term-dot"></span><span class="term-title">Rocky — Terminal Session</span></div>
+  <div class="term-body" id="termBody">
+    <div class="term-line"><span class="term-prompt">~ $</span> <span class="term-cmd">uv run rockycode chat</span></div>
+    <div class="term-line term-rocky">Rocky: amaze! ready to help! what we fix today?</div>
+    <div class="term-line"><span class="term-prompt">~ $</span> <span class="term-cmd">fix the null pointer in login</span></div>
+    <div class="term-line term-rocky">Rocky: i search... <span class="term-dim">grep "NullPointer" src/</span></div>
+    <div class="term-line term-dim">src/auth/LoginService.java:42: NullPointerException</div>
+    <div class="term-line term-rocky">Rocky: i read file... <span class="term-dim">read_file LoginService.java</span></div>
+    <div class="term-line term-rocky">Rocky: i see problem! line 42, no null check before .getUser()</div>
+    <div class="term-line term-rocky">Rocky: i edit... <span class="term-dim">edit_file LoginService.java</span></div>
+    <div class="term-line term-success">+ if (session != null) { return session.getUser(); }</div>
+    <div class="term-line term-rocky">Rocky: i run test... <span class="term-dim">./gradlew test</span></div>
+    <div class="term-line term-success">BUILD SUCCESSFUL — all tests passing!</div>
+    <div class="term-line term-rocky">Rocky: <strong>amaze! bug fixed!</strong></div>
+  </div>
+</div>
+
 <!-- ============ What is Rocky ============ -->
 <div class="section">
   <h2 data-l10n="what_title">什么是 Rocky？</h2>
@@ -441,6 +495,32 @@
 </div>
 
 <script>
+// ===== Terminal Animation =====
+(function(){
+  var body = document.getElementById('termBody');
+  var lines = body.querySelectorAll('.term-line');
+  var i = 0;
+  var delay = 600;
+
+  function showNext() {
+    lines.forEach(function(l){ l.classList.remove('show'); });
+    if (i < lines.length) {
+      for (var j = 0; j <= i; j++) { lines[j].classList.add('show'); }
+      body.scrollTop = body.scrollHeight;
+      i++;
+      setTimeout(showNext, i === 2 ? 400 : delay);
+    } else {
+      // All shown — pause then loop
+      setTimeout(function(){
+        i = 0;
+        lines.forEach(function(l){ l.classList.remove('show'); });
+        setTimeout(showNext, 800);
+      }, 3000);
+    }
+  }
+  setTimeout(showNext, 1000);
+})();
+
 // ===== L10n =====
 var T = {
   banner:       ["Rocky Beta 版现已推出 — 支持 macOS、Windows 和 Linux。", "Rocky Beta is now available for macOS, Windows, and Linux."],
