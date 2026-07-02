@@ -389,8 +389,8 @@
 </div>
 
 <!-- ============ Hero Screenshot ============ -->
-<div class="hero-shot">
-  <img src="ROCKY.png" alt="Rocky TUI Interface">
+<div class="hero-shot" id="heroShot">
+  <img src="ROCKY.png" alt="Rocky TUI Interface" id="heroFrame">
   <div class="hero-cursor"></div>
 </div>
 
@@ -537,6 +537,44 @@
 </div>
 
 <script>
+// ===== Frame Slideshow =====
+(function(){
+  var frames = [];
+  for (var i = 0; i < 16; i++) {
+    frames.push('frames/frame_' + String(i).padStart(3,'0') + '.png');
+  }
+  var img = document.getElementById('heroFrame');
+  var idx = 0;
+  var playing = false;
+  var timer;
+
+  // Preload
+  var loaded = 0;
+  frames.forEach(function(src) {
+    var pre = new Image();
+    pre.onload = function(){ loaded++; if (loaded >= 3 && !playing) startSlideshow(); };
+    pre.src = src;
+  });
+
+  function startSlideshow() {
+    playing = true;
+    timer = setInterval(function() {
+      idx = (idx + 1) % frames.length;
+      img.src = frames[idx];
+    }, 180);
+  }
+
+  // Pause on hover
+  var shot = document.getElementById('heroShot');
+  shot.addEventListener('mouseenter', function(){ clearInterval(timer); });
+  shot.addEventListener('mouseleave', function(){
+    timer = setInterval(function() {
+      idx = (idx + 1) % frames.length;
+      img.src = frames[idx];
+    }, 180);
+  });
+})();
+
 // ===== Terminal Animation =====
 (function(){
   var body = document.getElementById('termBody');
