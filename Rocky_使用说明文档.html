@@ -532,11 +532,32 @@
   });
 
   function startFrames() {
-    img.src = frames[0];  // Show first frame immediately
+    img.src = frames[0];
     shot.style.display = 'block';
     running = true;
+    idx = 0;
+    var cycleCount = 0;
     timer = setInterval(function() {
-      idx = (idx + 1) % frames.length;
+      idx++;
+      if (idx >= frames.length) {
+        idx = 0;
+        cycleCount++;
+        if (cycleCount >= 2) {
+          // After 2 cycles (~16s), loop back to terminal
+          clearInterval(timer);
+          running = false;
+          shot.style.opacity = '0';
+          setTimeout(function() {
+            shot.style.display = 'none';
+            shot.style.opacity = '1';
+            window.termDemo.style.display = 'block';
+            window.termDemo.style.opacity = '1';
+            // Restart terminal animation
+            if (window.restartTerminal) window.restartTerminal();
+          }, 400);
+          return;
+        }
+      }
       img.src = frames[idx];
     }, 1000 / FPS);
   }
@@ -546,8 +567,9 @@
     if(running) { timer = setInterval(function() { idx = (idx + 1) % frames.length; img.src = frames[idx]; }, 1000 / FPS); }
   });
 
-  // Expose to terminal animation
+  // Expose
   window.startFrames = startFrames;
+  window.termDemo = document.getElementById('termDemo');
 })();
 
 // ===== Terminal Animation → Frames =====
@@ -556,7 +578,11 @@
   var body = document.getElementById('termBody');
   var lines = body.querySelectorAll('.term-line');
   var i = 0;
-  var delay = 550;
+
+  function resetTerminal() {
+    i = 0;
+    lines.forEach(function(l){ l.classList.remove('show'); });
+  }
 
   function showNext() {
     if (i < lines.length) {
@@ -564,10 +590,9 @@
       for (var j = 0; j <= i; j++) { lines[j].classList.add('show'); }
       body.scrollTop = body.scrollHeight;
       i++;
-      var d = (i === 0) ? 800 : 600;
+      var d = (i === 1) ? 800 : 600;
       setTimeout(showNext, d);
     } else {
-      // Quick transition to frames
       setTimeout(function() {
         termDemo.style.opacity = '0';
         setTimeout(function() {
@@ -577,6 +602,14 @@
       }, 300);
     }
   }
+
+  function restart() {
+    resetTerminal();
+    termDemo.style.opacity = '1';
+    setTimeout(showNext, 400);
+  }
+
+  window.restartTerminal = restart;
   setTimeout(showNext, 800);
 })();
 
