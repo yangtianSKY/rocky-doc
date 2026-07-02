@@ -192,34 +192,6 @@
     overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.06);
   }
   .hero-shot img { display: block; width: 100%; height: auto; }
-  .hero-shot::after {
-    content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-    background: linear-gradient(180deg, transparent 60%, rgba(124,58,237,0.03) 100%);
-    pointer-events: none;
-  }
-  /* cursor overlay */
-  .hero-cursor {
-    position: absolute; width: 8px; height: 16px;
-    background: var(--accent);
-    animation: cursorBlink 1s step-end infinite, cursorMove 8s ease-in-out infinite;
-    border-radius: 1px;
-    pointer-events: none;
-  }
-  @keyframes cursorBlink { 0%,100%{opacity:1} 50%{opacity:0} }
-  @keyframes cursorMove {
-    0%,10%  { top:18%; left:8%; }
-    30%,40% { top:22%; left:12%; }
-    55%,65% { top:35%; left:15%; }
-    80%,100%{ top:50%; left:18%; }
-  }
-  /* scan line */
-  .hero-shot::before {
-    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    background: rgba(124,58,237,0.15);
-    animation: scanLine 3s linear infinite;
-    z-index: 2; pointer-events: none;
-  }
-  @keyframes scanLine { 0%{top:0} 100%{top:100%} }
 
   /* --- Sections --- */
   .section { padding: var(--s80) 0; border-top: 1px solid var(--hairline); }
@@ -391,7 +363,6 @@
 <!-- ============ Hero Screenshot ============ -->
 <div class="hero-shot" id="heroShot">
   <img src="ROCKY.png" alt="Rocky TUI Interface" id="heroFrame">
-  <div class="hero-cursor"></div>
 </div>
 
 <!-- ============ Terminal Demo ============ -->
@@ -540,17 +511,19 @@
 // ===== Frame Slideshow =====
 (function(){
   var frames = [];
-  for (var i = 0; i < 16; i++) {
+  for (var i = 0; i < 120; i++) {
     frames.push('frames/frame_' + String(i).padStart(3,'0') + '.png');
   }
   var img = document.getElementById('heroFrame');
   var idx = 0;
   var playing = false;
   var timer;
+  var FPS = 15;
 
-  // Preload
+  // Preload first batch
   var loaded = 0;
-  frames.forEach(function(src) {
+  var firstFew = frames.slice(0, 10);
+  firstFew.forEach(function(src) {
     var pre = new Image();
     pre.onload = function(){ loaded++; if (loaded >= 3 && !playing) startSlideshow(); };
     pre.src = src;
@@ -561,17 +534,16 @@
     timer = setInterval(function() {
       idx = (idx + 1) % frames.length;
       img.src = frames[idx];
-    }, 180);
+    }, 1000 / FPS);
   }
 
-  // Pause on hover
   var shot = document.getElementById('heroShot');
   shot.addEventListener('mouseenter', function(){ clearInterval(timer); });
   shot.addEventListener('mouseleave', function(){
     timer = setInterval(function() {
       idx = (idx + 1) % frames.length;
       img.src = frames[idx];
-    }, 180);
+    }, 1000 / FPS);
   });
 })();
 
